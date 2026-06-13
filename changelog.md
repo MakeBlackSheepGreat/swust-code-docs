@@ -23,10 +23,25 @@
 - **Token 估算**（移植自 Claude-Code）：三层估算（rough → API → fallback），auto-compact 阈值，context window 管理
 - **Tool Output 裁剪**（移植自 DevEco Code）：保护最近 40K tokens，旧 tool output 标记为 compacted
 
+### 国际化（移植自 MiMo-Code）
+
+- 17 种语言类型定义，支持 en/zh/zht/ja/ko/de/es/fr/ru 等
+- 三层语言自动检测：时区 → 环境变量 → Intl API
+- SolidJS 响应式语言上下文，懒加载 + 缓存
+- 中文翻译字典（50+ keys），覆盖 prompt/tips/dialog/toast
+- CLI 级别同步翻译函数
+- CJK 字符宽度自动处理（Bun.stringWidth）
+
+### 代码质量
+
+- 接入所有孤立模块（import-resolver、token-estimation、fact-store）
+- 消除重复代码，统一使用共享工具函数
+- 全面审计：10 个模块接入状态验证，6 个孤立模块修复
+
 ### 统计
 
-- 新增 8 个源文件
-- 累计 62+ 个新源文件，154 个测试用例
+- 新增 14 个源文件
+- 累计 70+ 个新源文件，154 个测试用例
 
 ---
 

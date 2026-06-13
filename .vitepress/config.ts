@@ -47,6 +47,7 @@ export default defineConfig({
                 { text: '安全防护', link: '/features/security' },
                 { text: '工作流引擎', link: '/features/workflow' },
                 { text: '技能系统', link: '/features/skills' },
+                { text: '国际化', link: '/features/i18n' },
               ],
             },
           ],
