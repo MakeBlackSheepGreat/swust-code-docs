@@ -1,10 +1,40 @@
 # 更新日志
 
+## v0.2.0 (2026-06-14)
+
+移植自 DeepSeek-Reasonix（esengine）和 MiMo-Code/Claude-Code 的 Session 增强。
+
+### 缓存优先架构（移植自 DeepSeek-Reasonix）
+
+- System prompt 分为字节稳定前缀 + 每轮 tail
+- 前缀在会话内保持不变，LLM Provider 缓存持续命中
+- 降低长会话的 token 成本
+
+### 记忆增强（移植自 DeepSeek-Reasonix）
+
+- `@path` 导入指令：MEMORY.md 中可 `@path` 导入其他文件，递归解析，深度限制 5
+- One-Fact-Per-File 存储：每个事实一个 md 文件 + frontmatter，MEMORY.md 自动索引
+- Slash 命令：`/memory` `/goal` `/dream` `/distill` `/help` 交互式命令
+
+### Session 增强
+
+- **Retry 策略**（移植自 MiMo-Code）：header-aware 指数退避，transient error 检测（429/5xx/ECONNRESET）
+- **Doom Loop 检测**（移植自 MiMo-Code）：3 次相同 tool call + 相同 input 自动打断循环
+- **Token 估算**（移植自 Claude-Code）：三层估算（rough → API → fallback），auto-compact 阈值，context window 管理
+- **Tool Output 裁剪**（移植自 DevEco Code）：保护最近 40K tokens，旧 tool output 标记为 compacted
+
+### 统计
+
+- 新增 8 个源文件
+- 累计 62+ 个新源文件，154 个测试用例
+
+---
+
 ## v0.1.0 (2026-06-13)
 
 ### 初始版本
 
-基于 OpenCode v1.17.4 构建，移植自 MiMo-Code、DevEco Code 和 DeepSeek-Reasonix。
+基于 OpenCode v1.17.4 构建，移植自 MiMo-Code（小米）和 DevEco Code（nicognaW）。
 
 ### 核心特性
 
@@ -47,25 +77,9 @@
 - Workspace 适配器
 - 文档验证系统
 
-**缓存优先架构（移植自 DeepSeek-Reasonix）**
-- System prompt 分为字节稳定前缀 + 每轮 tail
-- 前缀在会话内保持不变，LLM Provider 缓存持续命中
-
-**记忆增强（移植自 DeepSeek-Reasonix）**
-- `@path` 导入指令：MEMORY.md 中可导入其他文件
-- One-Fact-Per-File 存储：每个事实一个 md 文件 + frontmatter
-- Slash 命令：`/memory` `/goal` `/dream` `/distill` 交互式命令
-
-**Session 增强（移植自 MiMo-Code + Claude-Code）**
-- Retry 策略：header-aware 指数退避，transient error 检测
-- Doom Loop 检测：3 次相同 tool call 自动打断
-- Token 估算：三层估算 + auto-compact 阈值
-- Tool Output 裁剪：保护最近 40K tokens，旧 tool output 标记为 compacted
-
 ### 统计
 
-- 62+ 个新源文件
-- 11 个测试文件（154 个测试用例，全部通过）
+- 53 个新源文件（6,380 行新代码）
+- 99 个测试用例（全部通过）
 - 24 个 CLI 命令
 - 15+ LLM 提供商支持
-- 4 个参考项目：OpenCode、MiMo-Code、DevEco Code、DeepSeek-Reasonix
