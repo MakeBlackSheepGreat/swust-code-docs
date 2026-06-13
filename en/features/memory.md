@@ -4,7 +4,7 @@ SWUST Code's memory system lets your AI coding assistant remember project knowle
 
 ## How It Works
 
-Memory is stored in SQLite FTS5 full-text search index, supporting millisecond-level retrieval. At the start of each conversation, relevant memories are automatically injected into the system prompt.
+Memory is stored as Markdown files and reconciled into a SQLite FTS5 full-text index. The core v2 runner loads memory context during system prompt assembly and injects global `MEMORY.md` content with a 4KB cap.
 
 ## Memory Directory Structure
 
@@ -15,6 +15,8 @@ Memory is stored in SQLite FTS5 full-text search index, supporting millisecond-l
   projects/
     <project_hash>/
       MEMORY.md            # Project knowledge
+      facts/
+        <fact>.md          # One-fact-per-file store
   sessions/
     <session_id>/
       checkpoint.md        # Session checkpoint (11 sections)
@@ -23,11 +25,12 @@ Memory is stored in SQLite FTS5 full-text search index, supporting millisecond-l
 
 ## Memory Tools
 
-- `memory` — Search persistent knowledge (FTS5 + BM25 ranking)
-- `memory_write` — Write structured knowledge to memory files
+- `memory` — Search persistent knowledge in the core v2 registry
+- `memory_write` — Write structured knowledge to memory files in the core v2 registry
 
 ## Automatic Behavior
 
 - **Pre-search sync**: Automatically syncs disk files to FTS index before each search
 - **Context injection**: Auto-injects MEMORY.md content into system prompt (4KB cap)
 - **Incremental sync**: Fingerprints based on file size and mtime, only processes changed files
+- **Imports**: `MEMORY.md` supports `@path` imports during local resolution

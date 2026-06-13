@@ -8,7 +8,7 @@ SWUST Code learns from your usage patterns and continuously improves.
 swust-code dream
 ```
 
-Auto-triggers every 7 days. Scans recent session traces, extracts persistent knowledge into project memory, and removes outdated entries.
+Current status: the `dream` CLI command, dedicated agent prompt, and 7-day interval check exist. The automatic trigger currently returns false until it is wired into the session lifecycle, so run the command manually for now.
 
 ## Distill (Skill Discovery)
 
@@ -16,7 +16,7 @@ Auto-triggers every 7 days. Scans recent session traces, extracts persistent kno
 swust-code distill
 ```
 
-Auto-triggers every 30 days. Discovers repeated manual workflows and packages high-confidence candidates into reusable skills.
+Current status: the `distill` CLI command, dedicated agent prompt, and 30-day interval check exist. The CLI handler is still a prompt-style stub and the full subagent orchestration is marked as a later phase.
 
 ## Auto-Trigger Mechanism
 
@@ -24,3 +24,9 @@ Auto-triggers every 30 days. Discovers repeated manual workflows and packages hi
 |------|----------|-----------------|
 | Dream | 7 days | Last Dream session time |
 | Distill | 30 days | Last Distill session time |
+
+Implementation notes:
+- `session/auto-dream.ts` defines intervals, titles, and task text
+- `shouldAutoDream()` and `shouldAutoDistill()` currently return false
+- `dream` shows the consolidation flow and asks for confirmation
+- `distill` explains workflow packaging, then reports that full orchestration is pending

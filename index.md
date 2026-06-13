@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: SWUST Code
-  text: 会进化的 AI 编程伙伴
-  tagline: 记得住、学得会、长得大。基于 OpenCode 构建，移植自 MiMo-Code 和 DevEco Code。
+  text: 终端原生 AI 编程智能体
+  tagline: 基于 OpenCode v1.17.4 构建，整合 MiMo-Code、DevEco Code 与 DeepSeek-Reasonix 的记忆、自治、工具和缓存能力。
   actions:
     - theme: brand
       text: 快速开始
@@ -16,15 +16,15 @@ hero:
 features:
   - icon: 🧠
     title: 持久化记忆
-    details: 基于 SQLite FTS5 全文搜索，跨会话记住项目知识、架构决策和工作模式。
+    details: SQLite FTS5 索引、MEMORY.md 注入、@path 导入和 one-fact-per-file 项目知识存储。
     link: /features/memory
   - icon: 🎯
     title: 目标驱动自治
-    details: 设定目标后 Agent 自主工作，独立 Judge 模型评估是否达成，防止过早停止。
+    details: 设定目标后 Agent 进入 Goal/Gate 重入循环；独立 Judge 模型接入仍在完善。
     link: /features/goal
   - icon: 🌱
     title: 自我进化
-    details: Dream 自动提炼知识，Distill 自动发现重复工作流并打包为可复用技能。
+    details: Dream 和 Distill 命令已接入 CLI；自动周期调度仍在接入会话生命周期。
     link: /features/dream
   - icon: 🛡️
     title: 安全防护
@@ -32,10 +32,14 @@ features:
     link: /features/security
   - icon: ⚙️
     title: 工作流引擎
-    details: 可脚本化的多 Agent 编排，支持崩溃恢复和并发控制。
+    details: JavaScript 编排运行时骨架已存在，脚本执行、沙箱和持久化恢复仍在接入。
     link: /features/workflow
   - icon: 🧩
     title: 技能系统
-    details: SKILL.md 声明式技能，多源自动发现，条件激活。
+    details: SKILL.md 声明式技能，支持项目、全局和外部目录发现。
     link: /features/skills
+  - icon: 🌐
+    title: 中英文 TUI
+    details: TUI 命令面板、提示和常用控件已接入中文/英文翻译，默认跟随系统语言。
+    link: /features/i18n
 ---

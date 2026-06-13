@@ -8,7 +8,7 @@ SWUST Code 从你的使用模式中学习，持续改进自身能力。
 swust-code dream
 ```
 
-每 7 天自动触发，或手动运行。
+当前状态：`dream` CLI 命令、专用 agent prompt 和 7 天间隔判断代码已经存在；自动触发函数目前返回 false，完整自动调度尚未接入会话生命周期。现阶段请手动运行命令。
 
 **做什么**：
 1. 扫描最近 7 天的会话轨迹
@@ -32,7 +32,7 @@ swust-code dream
 swust-code distill
 ```
 
-每 30 天自动触发，或手动运行。
+当前状态：`distill` CLI 命令、专用 agent prompt 和 30 天间隔判断代码已经存在；CLI 处理器仍是提示型 stub，完整子智能体编排标记为后续阶段。
 
 **做什么**：
 1. 分析最近 30 天的工具使用模式
@@ -55,3 +55,9 @@ swust-code distill
 前置检查：
 - 项目年龄必须超过间隔时间
 - 距上次触发 ≥ 10 秒（防抖）
+
+实现进度：
+- `session/auto-dream.ts` 已定义间隔、标题和任务文本
+- `shouldAutoDream()` 和 `shouldAutoDistill()` 目前都会返回 false
+- `dream` 命令会展示记忆整合说明并请求确认
+- `distill` 命令会展示工作流打包说明，但仍提示完整编排需要后续实现

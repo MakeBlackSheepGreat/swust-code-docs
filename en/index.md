@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: SWUST Code
-  text: Self-Evolving AI Coding Agent
-  tagline: Remembers, learns, and grows. Built on OpenCode with capabilities from MiMo-Code and DevEco Code.
+  text: Terminal-Native AI Coding Agent
+  tagline: Built on OpenCode v1.17.4 with memory, autonomy, tooling, and cache architecture from MiMo-Code, DevEco Code, and DeepSeek-Reasonix.
   actions:
     - theme: brand
       text: Quick Start
@@ -16,15 +16,15 @@ hero:
 features:
   - icon: 🧠
     title: Persistent Memory
-    details: SQLite FTS5 full-text search across project knowledge that persists between sessions.
+    details: SQLite FTS5 indexing, MEMORY.md injection, @path imports, and one-fact-per-file project knowledge.
     link: /en/features/memory
   - icon: 🎯
     title: Goal-Driven Autonomy
-    details: Set a goal and the agent works autonomously. Independent judge prevents premature stops.
+    details: Goal/Gate re-entry is wired; independent LLM Judge integration is still pending.
     link: /en/features/goal
   - icon: 🌱
     title: Self-Improvement
-    details: Dream consolidates knowledge automatically. Distill discovers reusable workflows.
+    details: Dream and Distill CLI entry points exist; automatic scheduling is still being wired into session lifecycle.
     link: /en/features/dream
   - icon: 🛡️
     title: Security
@@ -32,10 +32,14 @@ features:
     link: /en/features/security
   - icon: ⚙️
     title: Workflow Engine
-    details: Scriptable multi-agent orchestration with crash recovery and concurrency control.
+    details: JavaScript orchestration runtime scaffold exists; script execution, sandboxing, and persistent recovery are still pending.
     link: /en/features/workflow
   - icon: 🧩
     title: Skills System
-    details: SKILL.md declarative skills, multi-source auto-discovery, conditional activation.
+    details: SKILL.md declarative skills discovered from project, global, and external directories.
     link: /en/features/skills
+  - icon: 🌐
+    title: Chinese/English TUI
+    details: Command palette, prompts, tips, and common controls use Chinese or English based on system locale.
+    link: /en/features/i18n
 ---

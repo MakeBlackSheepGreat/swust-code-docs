@@ -1,5 +1,15 @@
 # CLI 命令
 
+## 全局参数
+
+| 参数 | 说明 |
+|------|------|
+| `--help`, `-h` | 显示帮助 |
+| `--version`, `-v` | 显示版本 |
+| `--print-logs` | 将日志输出到 stderr |
+| `--log-level DEBUG\|INFO\|WARN\|ERROR` | 设置日志级别 |
+| `--pure` | 禁用外部插件 |
+
 ## 基本命令
 
 | 命令 | 说明 |
@@ -7,8 +17,11 @@
 | `swust-code` | 启动交互式 TUI |
 | `swust-code run [message]` | 运行单次命令 |
 | `swust-code run --goal "目标" "消息"` | 自治模式 |
-| `swust-code dream` | 知识提炼 |
-| `swust-code distill` | 技能发现 |
+| `swust-code dream` | 启动记忆整合命令流 |
+| `swust-code distill` | 启动工作流打包命令流 |
+| `swust-code serve` | 启动 headless API server |
+| `swust-code web` | 启动 server 并打开 Web UI |
+| `swust-code attach <url>` | 连接已有 server |
 | `swust-code --help` | 显示帮助 |
 | `swust-code --version` | 显示版本 |
 
@@ -25,18 +38,39 @@ swust-code run [message..]
   --agent                 指定智能体
   --fork                  分叉会话后再继续
   --share                 分享会话
+  --format default|json   输出格式
+  -f, --file              附加文件
+  --title                 指定会话标题
+  --attach                连接远端 server
+  --dir                   指定运行目录
+  --interactive, -i       启动直接交互模式
+  --thinking              显示 thinking block
+  --variant               指定模型变体
+  --dangerously-skip-permissions  自动批准未显式拒绝的权限
 ```
 
 ## 管理命令
 
 | 命令 | 说明 |
 |------|------|
-| `swust-code providers` | 管理 LLM 提供商 |
+| `swust-code providers list` | 列出 Provider 凭证 |
+| `swust-code providers login [url]` | 登录 Provider |
+| `swust-code providers logout [provider]` | 删除 Provider 凭证 |
+| `swust-code providers import` | 从 MiMo-Code、Claude Code 或环境变量导入凭证 |
 | `swust-code agent` | 管理智能体 |
 | `swust-code mcp list` | 列出 MCP 服务器 |
 | `swust-code mcp add` | 添加 MCP 服务器 |
+| `swust-code mcp auth [name]` | 为远程 MCP 执行 OAuth |
+| `swust-code mcp logout [name]` | 删除 MCP OAuth 凭证 |
+| `swust-code models [provider]` | 列出模型 |
 | `swust-code plugin <module>` | 安装插件 |
 | `swust-code session` | 管理会话 |
 | `swust-code db` | 数据库工具 |
+| `swust-code stats` | 查看 token 与费用统计 |
+| `swust-code export [sessionID]` | 导出会话 JSON |
+| `swust-code import <file>` | 导入会话 JSON 或分享 URL |
+| `swust-code github` | 管理 GitHub agent |
+| `swust-code pr <number>` | 拉取并 checkout PR 后运行 SWUST Code |
+| `swust-code acp` | 启动 Agent Client Protocol server |
 | `swust-code upgrade` | 升级 |
 | `swust-code uninstall` | 卸载 |

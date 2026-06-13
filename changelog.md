@@ -4,6 +4,12 @@
 
 移植自 DeepSeek-Reasonix（esengine）和 MiMo-Code/Claude-Code 的 Session 增强。
 
+### 文档状态校准
+
+- 根据当前 `swust-code` 代码重新校准文档站描述
+- 修正 Goal Judge、Dream/Distill 自动调度、Workflow QuickJS、技能条件激活和 i18n 的成熟度说明
+- 新增英文 API 参考与配置 Schema 页面
+
 ### 缓存优先架构（移植自 DeepSeek-Reasonix）
 
 - System prompt 分为字节稳定前缀 + 每轮 tail
@@ -25,9 +31,9 @@
 
 ### 国际化（移植自 MiMo-Code）
 
-- 17 种语言类型定义，支持 en/zh/zht/ja/ko/de/es/fr/ru 等
+- 17 种语言类型定义，当前完整字典落地为 en/zh，其余 locale 保留类型与标签
 - 三层语言自动检测：时区 → 环境变量 → Intl API
-- SolidJS 响应式语言上下文，懒加载 + 缓存
+- SolidJS 响应式语言上下文，TUI 可视化切换入口仍在接入
 - 中文翻译字典（50+ keys），覆盖 prompt/tips/dialog/toast
 - CLI 级别同步翻译函数
 - CJK 字符宽度自动处理（Bun.stringWidth）
@@ -68,14 +74,15 @@
 
 **目标驱动自治**
 - `--goal` CLI 参数
-- Goal Judge 独立评估
-- Task Gate 二级停止条件
+- Goal Store、Goal Gate 和重入控制已接入
+- 当前 runner 的 Judge 评估仍是占位实现
+- Task Gate 状态与 todowrite 的完整联动仍在后续接入
 - 重入控制（主 12 次 / 子 3 次）
 
 **自我进化**
-- Dream 知识提炼（7 天周期）
-- Distill 技能发现（30 天周期）
-- 自动触发机制
+- Dream 知识提炼 CLI 与专用提示词
+- Distill 技能发现 CLI 与专用提示词
+- 周期判断代码存在，自动调度函数当前返回 false
 
 **安全防护**
 - 四步权限流水线
@@ -88,9 +95,9 @@
 - Coordinator 协议
 
 **工作流引擎**
-- QuickJS 沙箱运行时
-- Journal 持久化 + 崩溃恢复
-- Deep Research 内置工作流
+- Workflow runtime 骨架、metadata 解析和内存 journal
+- QuickJS 沙箱、host 函数注入和持久化恢复仍在后续增强
+- Deep Research 相关文件已存在，完整执行链路仍需继续接入
 
 **扩展性**
 - 动态工具加载（JSON 声明式）

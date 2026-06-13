@@ -43,6 +43,8 @@ swust-code dream
 swust-code distill
 ```
 
+`dream` and `distill` are currently CLI entry commands. The codebase contains automatic trigger checks and dedicated agent prompts, but the automatic scheduler still returns false until it is wired into the session lifecycle.
+
 ## Next Steps
 
 - [Installation](/en/guide/install) — Detailed installation methods

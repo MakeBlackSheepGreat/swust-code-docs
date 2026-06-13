@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-npm install -g @swust-code/cli
+npm install -g swust-code
 ```
 
 ## First Run
@@ -21,14 +21,15 @@ swust-code run --goal "fix all TypeScript errors" "start working"
 
 ## Configuration
 
-Create `.swust-code/config.json` in your project root:
+Create `swust-code.jsonc` in your project root, or place it under `.swust-code/swust-code.jsonc`:
 
 ```json
 {
   "model": "anthropic/claude-sonnet-4-6",
-  "permissions": {
+  "permission": {
     "bash": "ask",
-    "write": "allow"
+    "edit": "allow",
+    "read": "allow"
   }
 }
 ```
@@ -44,8 +45,7 @@ SWUST Code remembers project knowledge across sessions:
 # The agent automatically:
 # - Indexes memory files for full-text search
 # - Injects relevant context into conversations
-# - Consolidates knowledge via Dream (every 7 days)
-# - Discovers repeated workflows via Distill (every 30 days)
+# - Supports manual Dream and Distill entry points
 ```
 
 ## Key Commands
@@ -54,15 +54,16 @@ SWUST Code remembers project knowledge across sessions:
 |---------|-------------|
 | `swust-code` | Start interactive TUI |
 | `swust-code run "msg"` | Run with a message |
-| `swust-code run --goal "cond" "msg"` | Autonomous goal-driven execution |
-| `swust-code dream` | Consolidate project memory |
-| `swust-code distill` | Discover and package repeated workflows |
+| `swust-code run --goal "cond" "msg"` | Goal/Gate re-entry mode; Judge integration is still pending |
+| `swust-code dream` | Start the memory consolidation command flow |
+| `swust-code distill` | Start the workflow packaging command flow |
 | `swust-code mcp list` | List MCP servers |
-| `swust-code providers` | Manage AI providers |
+| `swust-code providers list` | List AI provider credentials |
+| `swust-code providers import` | Import credentials from MiMo-Code, Claude Code, or env vars |
 
 ## Skills
 
-Create custom skills in `.swust-code/skills/<name>/SKILL.md`:
+Create custom skills in `.swust-code/skill/<name>.md` or `.swust-code/skills/<name>/SKILL.md`:
 
 ```markdown
 ---

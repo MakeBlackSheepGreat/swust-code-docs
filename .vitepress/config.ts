@@ -113,6 +113,17 @@ export default defineConfig({
                 { text: 'Security', link: '/en/features/security' },
                 { text: 'Workflow Engine', link: '/en/features/workflow' },
                 { text: 'Skills System', link: '/en/features/skills' },
+                { text: 'Internationalization', link: '/en/features/i18n' },
+              ],
+            },
+          ],
+          '/en/api/': [
+            {
+              text: 'API Reference',
+              items: [
+                { text: 'Tools', link: '/en/api/tools' },
+                { text: 'CLI Commands', link: '/en/api/commands' },
+                { text: 'Config Schema', link: '/en/api/config-schema' },
               ],
             },
           ],
