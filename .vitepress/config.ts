@@ -48,6 +48,7 @@ export default defineConfig({
                 { text: '工作流引擎', link: '/features/workflow' },
                 { text: '技能系统', link: '/features/skills' },
                 { text: '国际化', link: '/features/i18n' },
+                { text: 'TUI 体验', link: '/features/tui' },
               ],
             },
           ],
@@ -57,6 +58,7 @@ export default defineConfig({
               items: [
                 { text: '工具参考', link: '/api/tools' },
                 { text: 'CLI 命令', link: '/api/commands' },
+                { text: 'HTTP API', link: '/api/http' },
                 { text: '配置 Schema', link: '/api/config-schema' },
               ],
             },
@@ -114,6 +116,7 @@ export default defineConfig({
                 { text: 'Workflow Engine', link: '/en/features/workflow' },
                 { text: 'Skills System', link: '/en/features/skills' },
                 { text: 'Internationalization', link: '/en/features/i18n' },
+                { text: 'TUI Experience', link: '/en/features/tui' },
               ],
             },
           ],
@@ -123,6 +126,7 @@ export default defineConfig({
               items: [
                 { text: 'Tools', link: '/en/api/tools' },
                 { text: 'CLI Commands', link: '/en/api/commands' },
+                { text: 'HTTP API', link: '/en/api/http' },
                 { text: 'Config Schema', link: '/en/api/config-schema' },
               ],
             },

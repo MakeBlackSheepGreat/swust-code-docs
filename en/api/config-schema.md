@@ -23,6 +23,7 @@ The runtime primarily reads v1 config fields and adapts them into the core v2 co
 | `lsp` | boolean or object | LSP configuration |
 | `tool_output` | object | Tool output truncation thresholds |
 | `compaction` | object | Context compaction behavior |
+| `experimental.predict_next_prompt` | boolean | TUI next-prompt prediction toggle, enabled by default |
 | `share` | `manual`, `auto`, `disabled` | Session sharing policy |
 
 ## Permissions
@@ -80,3 +81,17 @@ The current CLI/TUI path reads the v1 shape:
 ```
 
 The core v2 config layer represents `skills` as a string array. The migration layer expands v1 `paths` and `urls` into that array. For user-facing config files, prefer the v1 object shape above.
+
+## Experimental
+
+```json
+{
+  "experimental": {
+    "predict_next_prompt": false,
+    "batch_tool": true,
+    "openTelemetry": true
+  }
+}
+```
+
+`predict_next_prompt=false` disables TUI next-prompt ghost suggestions. Other experimental fields are wired according to runtime support.

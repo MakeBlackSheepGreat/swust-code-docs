@@ -20,11 +20,11 @@ features:
     link: /features/memory
   - icon: 🎯
     title: 目标驱动自治
-    details: 设定目标后 Agent 进入 Goal/Gate 重入循环；独立 Judge 模型接入仍在完善。
+    details: Goal/Gate 已接入独立 LLM Judge，未达成时自动发布提醒并继续工作。
     link: /features/goal
   - icon: 🌱
     title: 自我进化
-    details: Dream 和 Distill 命令已接入 CLI；自动周期调度仍在接入会话生命周期。
+    details: Dream 和 Distill 会启动带目标的自治 run，并支持 7/30 天后台自动触发。
     link: /features/dream
   - icon: 🛡️
     title: 安全防护
@@ -32,7 +32,7 @@ features:
     link: /features/security
   - icon: ⚙️
     title: 工作流引擎
-    details: JavaScript 编排运行时骨架已存在，脚本执行、沙箱和持久化恢复仍在接入。
+    details: JavaScript 工作流可执行 host 函数、派生子 Agent，并写入持久化 JSONL journal。
     link: /features/workflow
   - icon: 🧩
     title: 技能系统
@@ -40,6 +40,10 @@ features:
     link: /features/skills
   - icon: 🌐
     title: 中英文 TUI
-    details: TUI 命令面板、提示和常用控件已接入中文/英文翻译，默认跟随系统语言。
+    details: 命令面板、权限弹窗、语言切换、Logo 选择和下一条输入预测已接入 TUI。
     link: /features/i18n
+  - icon: ✦
+    title: TUI 体验
+    details: 星空首页、双 Logo、SWUST Code 主题和 ghost suggestion 改善日常终端交互。
+    link: /features/tui
 ---

@@ -2,7 +2,7 @@
 
 > 基于 OpenCode v1.17.4 (anomalyco/opencode) 源码深度审计
 > 审计日期: 2026-06-13
-> 状态校准: 2026-06-14 按当前 `swust-code` 代码复核，部分能力仍处于骨架或 CLI 入口阶段。
+> 状态校准: 2026-06-14 按当前 `swust-code` 代码复核，v0.3 已接入 Goal Judge、自动进化入队和可执行 Workflow runtime。
 
 ---
 
@@ -16,9 +16,9 @@
 | CLI 命令数 | 22 | 24 | +2 (dream, distill) |
 | 数据库表数 | 18 | 19 | +1 (memory_doc + FTS5) |
 | Effect 服务数 | ~35 | ~45 | +10 新服务 |
-| 自治能力 | 无 | 部分接入 | Goal/Gate/重入控制已接入，Judge 与 TaskGate 联动仍在完善 |
+| 自治能力 | 无 | 已接入 | Goal/Gate/重入控制 + 独立 LLM Judge；TaskGate 真实任务状态仍待接入 |
 | 记忆系统 | 无 | 完整 | FTS5 + BM25 + 增量同步 |
-| 进化能力 | 无 | CLI 入口 + 判断骨架 | Dream/Distill 命令与 prompt 已存在，自动调度仍待接入 |
+| 进化能力 | 无 | 已接入 | Dream/Distill 自治 run + 7/30 天后台自动触发 |
 
 ---
 
@@ -106,7 +106,7 @@ system prompt ← context.ts ← memory_fts COUNT + MEMORY.md 内容注入
                                       ↓
                               ┌─── taskGate(tasks) ─── 有未完成任务 → 继续
                               │
-                              └─── goalGate(sessionID) ── Judge 占位评估 → 未达标 → 注入合成消息 → 继续
+                              └─── goalGate(sessionID) ── LLM Judge 评估 → 未达标 → 注入合成消息 → 继续
                                                            │
                                                            └── 达标/不可能/超限 → break
 ```
@@ -116,7 +116,7 @@ system prompt ← context.ts ← memory_fts COUNT + MEMORY.md 内容注入
 | 组件 | 文件 | 功能 |
 |------|------|------|
 | **Goal 类型** | `session/goal.ts` | `GoalInfo { condition, react }`、`Verdict { ok, impossible, reason }`、Map<sessionID, Goal> 存储 |
-| **Goal Judge** | `session/goal-judge.ts` | JUDGE_SYSTEM 提示词和 buildPrompt 已定义；LLM 评估调用仍待接入 |
+| **Goal Judge** | `session/goal-judge.ts` | `LLM.generateObject()` + `Verdict` schema，temperature=0，失败时继续 |
 | **Goal Gate** | `session/goal-gate.ts` | 检查 activeGoal → 调用 Judge → ok 则 clear、impossible 则 clear、否则 bumpReact → 注入合成消息 |
 | **Task Gate** | `session/task-gate.ts` | 过滤 non-terminal tasks（in_progress/pending）、生成 `<system-reminder>` 继续指令 |
 | **Step Classifier** | `session/classify.ts` | 确定性优先级级联：pendingToolCalls→continue, error→failed, structured→final, filter→filtered, reasoning→think-only |
@@ -124,7 +124,7 @@ system prompt ← context.ts ← memory_fts COUNT + MEMORY.md 内容注入
 
 #### 技术细节
 
-- **Judge 状态**: 独立评估提示词已定义；当前默认实现返回继续，core runner 中仍传入 `Judge not yet integrated` 占位结果
+- **Judge 状态**: core runner 组装会话转录与工具结果，交给独立 LLM Judge 评估，失败时按未达成继续
 - **合成消息格式**: `<system-reminder>Your goal is not yet satisfied: "{condition}". A judge reviewed...{reason}. Keep working.</system-reminder>`
 - **Task Gate 优先级**: 先检查 taskGate（更确定性），再检查 goalGate（需要 LLM 调用）
 - **Fail-open**: goalGate 任何异常都返回 `shouldContinue: false`，不阻塞用户
@@ -135,14 +135,14 @@ system prompt ← context.ts ← memory_fts COUNT + MEMORY.md 内容注入
 
 **OpenCode**: 能力固定，不会从使用中学习。
 
-**SWUST Code**: 提供 Dream/Distill 的 CLI 入口、专用提示词和周期判断骨架；自动调度仍待接入会话生命周期。
+**SWUST Code**: Dream/Distill 会启动带目标的自治 run，并在会话结束后按周期检查后台触发。
 
 #### 架构
 
 ```
-手动运行 swust-code dream → Dream Agent 提示词 → 读 MEMORY/轨迹 → 提炼知识 → 更新 MEMORY.md
+swust-code dream → runAutonomyTask() → swust-code run --goal → 读 MEMORY/轨迹 → 提炼知识 → 更新 MEMORY.md
 
-手动运行 swust-code distill → Distill Agent 提示词 → 分析重复工作流 → 形成 Skill/Command 候选
+swust-code distill → runAutonomyTask() → swust-code run --goal → 分析重复工作流 → 创建高置信度资产
 ```
 
 #### 核心组件
@@ -151,10 +151,10 @@ system prompt ← context.ts ← memory_fts COUNT + MEMORY.md 内容注入
 |------|------|------|
 | **Dream 提示词** | `agent/prompt/dream.txt` | 97 行，6 阶段：Locate Data → Orient → Gather → Verify → Consolidate → Prune |
 | **Distill 提示词** | `agent/prompt/distill.txt` | 92 行，7 阶段：Locate → Inventory → Discover → Confirm → Shortlist → Choose Form → Create |
-| **自动触发判断** | `session/auto-dream.ts` | 保留 Dream/Distill 周期判断函数；当前函数返回 false，自动 spawn 未接入 |
+| **自动触发判断** | `session/auto-dream.ts` | 7/30 天间隔、项目年龄检查、10s 防抖、后台 spawn |
 | **Dream Agent** | `agent/agent.ts` | native subagent，权限：read/write/edit/glob/grep/memory/bash |
 | **Distill Agent** | `agent/agent.ts` | 同上 |
-| **CLI 命令** | `cli/cmd/dream.ts`, `distill.ts` | `swust-code dream` / `swust-code distill`，带 `--dry-run` 选项 |
+| **CLI 命令** | `cli/cmd/dream.ts`, `distill.ts` | `--dry-run`、`--yes`、`--model`、`--agent`、`--dir` |
 
 #### 技术细节
 
@@ -162,7 +162,7 @@ system prompt ← context.ts ← memory_fts COUNT + MEMORY.md 内容注入
 - **Dream 输出约束**: MEMORY.md ≤ 200 行 / ≤ 10KB，每条 entry 1-3 行
 - **Distill 阈值**: 仅打包发生 ≥ 2 次的工作流，且有稳定输入、可重复流程、明确输出
 - **Distill 产物形式**: Skill（SKILL.md）、Agent（.md）、Command（.md）、Automation（plugin hook）
-- **自动调度状态**: 周期判断与 agent prompt 已存在，完整自动 spawn 仍需后续接入
+- **自动调度状态**: `SWUST_CODE_AUTO_EVOLUTION=0|false` 可禁用；子进程自动设置为 `0` 防止递归触发
 
 ---
 
@@ -262,7 +262,7 @@ workflow script → parseMeta() → 提取 name/description/phases
 
 | 组件 | 文件 | 功能 |
 |------|------|------|
-| **运行时** | `workflow/runtime.ts` | 脚本解析、host 函数注入、并发信号量（min(16, 2*cores)）、deadline 12h |
+| **运行时** | `workflow/runtime.ts` | 受限脚本执行、host 函数注入、Actor Spawn、并发限制、deadline 12h |
 | **持久化** | `workflow/persistence.ts` | JSONL journal、确定性 key（sha256(prompt+agent+model+schema+phase)）、script SHA 失效检测 |
 | **注册表** | `workflow/builtin.ts` | 内置工作流注册（当前 1 个：deep-research） |
 | **Deep Research** | `workflow/builtin/deep-research.ts` | 6 阶段：Plan→Search→Extract→Group→Crosscheck→Report、JURY_SIZE=3、REJECT_QUORUM=2 |
@@ -407,7 +407,7 @@ workflow script → parseMeta() → 提取 name/description/phases
 
 | 文件 | 修改内容 |
 |------|----------|
-| `packages/core/src/session/runner/llm.ts` | +MemoryContext 集成、+Goal/Gate 接入；Judge 评估和 TaskGate 状态仍有占位 |
+| `packages/core/src/session/runner/llm.ts` | +MemoryContext 集成、+Goal/Gate 接入、+LLM Judge、+自动 Dream/Distill 入队 |
 | `packages/core/src/location-layer.ts` | +MemoryContext.locationLayer、+Goal.defaultLayer 接入 runner 依赖链 |
 | `packages/core/src/tool/builtins.ts` | +MemoryTool.layer、+MemoryWriteTool.layer |
 | `packages/core/src/tool/tool.ts` | +isReadOnly/isConcurrencySafe/isDestructive 属性 |
@@ -427,13 +427,13 @@ workflow script → parseMeta() → 提取 name/description/phases
 | 指标 | OpenCode | SWUST Code | 提升 |
 |------|----------|------------|------|
 | 跨会话记忆 | ❌ | ✅ FTS5 + BM25 | ∞ |
-| 自治目标驱动 | ❌ | 部分接入：Goal + Gate，Judge 占位 | 路线增强 |
-| 自我进化 | ❌ | CLI 入口：Dream + Distill，自动调度待接入 | 路线增强 |
+| 自治目标驱动 | ❌ | ✅ Goal + Gate + LLM Judge | ∞ |
+| 自我进化 | ❌ | ✅ Dream + Distill 自治 run + 自动触发 | ∞ |
 | 记忆检索延迟 | N/A | < 50ms | — |
 | 记忆容量 | N/A | 10,000+ 文档 | — |
 | Bash 危险命令拦截 | ❌ | ✅ 21 种模式 | ∞ |
 | 子 Agent 编排 | 基础 | Actor + ForkCache + Coordinator | 3x |
-| 工作流脚本化 | ❌ | runtime 骨架，QuickJS 待接入 | 路线增强 |
+| 工作流脚本化 | ❌ | ✅ 受限脚本 runner + JSONL journal | ∞ |
 | 上下文管理 | 基础截断 | 结构化 checkpoint + 预算读取 | 5x |
 | 动态工具扩展 | ❌ | ✅ JSON 声明 + NAPI | ∞ |
 | 测试用例数 | 537 | 636 | +18% |
@@ -441,4 +441,4 @@ workflow script → parseMeta() → 提取 name/description/phases
 
 ---
 
-*文档版本: v1.1 | 审计基于 OpenCode v1.17.4 | 初稿 2026-06-13，状态校准 2026-06-14*
+*文档版本: v1.2 | 审计基于 OpenCode v1.17.4 | 初稿 2026-06-13，v0.3 状态校准 2026-06-14*

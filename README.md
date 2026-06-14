@@ -26,7 +26,8 @@ Deployed to Cloudflare Pages automatically on push to `main`.
 ├── en/index.md           # English homepage
 ├── guide/                # Getting started guides
 ├── features/             # Feature documentation
-├── api/                  # API reference
+│   └── tui.md            # TUI experience and interaction polish
+├── api/                  # API reference, including CLI and HTTP API
 ├── dev/                  # Developer documentation
 ├── changelog.md          # Changelog
 ├── DIFFERENCES.md        # Comparison with OpenCode

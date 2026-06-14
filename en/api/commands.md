@@ -17,8 +17,8 @@
 | `swust-code` | Start the interactive TUI |
 | `swust-code run [message]` | Run one prompt |
 | `swust-code run --goal "goal" "message"` | Goal-driven run mode |
-| `swust-code dream` | Start the memory consolidation command flow |
-| `swust-code distill` | Start the workflow packaging command flow |
+| `swust-code dream` | Start an autonomous memory consolidation run |
+| `swust-code distill` | Start an autonomous workflow packaging run |
 | `swust-code serve` | Start a headless API server |
 | `swust-code web` | Start the server and open the Web UI |
 | `swust-code attach <url>` | Attach to an existing server |
@@ -70,3 +70,21 @@ Options:
 | `swust-code acp` | Start Agent Client Protocol server |
 | `swust-code upgrade` | Upgrade |
 | `swust-code uninstall` | Uninstall |
+
+## `dream` / `distill`
+
+Both commands reuse the autonomy task runner and launch `swust-code run --goal ...`.
+
+```bash
+swust-code dream [options]
+swust-code distill [options]
+
+Options:
+  --dry-run              Show the task text without starting an agent
+  -y, --yes             Skip confirmation
+  -m, --model           Model in provider/model format
+  --agent               Select the primary agent
+  --dir                 Working directory
+```
+
+Background auto-triggers use `--yes --dir <cwd>` and set `SWUST_CODE_AUTO_EVOLUTION=0` for the child process to prevent recursion.

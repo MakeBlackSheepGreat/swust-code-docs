@@ -40,6 +40,18 @@ Project config overrides global config, and the closest project config wins. Use
 
 The CLI/TUI path currently reads this v1 object shape. The core v2 layer adapts these entries into local directory or remote URL sources internally.
 
+## Experimental Options
+
+```json
+{
+  "experimental": {
+    "predict_next_prompt": true
+  }
+}
+```
+
+`predict_next_prompt` controls the TUI next-prompt ghost suggestion. It is enabled by default. Set it to `false` to hide ghost suggestions in empty prompt input.
+
 ## Environment Variables
 
 | Variable | Description |
@@ -53,4 +65,6 @@ The CLI/TUI path currently reads this v1 object shape. The core v2 layer adapts 
 | `SWUST_CODE_DISABLE_MODELS_FETCH` | Disable model catalog refresh |
 | `SWUST_CODE_SERVER_PASSWORD` | Password for `serve` and `web` |
 | `SWUST_CODE_SERVER_USERNAME` | Username for `serve` and `web` |
+| `SWUST_CODE_LOCALE` | Pin TUI language preference, such as `auto`, `en`, or `zh` |
+| `SWUST_CODE_AUTO_EVOLUTION` | Set to `0` or `false` to disable background Dream/Distill auto-triggers |
 | `SWUST_CODE_MEMORY_RECONCILE_ON_SEARCH` | Auto-sync memory before search (default: true) |

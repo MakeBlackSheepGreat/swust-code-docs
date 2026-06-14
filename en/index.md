@@ -20,11 +20,11 @@ features:
     link: /en/features/memory
   - icon: 🎯
     title: Goal-Driven Autonomy
-    details: Goal/Gate re-entry is wired; independent LLM Judge integration is still pending.
+    details: Goal/Gate now uses an independent LLM Judge and publishes reminders when work must continue.
     link: /en/features/goal
   - icon: 🌱
     title: Self-Improvement
-    details: Dream and Distill CLI entry points exist; automatic scheduling is still being wired into session lifecycle.
+    details: Dream and Distill launch goal-driven autonomous runs and support 7/30-day background triggers.
     link: /en/features/dream
   - icon: 🛡️
     title: Security
@@ -32,7 +32,7 @@ features:
     link: /en/features/security
   - icon: ⚙️
     title: Workflow Engine
-    details: JavaScript orchestration runtime scaffold exists; script execution, sandboxing, and persistent recovery are still pending.
+    details: JavaScript workflows execute host functions, spawn subagents, and write persistent JSONL journals.
     link: /en/features/workflow
   - icon: 🧩
     title: Skills System
@@ -40,6 +40,10 @@ features:
     link: /en/features/skills
   - icon: 🌐
     title: Chinese/English TUI
-    details: Command palette, prompts, tips, and common controls use Chinese or English based on system locale.
+    details: Command palette, permission prompts, language switcher, logo selection, and ghost suggestions are wired.
     link: /en/features/i18n
+  - icon: ✦
+    title: TUI Experience
+    details: Starry home screen, dual logos, SWUST Code theme, and next-prompt suggestions improve terminal use.
+    link: /en/features/tui
 ---

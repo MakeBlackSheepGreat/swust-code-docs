@@ -1,6 +1,6 @@
 # Goal-Driven Autonomy
 
-Set a goal with `--goal` so the run loop checks the target when the agent tries to stop. The current code has Goal Store, Goal Gate, and a 12 re-entry cap. Full independent LLM Judge integration is still pending.
+Set a target with `--goal` and the run loop checks it when the agent tries to stop. v0.3 wires the independent LLM Judge into the core runner: it reads the transcript, tool results, and goal condition, then returns a structured verdict.
 
 ## Usage
 
@@ -8,24 +8,26 @@ Set a goal with `--goal` so the run loop checks the target when the agent tries 
 swust-code run --goal "fix all TypeScript errors" "start working"
 ```
 
-## How It Works
+## Flow
 
-1. User sets a goal
-2. Agent begins working
-3. When agent tries to stop, **Goal Gate** triggers
-4. Goal Gate calls an evaluator
-5. If goal not met: injects synthetic message, agent continues
-6. If goal met or impossible: stops normally
+1. User sets a goal with `--goal`
+2. Agent runs normal tool calls
+3. Goal Gate triggers when the agent is ready to stop
+4. The runner builds a transcript and resolves the current model
+5. Goal Judge calls `LLM.generateObject()` for `{ ok, impossible, reason }`
+6. If not satisfied, a synthetic reminder is published and the agent continues
+7. If satisfied or impossible, the goal is cleared and the run stops
 
 ## Goal Judge
 
-The intended evaluator returns `{ ok, impossible, reason }`.
+The Judge uses a separate system prompt and is instructed to evaluate concrete evidence such as code changes, tests, file state, and tool output.
 
-- `ok=true` clears the goal and stops
-- `impossible=true` clears the goal and stops
-- Otherwise the loop injects a `<system-reminder>` and continues
-
-In the current core runner, the evaluator is still a placeholder returning `Judge not yet integrated`. The `--goal` option exists, but the final judgment quality depends on the pending Judge wiring.
+| Behavior | Current implementation |
+|----------|------------------------|
+| Output | `Verdict` schema: `ok`, `impossible`, `reason` |
+| Sampling | `temperature: 0`, `maxTokens: 500` |
+| Context | User text, assistant text, reasoning, tool success/error results, shell output, compaction summaries |
+| Failure policy | If Judge evaluation fails, it returns not-satisfied and continues |
 
 ## Re-entry Control
 
@@ -33,6 +35,8 @@ In the current core runner, the evaluator is still a placeholder returning `Judg
 |------|---------------|
 | Main Agent | 12 |
 
+After the cap is exceeded, the goal is cleared to prevent an infinite loop.
+
 ## Task Gate
 
-`taskGate()` can force continuation when non-terminal tasks exist. The current runner still passes an empty task list, so wiring real todowrite state remains pending.
+`taskGate()` can still force continuation for non-terminal tasks. The current core runner still passes an empty task list, so wiring real `todowrite` state remains pending.

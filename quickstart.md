@@ -54,9 +54,10 @@ SWUST Code remembers project knowledge across sessions:
 |---------|-------------|
 | `swust-code` | Start interactive TUI |
 | `swust-code run "msg"` | Run with a message |
-| `swust-code run --goal "cond" "msg"` | Goal/Gate re-entry mode; Judge integration is still pending |
-| `swust-code dream` | Start the memory consolidation command flow |
-| `swust-code distill` | Start the workflow packaging command flow |
+| `swust-code run --goal "cond" "msg"` | Goal-driven run with independent LLM Judge |
+| `swust-code dream` | Start an autonomous memory consolidation run |
+| `swust-code dream --yes --dir .` | Start Dream without confirmation for the current project |
+| `swust-code distill` | Start an autonomous workflow packaging run |
 | `swust-code mcp list` | List MCP servers |
 | `swust-code providers list` | List AI provider credentials |
 | `swust-code providers import` | Import credentials from MiMo-Code, Claude Code, or env vars |

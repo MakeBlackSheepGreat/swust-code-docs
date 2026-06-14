@@ -23,6 +23,7 @@
 | `lsp` | boolean 或 object | LSP 配置 |
 | `tool_output` | object | 工具输出截断阈值 |
 | `compaction` | object | 上下文压缩配置 |
+| `experimental.predict_next_prompt` | boolean | TUI 下一条输入预测开关，默认开启 |
 | `share` | `manual`、`auto`、`disabled` | 会话分享策略 |
 
 ## 权限配置
@@ -102,3 +103,17 @@
 ```
 
 core v2 配置层的 `skills` 是字符串数组，迁移层会把 v1 的 `paths` 和 `urls` 展开为数组。直接面向用户的配置文件建议继续使用上面的 v1 对象形式。
+
+## 实验配置
+
+```json
+{
+  "experimental": {
+    "predict_next_prompt": false,
+    "batch_tool": true,
+    "openTelemetry": true
+  }
+}
+```
+
+`predict_next_prompt=false` 会关闭 TUI 的下一条输入预测。其他实验字段仍按运行时能力逐步接入。

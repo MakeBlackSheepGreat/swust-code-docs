@@ -50,7 +50,7 @@ swust-code dream
 swust-code distill
 ```
 
-`dream` 和 `distill` 当前是 CLI 入口命令。代码里已经保留自动触发判断和专用 agent prompt，但自动周期调度函数仍返回 false，完整自动接入还在后续实现中。
+`dream` 和 `distill` 会启动带 `--goal` 的自治 run。普通会话结束后，系统也会按 7 天 Dream、30 天 Distill 的间隔检查是否需要后台触发；可用 `SWUST_CODE_AUTO_EVOLUTION=0` 禁用自动进化。
 
 ## 记忆系统
 

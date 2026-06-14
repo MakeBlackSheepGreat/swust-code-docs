@@ -1,6 +1,6 @@
 # 自我进化
 
-SWUST Code 从你的使用模式中学习，持续改进自身能力。
+v0.3 把 Dream 和 Distill 从说明型命令推进为可运行的自治任务。两个命令都会复用 `runAutonomyTask()`，启动带 `--goal` 的 `swust-code run`，让主 Agent 完成记忆整合或工作流打包。
 
 ## Dream（知识提炼）
 
@@ -8,23 +8,23 @@ SWUST Code 从你的使用模式中学习，持续改进自身能力。
 swust-code dream
 ```
 
-当前状态：`dream` CLI 命令、专用 agent prompt 和 7 天间隔判断代码已经存在；自动触发函数目前返回 false，完整自动调度尚未接入会话生命周期。现阶段请手动运行命令。
+常用选项：
 
-**做什么**：
-1. 扫描最近 7 天的会话轨迹
-2. 从 checkpoint.md 和 notes.md 中提取持久知识
-3. 在 SQLite 轨迹数据库中验证事实
-4. 将验证后的知识写入 MEMORY.md
-5. 移除过时和矛盾的条目
+| 选项 | 说明 |
+|------|------|
+| `--dry-run` | 只展示任务文本，不启动 Agent |
+| `--yes`, `-y` | 跳过确认 |
+| `--model`, `-m` | 指定 `provider/model` |
+| `--agent` | 指定 primary agent |
+| `--dir` | 指定项目目录 |
 
-**MEMORY.md 结构**：
-- `## Rules` — 用户明确声明的项目规则
-- `## Architecture decisions` — 设计决策 + 日期 + 理由
-- `## Discovered knowledge` — 跨会话发现的持久知识
-- `## Patterns` — 重复出现的问题和解决方案
-- `## Gotchas` — 容易踩的坑
+Dream 会启动标题为 `Auto Dream` 的自治 run，目标是把经过验证的持久项目知识整合进 SWUST Code memory。
 
-**约束**：MEMORY.md ≤ 200 行 / ≤ 10KB
+**任务要求**：
+1. 以 memory 文件为工作索引
+2. 以原始 trajectory 数据库为事实来源
+3. 只用只读 SQLite 和文件系统检查
+4. 只写入持久、可验证的信息
 
 ## Distill（技能发现）
 
@@ -32,32 +32,29 @@ swust-code dream
 swust-code distill
 ```
 
-当前状态：`distill` CLI 命令、专用 agent prompt 和 30 天间隔判断代码已经存在；CLI 处理器仍是提示型 stub，完整子智能体编排标记为后续阶段。
+Distill 会启动标题为 `Auto Distill` 的自治 run，目标是识别重复工作流，并只创建高置信度缺失的技能、Agent 或命令。
 
-**做什么**：
-1. 分析最近 30 天的工具使用模式
-2. 识别重复出现 ≥ 2 次的工作流
-3. 评估是否值得打包为技能
-4. 生成 SKILL.md 文件到 `.swust-code/skills/`
+**任务要求**：
+1. 回顾最近一个月会话
+2. 用 trajectory 数据库核对重复手工流程
+3. 先盘点已有 skills、agents、commands
+4. 输出紧凑候选清单
+5. 只创建确定有价值的缺失资产
 
-**打包形式**：
-- **Skill** — SKILL.md 声明式技能
-- **Agent** — 专用子智能体配置
-- **Command** — 参数化的提示模板
+## 自动触发
 
-## 自动触发机制
+普通会话结束后，core runner 会尝试动态加载 `session/auto-dream.ts`，满足条件时在后台入队对应命令。
 
-| 任务 | 间隔 | 检查条件 |
+| 任务 | 间隔 | 后台命令 |
 |------|------|----------|
-| Dream | 7 天 | 上次 Dream 会话时间 |
-| Distill | 30 天 | 上次 Distill 会话时间 |
+| Dream | 7 天 | `swust-code dream --yes --dir <cwd>` |
+| Distill | 30 天 | `swust-code distill --yes --dir <cwd>` |
 
-前置检查：
-- 项目年龄必须超过间隔时间
-- 距上次触发 ≥ 10 秒（防抖）
+触发条件：
 
-实现进度：
-- `session/auto-dream.ts` 已定义间隔、标题和任务文本
-- `shouldAutoDream()` 和 `shouldAutoDistill()` 目前都会返回 false
-- `dream` 命令会展示记忆整合说明并请求确认
-- `distill` 命令会展示工作流打包说明，但仍提示完整编排需要后续实现
+- `SWUST_CODE_AUTO_EVOLUTION` 没有设置为 `0` 或 `false`
+- 距离上一次同标题会话超过间隔
+- 项目已有足够久的历史会话
+- 距离上一次 spawn 至少 10 秒
+
+子进程会把 `SWUST_CODE_AUTO_EVOLUTION=0` 写入环境，防止自动进化任务递归触发自身。

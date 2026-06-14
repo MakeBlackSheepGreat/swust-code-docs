@@ -17,8 +17,8 @@
 | `swust-code` | 启动交互式 TUI |
 | `swust-code run [message]` | 运行单次命令 |
 | `swust-code run --goal "目标" "消息"` | 自治模式 |
-| `swust-code dream` | 启动记忆整合命令流 |
-| `swust-code distill` | 启动工作流打包命令流 |
+| `swust-code dream` | 启动记忆整合自治 run |
+| `swust-code distill` | 启动工作流打包自治 run |
 | `swust-code serve` | 启动 headless API server |
 | `swust-code web` | 启动 server 并打开 Web UI |
 | `swust-code attach <url>` | 连接已有 server |
@@ -74,3 +74,21 @@ swust-code run [message..]
 | `swust-code acp` | 启动 Agent Client Protocol server |
 | `swust-code upgrade` | 升级 |
 | `swust-code uninstall` | 卸载 |
+
+## dream / distill 命令
+
+两个命令都会复用自治任务 runner，并启动 `swust-code run --goal ...`。
+
+```bash
+swust-code dream [options]
+swust-code distill [options]
+
+选项:
+  --dry-run              只展示任务文本，不启动 Agent
+  -y, --yes             跳过确认
+  -m, --model           指定模型 (provider/model)
+  --agent               指定 primary agent
+  --dir                 指定运行目录
+```
+
+后台自动触发时使用 `--yes --dir <cwd>`，并通过 `SWUST_CODE_AUTO_EVOLUTION=0` 防止递归触发。

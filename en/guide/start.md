@@ -43,7 +43,7 @@ swust-code dream
 swust-code distill
 ```
 
-`dream` and `distill` are currently CLI entry commands. The codebase contains automatic trigger checks and dedicated agent prompts, but the automatic scheduler still returns false until it is wired into the session lifecycle.
+`dream` and `distill` launch autonomous `swust-code run --goal` sessions. After normal sessions finish, the system also checks 7-day Dream and 30-day Distill intervals for background triggering. Set `SWUST_CODE_AUTO_EVOLUTION=0` to disable auto-evolution.
 
 ## Next Steps
 
