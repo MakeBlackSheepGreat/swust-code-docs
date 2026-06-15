@@ -1,0 +1,88 @@
+:root {
+  --swust-doc-line: 1.82;
+  --swust-doc-width: 900px;
+}
+
+.VPDoc .content {
+  max-width: var(--swust-doc-width);
+}
+
+.VPDoc .content-container {
+  max-width: var(--swust-doc-width) !important;
+}
+
+.vp-doc {
+  line-height: var(--swust-doc-line);
+  letter-spacing: 0;
+  text-wrap: pretty;
+}
+
+.vp-doc p,
+.vp-doc li {
+  line-height: var(--swust-doc-line);
+}
+
+.vp-doc p {
+  margin: 14px 0;
+}
+
+.vp-doc h2 {
+  margin-top: 42px;
+  padding-top: 12px;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.vp-doc h3 {
+  margin-top: 30px;
+}
+
+.vp-doc a {
+  text-underline-offset: 3px;
+}
+
+.vp-doc :not(pre) > code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.vp-doc div[class*='language-'] {
+  margin: 18px 0;
+  border-radius: 8px;
+}
+
+.vp-doc table {
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.vp-doc th,
+.vp-doc td {
+  vertical-align: top;
+}
+
+.VPHome .VPFeature {
+  border-radius: 8px;
+}
+
+.VPHome .text {
+  max-width: 780px;
+}
+
+@media (max-width: 768px) {
+  .VPDoc .content,
+  .VPDoc .content-container {
+    max-width: 100% !important;
+  }
+
+  .vp-doc {
+    font-size: 15px;
+    line-height: 1.78;
+  }
+
+  .vp-doc table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

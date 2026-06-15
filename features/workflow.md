@@ -1,6 +1,6 @@
 # 工作流引擎
 
-v0.3 的工作流运行时已经能执行脚本，并通过显式 host 函数完成多 Agent 编排。当前后端是受限 host-function runner，QuickJS 仍保留为未来可替换的执行边界。
+工作流运行时已经能执行脚本，并通过显式 host 函数完成多 Agent 编排。当前后端是受限 host-function runner，QuickJS 仍保留为未来可替换的执行边界。v0.4 后，`agent()` 走 MiMo 风格 ActorSpawn，并等待 actor outcome 后再写入 journal。
 
 ## 运行模型
 
@@ -41,7 +41,7 @@ return { ok: true, text: result.text }
 
 | 函数 | 当前行为 |
 |------|----------|
-| `agent(prompt, opts?)` | 通过 Actor Spawn 派生 ephemeral subagent，记录 agent 计数和结果 |
+| `agent(prompt, opts?)` | 通过 Actor Spawn 派生 ephemeral subagent，等待 outcome，记录 agent 计数和结果 |
 | `parallel(thunks)` | 并行执行任务；agent 并发受 `maxConcurrentAgents` 限制 |
 | `pipeline(items, ...stages)` | 按 stage 处理 item 数组 |
 | `phase(title)` | 更新当前阶段并写入 journal |
@@ -59,7 +59,7 @@ return { ok: true, text: result.text }
 | `<data>/workflow/<runID>.jsonl` | 记录 phase、log、agent result、error |
 | `<data>/workflow/<runID>.js` | 保存脚本内容，用于变更检测 |
 
-agent 调用使用 `sha256(prompt + agentType + model + schema + phase)` 生成确定性 key。恢复时会重放已有结果；脚本内容变化会清空旧 journal，避免复用过期结果。
+agent 调用使用 `sha256(prompt + agentType + model + schema + phase + occurrence)` 生成确定性 key。恢复时会重放已有结果；脚本内容变化会清空旧 journal，避免复用过期结果。
 
 ## 内置工作流
 

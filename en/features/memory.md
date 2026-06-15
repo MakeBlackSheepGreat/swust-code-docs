@@ -4,7 +4,7 @@ SWUST Code's memory system lets your AI coding assistant remember project knowle
 
 ## How It Works
 
-Memory is stored as Markdown files and reconciled into a SQLite FTS5 full-text index. The core v2 runner loads memory context during system prompt assembly and injects global `MEMORY.md` content with a 4KB cap.
+Memory is stored as Markdown files and reconciled into a SQLite FTS5 full-text index. The core v2 runner loads memory context during system prompt assembly and injects global `MEMORY.md` content with a 4KB cap. When long sessions approach the context limit, v0.4 can start the checkpoint writer before rebuilding context from a checkpoint boundary.
 
 ## Memory Directory Structure
 
@@ -21,6 +21,9 @@ Memory is stored as Markdown files and reconciled into a SQLite FTS5 full-text i
     <session_id>/
       checkpoint.md        # Session checkpoint (11 sections)
       notes.md             # Temporary notes
+      tasks/
+        <task_id>/
+          progress.md      # Subagent task progress
 ```
 
 ## Memory Tools
@@ -34,3 +37,5 @@ Memory is stored as Markdown files and reconciled into a SQLite FTS5 full-text i
 - **Context injection**: Auto-injects MEMORY.md content into system prompt (4KB cap)
 - **Incremental sync**: Fingerprints based on file size and mtime, only processes changed files
 - **Imports**: `MEMORY.md` supports `@path` imports during local resolution
+- **Checkpoint writer**: A background system agent writes `checkpoint.md`, `MEMORY.md`, and task progress summaries
+- **Boundary rebuild**: `last_checkpoint_message_id` records the checkpoint boundary for future context rebuilds

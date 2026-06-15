@@ -1,6 +1,6 @@
 # Workflow Engine
 
-v0.3 workflow runtime can execute scripts and orchestrate agents through explicit host functions. The current backend is a restricted host-function runner. QuickJS remains a possible future execution boundary.
+The workflow runtime can execute scripts and orchestrate agents through explicit host functions. The current backend is a restricted host-function runner. QuickJS remains a possible future execution boundary. Since v0.4, `agent()` uses MiMo-style ActorSpawn and waits for actor outcome before writing journal results.
 
 ## Runtime Model
 
@@ -41,7 +41,7 @@ The runtime parses `meta`, records the name and phase, and injects host function
 
 | Function | Current behavior |
 |----------|------------------|
-| `agent(prompt, opts?)` | Spawns an ephemeral subagent through Actor Spawn and records counters/results |
+| `agent(prompt, opts?)` | Spawns an ephemeral subagent through Actor Spawn, waits for outcome, and records counters/results |
 | `parallel(thunks)` | Runs tasks in parallel; agent calls are bounded by `maxConcurrentAgents` |
 | `pipeline(items, ...stages)` | Processes item arrays through stages |
 | `phase(title)` | Updates current phase and writes journal entries |
@@ -59,7 +59,7 @@ The workflow runtime maintains both an in-memory journal and disk JSONL:
 | `<data>/workflow/<runID>.jsonl` | Records phase, log, agent result, and error events |
 | `<data>/workflow/<runID>.js` | Saves script content for change detection |
 
-Agent calls use `sha256(prompt + agentType + model + schema + phase)` to build deterministic keys. Resume replays completed results. If the script content changes, the old journal is cleared to avoid stale replay.
+Agent calls use `sha256(prompt + agentType + model + schema + phase + occurrence)` to build deterministic keys. Resume replays completed results. If the script content changes, the old journal is cleared to avoid stale replay.
 
 ## Built-In Workflow
 

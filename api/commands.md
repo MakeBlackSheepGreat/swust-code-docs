@@ -16,7 +16,8 @@
 |------|------|
 | `swust-code` | 启动交互式 TUI |
 | `swust-code run [message]` | 运行单次命令 |
-| `swust-code run --goal "目标" "消息"` | 自治模式 |
+| `swust-code run --goal "目标" "消息"` | 自治模式，默认路由到 `goal` Agent |
+| `swust-code run --agent compose "消息"` | 进入 compose 智能体模式 |
 | `swust-code dream` | 启动记忆整合自治 run |
 | `swust-code distill` | 启动工作流打包自治 run |
 | `swust-code serve` | 启动 headless API server |
@@ -34,8 +35,8 @@ swust-code run [message..]
   -c, --continue          继续上一个会话
   -s, --session           指定会话 ID
   -m, --model             指定模型 (provider/model)
-  --goal                  设定自治目标
-  --agent                 指定智能体
+  --goal                  设定自治目标；未指定 --agent 时使用 goal Agent
+  --agent                 指定智能体，例如 compose、goal 或自定义 Agent
   --fork                  分叉会话后再继续
   --share                 分享会话
   --format default|json   输出格式

@@ -2,7 +2,7 @@
 
 Skills are Markdown instruction packages with frontmatter. They inject task-specific workflows, constraints, scripts, and reference files into a conversation.
 
-Current status: skill discovery, permission filtering, and the `skill` tool are wired. Automatic `paths`-based conditional activation is still pending in the current runtime. The reliable paths today are model selection from the available-skills list, `/skill`, or an explicit `skill` tool call.
+Current status: skill discovery, permission filtering, the `skill` tool, and dynamic catalogs are wired. v0.4 also adds compose hidden skills: these are visible only to the `compose` agent mode and do not pollute regular agents.
 
 ## Create a Skill
 
@@ -47,3 +47,19 @@ Remote skill sources must expose an `index.json`. Each listed skill must include
 Available skills are listed in system context as `<available_skills>`. When a skill is needed, the model calls the `skill` tool with the skill name; the tool returns the skill body, base directory, and a sampled file list.
 
 Skills are filtered by the `skill` permission resource. If an agent denies a skill name, that skill is hidden from the available list and explicit loading is blocked by the permission system.
+
+## Compose Skill Bundle
+
+The `compose` agent loads a MiMo-style bundled skill set:
+
+| Skill | Purpose |
+|-------|---------|
+| `plan` | Break down goals into executable plans |
+| `parallel` | Dispatch parallel work |
+| `review` | Review code and plans |
+| `verify` | Verify results and reduce risk |
+| `merge` | Merge multiple outputs |
+| `subagent` | Coordinate subagent roles |
+| `tdd` | Drive implementation through tests |
+
+These skills are injected through compose reminders and the `skill` tool catalog only when the active agent is `compose`.

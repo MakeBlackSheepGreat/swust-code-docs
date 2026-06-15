@@ -42,6 +42,7 @@ export default defineConfig({
               text: '核心功能',
               items: [
                 { text: '持久化记忆', link: '/features/memory' },
+                { text: '智能体模式', link: '/features/agents' },
                 { text: '目标驱动自治', link: '/features/goal' },
                 { text: '自我进化', link: '/features/dream' },
                 { text: '安全防护', link: '/features/security' },
@@ -110,6 +111,7 @@ export default defineConfig({
               text: 'Core Features',
               items: [
                 { text: 'Persistent Memory', link: '/en/features/memory' },
+                { text: 'Agent Modes', link: '/en/features/agents' },
                 { text: 'Goal-Driven Autonomy', link: '/en/features/goal' },
                 { text: 'Self-Improvement', link: '/en/features/dream' },
                 { text: 'Security', link: '/en/features/security' },

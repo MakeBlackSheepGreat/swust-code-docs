@@ -4,7 +4,7 @@ layout: home
 hero:
   name: SWUST Code
   text: 终端原生 AI 编程智能体
-  tagline: 基于 OpenCode v1.17.4 构建，整合 MiMo-Code、DevEco Code 与 DeepSeek-Reasonix 的记忆、自治、工具和缓存能力。
+  tagline: 基于 OpenCode v1.17.4 构建，优先对齐 MiMo Code 的智能体、compose、checkpoint 和任务运行时，并吸收 DevEco Code 与 DeepSeek-Reasonix 的工具和缓存能力。
   actions:
     - theme: brand
       text: 快速开始
@@ -16,11 +16,15 @@ hero:
 features:
   - icon: 🧠
     title: 持久化记忆
-    details: SQLite FTS5 索引、MEMORY.md 注入、@path 导入和 one-fact-per-file 项目知识存储。
+    details: SQLite FTS5 索引、MEMORY.md 注入、@path 导入、checkpoint writer 和 one-fact-per-file 项目知识存储。
     link: /features/memory
+  - icon: 🧭
+    title: 智能体模式
+    details: main、compose、goal、subagent、checkpoint-writer 统一到 MiMo 风格运行时。
+    link: /features/agents
   - icon: 🎯
     title: 目标驱动自治
-    details: Goal/Gate 已接入独立 LLM Judge，未达成时自动发布提醒并继续工作。
+    details: Goal 已成为独立 Agent 模式，保留 LLM Judge，并在目标未达成时继续推进。
     link: /features/goal
   - icon: 🌱
     title: 自我进化
@@ -36,7 +40,7 @@ features:
     link: /features/workflow
   - icon: 🧩
     title: 技能系统
-    details: SKILL.md 声明式技能，支持项目、全局和外部目录发现。
+    details: SKILL.md 声明式技能，compose hidden skills 和动态 catalog 已接入运行时。
     link: /features/skills
   - icon: 🌐
     title: 中英文 TUI

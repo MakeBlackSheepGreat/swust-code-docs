@@ -16,7 +16,8 @@
 |---------|-------------|
 | `swust-code` | Start the interactive TUI |
 | `swust-code run [message]` | Run one prompt |
-| `swust-code run --goal "goal" "message"` | Goal-driven run mode |
+| `swust-code run --goal "goal" "message"` | Goal-driven run mode, routed to the `goal` agent by default |
+| `swust-code run --agent compose "message"` | Enter compose agent mode |
 | `swust-code dream` | Start an autonomous memory consolidation run |
 | `swust-code distill` | Start an autonomous workflow packaging run |
 | `swust-code serve` | Start a headless API server |
@@ -32,8 +33,8 @@ Options:
   -c, --continue          Continue the last session
   -s, --session           Continue a specific session ID
   -m, --model             Model in provider/model format
-  --goal                  Set an autonomous goal
-  --agent                 Select an agent
+  --goal                  Set an autonomous goal; uses goal agent when --agent is omitted
+  --agent                 Select an agent such as compose, goal, or a custom agent
   --fork                  Fork before continuing
   --share                 Share the session
   --format default|json   Output format

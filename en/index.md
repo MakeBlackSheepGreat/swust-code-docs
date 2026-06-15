@@ -4,7 +4,7 @@ layout: home
 hero:
   name: SWUST Code
   text: Terminal-Native AI Coding Agent
-  tagline: Built on OpenCode v1.17.4 with memory, autonomy, tooling, and cache architecture from MiMo-Code, DevEco Code, and DeepSeek-Reasonix.
+  tagline: Built on OpenCode v1.17.4, prioritizing MiMo Code-style agents, compose, checkpointing, and task runtime while absorbing tooling and cache ideas from DevEco Code and DeepSeek-Reasonix.
   actions:
     - theme: brand
       text: Quick Start
@@ -16,11 +16,15 @@ hero:
 features:
   - icon: 🧠
     title: Persistent Memory
-    details: SQLite FTS5 indexing, MEMORY.md injection, @path imports, and one-fact-per-file project knowledge.
+    details: SQLite FTS5 indexing, MEMORY.md injection, @path imports, checkpoint writer, and one-fact-per-file project knowledge.
     link: /en/features/memory
+  - icon: 🧭
+    title: Agent Modes
+    details: main, compose, goal, subagent, and checkpoint-writer now share a MiMo-style runtime model.
+    link: /en/features/agents
   - icon: 🎯
     title: Goal-Driven Autonomy
-    details: Goal/Gate now uses an independent LLM Judge and publishes reminders when work must continue.
+    details: Goal is now a dedicated agent mode with the LLM Judge and continuation reminders.
     link: /en/features/goal
   - icon: 🌱
     title: Self-Improvement
@@ -36,7 +40,7 @@ features:
     link: /en/features/workflow
   - icon: 🧩
     title: Skills System
-    details: SKILL.md declarative skills discovered from project, global, and external directories.
+    details: SKILL.md declarative skills, compose hidden skills, and dynamic catalogs are wired into runtime.
     link: /en/features/skills
   - icon: 🌐
     title: Chinese/English TUI

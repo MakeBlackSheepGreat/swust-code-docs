@@ -1,5 +1,46 @@
 # 更新日志
 
+## v0.4.0 (2026-06-15)
+
+本版继续按 MiMo Code 作为主参考进行 1:1 对齐，并把上一版仍分散在指令、工具或占位逻辑里的能力收束到真实运行时。代码仓库对应提交：`bcd90b7 feat: align agent runtime with MiMo patterns`。
+
+### 智能体模式
+
+- 新增 `compose` 智能体模式，接入 MiMo 风格 compose prompt 和隐藏技能 bundle。
+- `compose` 模式内置 `plan`、`parallel`、`review`、`verify`、`merge`、`subagent`、`tdd` 等工作技能，普通 Agent 不会看到这些 hidden skills。
+- `goal` 从命令参数触发的附加指令升级为独立 Agent 模式；`--goal` 未显式指定 `--agent` 时默认路由到 `goal`。
+- Session reminder 会按 `msg.info.agent === "compose" | "goal"` 注入对应模式提示。
+
+### Actor / Task / Inbox 运行时
+
+- Actor Spawn 按 MiMo 风格重构：subagent 写入父会话的独立 `agentID` 消息切片，peer actor 继续使用 child session 隔离。
+- 后台 actor 返回可等待 outcome，`actor wait/status/cancel`、workflow agent 调用和 checkpoint writer 都能使用统一结算语义。
+- `preStop` / `postStop` hook 支持 ReAct 重入，任务绑定会自动 start、done 或 block。
+- 新增持久化 Actor Registry、Task Registry、Inbox 与 History FTS 相关数据库迁移。
+- `actor`、`subagent`、`task`、`history`、`memory`、`workflow` 等工具链同步扩展。
+
+### Checkpoint Writer
+
+- 新增真实 `SessionCheckpoint.tryStartCheckpointWriter()`，不再是 no-op。
+- writer 使用后台系统子 Agent 和 child session，`parentSessionID` 透传给 splitover 插件，确保写入父会话 memory 文件。
+- 同一会话只允许一个 writer 运行，新请求进入 1-slot pending queue，新范围覆盖旧 pending。
+- writer 完成后推进 `last_checkpoint_message_id`；溢出时优先插入 checkpoint boundary，再回退到传统 compaction。
+- 新增 checkpoint 模板、校验器、splitover 插件、progress reconcile 和 rebuild boundary 测试。
+
+### 文档与可读性
+
+- 新增“智能体模式”功能页，集中说明 `main`、`compose`、`goal`、subagent、`checkpoint-writer` 的使用边界。
+- 更新首页、Goal、Memory、Skills、Workflow、Tools 和 Commands 页面，使描述对齐 v0.4 代码状态。
+- 文档站新增 VitePress 主题样式：优化正文行宽、行距、标题间距、表格横向滚动、长路径和 inline code 换行。
+
+### 验证
+
+- `bun typecheck` 通过。
+- 定向回归通过：`154 pass, 14 skip, 0 fail`，覆盖 checkpoint、message-v2、actor、prompt、reminders、goal-agent routing 和 workflow runtime。
+- `git diff --check` 通过，仅有 Windows 换行提示。
+
+---
+
 ## v0.3.0 (2026-06-14)
 
 根据当前 `swust-code` 最新代码状态更新文档站：本版重点是把 0.2 中仍处于占位或待接入的能力推进到可运行路径，并补齐 TUI 体验文档。

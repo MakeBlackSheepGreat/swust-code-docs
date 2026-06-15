@@ -2,7 +2,7 @@
 
 技能是带 frontmatter 的 Markdown 指令包，用于把特定任务的流程、约束、脚本和参考文件按需注入会话。
 
-当前状态：技能发现、权限过滤和 `skill` 工具加载已经接入；基于 `paths` 的自动条件激活还没有在当前运行时形成完整闭环。现阶段更可靠的方式是让模型从可用技能列表判断，或通过 `/skill`、`skill` 工具显式加载。
+当前状态：技能发现、权限过滤、`skill` 工具加载和动态 catalog 已经接入。v0.4 额外加入了 compose hidden skills：这些技能只在 `compose` Agent 模式下出现，普通 Agent 不会看到。
 
 ## 创建技能
 
@@ -53,3 +53,19 @@ description: 审查代码变更的正确性、风格和潜在问题
 可用技能会进入 system context 的 `<available_skills>` 列表。模型需要使用技能时调用 `skill` 工具并传入技能名；工具会返回技能正文、技能目录和采样文件列表。
 
 技能权限通过 `skill` 资源名过滤。如果 agent 权限规则拒绝某个技能，它不会出现在该 agent 的可用列表中，显式加载也会被权限系统拦截。
+
+## Compose 技能 bundle
+
+`compose` Agent 会加载 MiMo 风格的内置技能 bundle，用于处理复杂任务：
+
+| 技能 | 用途 |
+|------|------|
+| `plan` | 拆解目标、形成执行计划 |
+| `parallel` | 并行派发子任务 |
+| `review` | 代码和方案复核 |
+| `verify` | 验证结果、收敛风险 |
+| `merge` | 汇总多路输出 |
+| `subagent` | 组织子 Agent 角色 |
+| `tdd` | 测试驱动实现 |
+
+这些技能不会进入普通 `<available_skills>`，但会通过 compose reminder 和 `skill` 工具 catalog 提供给 compose 模式。
