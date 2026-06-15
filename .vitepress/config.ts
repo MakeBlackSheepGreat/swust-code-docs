@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: 'SWUST Code',
+  title: '龙山灵码',
   description: '开源 AI 编程智能体 — 记得住、学得会、长得大',
   lang: 'zh-CN',
   base: '/',
@@ -14,7 +14,7 @@ export default defineConfig({
     root: {
       label: '中文',
       lang: 'zh-CN',
-      title: 'SWUST Code',
+      title: '龙山灵码',
       description: '开源 AI 编程智能体',
       themeConfig: {
         nav: [

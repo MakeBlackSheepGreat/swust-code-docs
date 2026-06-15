@@ -18,7 +18,7 @@ swust-code dream
 | `--agent` | 指定 primary agent |
 | `--dir` | 指定项目目录 |
 
-Dream 会启动标题为 `Auto Dream` 的自治 run，目标是把经过验证的持久项目知识整合进 SWUST Code memory。
+Dream 会启动标题为 `Auto Dream` 的自治 run，目标是把经过验证的持久项目知识整合进龙山灵码 memory。
 
 **任务要求**：
 1. 以 memory 文件为工作索引

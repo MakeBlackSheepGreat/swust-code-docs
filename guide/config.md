@@ -1,6 +1,6 @@
 # 配置
 
-SWUST Code 通过 JSON/JSONC 配置文件管理模型、权限、Provider、MCP、Agent、插件和 TUI 行为。
+龙山灵码通过 JSON/JSONC 配置文件管理模型、权限、Provider、MCP、Agent、插件和 TUI 行为。
 
 ## 配置文件位置
 

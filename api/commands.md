@@ -71,7 +71,7 @@ swust-code run [message..]
 | `swust-code export [sessionID]` | 导出会话 JSON |
 | `swust-code import <file>` | 导入会话 JSON 或分享 URL |
 | `swust-code github` | 管理 GitHub agent |
-| `swust-code pr <number>` | 拉取并 checkout PR 后运行 SWUST Code |
+| `swust-code pr <number>` | 拉取并 checkout PR 后运行龙山灵码 |
 | `swust-code acp` | 启动 Agent Client Protocol server |
 | `swust-code upgrade` | 升级 |
 | `swust-code uninstall` | 卸载 |

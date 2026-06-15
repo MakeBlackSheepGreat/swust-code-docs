@@ -1,6 +1,6 @@
 # 工具参考
 
-SWUST Code 当前有两套工具注册路径：核心 v2 runner 使用 `packages/core/src/tool/`，TUI/旧会话路径使用 `packages/opencode/src/tool/`。实际会话中展示的工具以运行时路径为准。
+龙山灵码当前有两套工具注册路径：核心 v2 runner 使用 `packages/core/src/tool/`，TUI/旧会话路径使用 `packages/opencode/src/tool/`。实际会话中展示的工具以运行时路径为准。
 
 ## Core v2 内置工具
 

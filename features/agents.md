@@ -1,6 +1,6 @@
 # 智能体模式
 
-v0.4 把 SWUST Code 的运行入口进一步对齐 MiMo Code：`compose`、`goal`、普通主 Agent、后台子 Agent 和系统 Agent 都按“智能体模式”组织。这样做的直接结果是提示词、技能目录、会话切片、任务状态和后台通知都能走同一套运行时。
+v0.4 把龙山灵码的运行入口进一步对齐 MiMo Code：`compose`、`goal`、普通主 Agent、后台子 Agent 和系统 Agent 都按“智能体模式”组织。这样做的直接结果是提示词、技能目录、会话切片、任务状态和后台通知都能走同一套运行时。
 
 ## 模式总览
 
@@ -60,4 +60,3 @@ v0.4 补齐了 MiMo 风格 checkpoint writer 的真实启动链：
 | 大任务需要拆解、并行、复核 | `compose` |
 | 主 Agent 需要派发独立调查或实现任务 | `actor run` / `actor spawn` |
 | 长会话接近上下文上限 | 自动 checkpoint writer |
-

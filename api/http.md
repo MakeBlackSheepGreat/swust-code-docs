@@ -1,6 +1,6 @@
 # HTTP API
 
-`swust-code serve` 和 `swust-code web` 暴露实验性 HTTP API。v0.3 的 OpenAPI 标题和 SDK 注释已统一为 SWUST Code，并新增会话预测接口。
+`swust-code serve` 和 `swust-code web` 暴露实验性 HTTP API。v0.3 的 OpenAPI 标题和 SDK 注释已统一为龙山灵码，并新增会话预测接口。
 
 ## 会话预测
 

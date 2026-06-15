@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: SWUST Code
+  name: 龙山灵码
   text: 终端原生 AI 编程智能体
   tagline: 基于 OpenCode v1.17.4 构建，优先对齐 MiMo Code 的智能体、compose、checkpoint 和任务运行时，并吸收 DevEco Code 与 DeepSeek-Reasonix 的工具和缓存能力。
   actions:
@@ -48,6 +48,6 @@ features:
     link: /features/i18n
   - icon: ✦
     title: TUI 体验
-    details: 星空首页、双 Logo、SWUST Code 主题和 ghost suggestion 改善日常终端交互。
+    details: 星空首页、双 Logo、龙山灵码主题和 ghost suggestion 改善日常终端交互。
     link: /features/tui
 ---

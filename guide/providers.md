@@ -1,6 +1,6 @@
 # LLM 提供商
 
-SWUST Code 通过 Vercel AI SDK 支持 15+ 家 LLM 提供商。
+龙山灵码通过 Vercel AI SDK 支持 15+ 家 LLM 提供商。
 
 ## 支持的提供商
 

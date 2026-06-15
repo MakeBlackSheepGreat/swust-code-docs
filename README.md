@@ -1,6 +1,6 @@
-# SWUST Code Documentation
+# 龙山灵码 Documentation
 
-Documentation site for [SWUST Code](https://github.com/MakeBlackSheepGreat/swust-code), built with VitePress.
+Documentation site for 龙山灵码 ([SWUST Code](https://github.com/MakeBlackSheepGreat/swust-code)), built with VitePress.
 
 ## Development
 

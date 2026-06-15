@@ -1,6 +1,6 @@
 # 快速开始
 
-SWUST Code 是一个终端原生的 AI 编程助手，拥有持久记忆和自我进化能力。
+龙山灵码是一个终端原生的 AI 编程助手，拥有持久记忆和自我进化能力。
 
 ## 安装
 
@@ -54,7 +54,7 @@ swust-code distill
 
 ## 记忆系统
 
-SWUST Code 自动在 `~/.local/share/swust-code/memory/` 下维护记忆文件：
+龙山灵码自动在 `~/.local/share/swust-code/memory/` 下维护记忆文件：
 
 - `global/MEMORY.md` — 跨项目偏好
 - `projects/<id>/MEMORY.md` — 项目知识
