@@ -1,5 +1,9 @@
 # SWUST Code vs OpenCode — 完整差异分析
 
+> **注意**: 从 v0.5.0 开始，SWUST Code 的基座已从 OpenCode 切换为 MiMo-Code。
+> 本文档记录的是 v0.1.0-v0.4.0 期间基于 OpenCode 的差异分析，保留作为历史参考。
+> MiMo-Code 本身是 OpenCode 的 fork，已内置大部分 SWUST Code 的核心功能。
+
 > 基于 OpenCode v1.17.4 (anomalyco/opencode) 源码深度审计
 > 审计日期: 2026-06-13
 > 状态校准: 2026-06-14 按当前 `swust-code` 代码复核，v0.3 已接入 Goal Judge、自动进化入队和可执行 Workflow runtime。

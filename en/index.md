@@ -4,7 +4,7 @@ layout: home
 hero:
   name: SWUST Code
   text: Terminal-Native AI Coding Agent
-  tagline: Built on OpenCode v1.17.4, prioritizing MiMo Code-style agents, compose, checkpointing, and task runtime while absorbing tooling and cache ideas from DevEco Code and DeepSeek-Reasonix.
+  tagline: Built on MiMo-Code with native persistent memory, agent orchestration, goal-driven autonomy, compose workflows, and dream/distill self-improvement.
   actions:
     - theme: brand
       text: Quick Start
@@ -20,15 +20,15 @@ features:
     link: /en/features/memory
   - icon: 🧭
     title: Agent Modes
-    details: main, compose, goal, subagent, and checkpoint-writer now share a MiMo-style runtime model.
+    details: build, plan, compose, goal, explore agents with subagent orchestration and checkpoint-writer as native MiMo-Code implementations.
     link: /en/features/agents
   - icon: 🎯
     title: Goal-Driven Autonomy
-    details: Goal is now a dedicated agent mode with the LLM Judge and continuation reminders.
+    details: /goal command sets a stop condition, independent LLM Judge evaluates whether the condition is satisfied, preventing premature stops.
     link: /en/features/goal
   - icon: 🌱
     title: Self-Improvement
-    details: Dream and Distill launch goal-driven autonomous runs and support 7/30-day background triggers.
+    details: /dream scans session traces to extract persistent knowledge, /distill discovers repeated workflows and packages them as reusable skills.
     link: /en/features/dream
   - icon: 🛡️
     title: Security

@@ -1,5 +1,31 @@
 # 更新日志
 
+## v0.5.0 (2026-06-19)
+
+### 基座切换：OpenCode → MiMo-Code
+
+将项目基座从 OpenCode 切换为 MiMo-Code（小米开源 AI 编程助手）。MiMo-Code 本身是 OpenCode 的 fork，已内置持久化记忆、智能体编排、Goal 驱动自治、Compose 工作流、Dream/Distill 自我进化等核心能力。
+
+**变更内容：**
+- 基座从 OpenCode v1.17.4 切换为 MiMo-Code（2026-06-19 最新版）
+- 品牌替换：`@mimo-ai/*` → `@swust-code/*`，`.mimocode/` → `.swust-code/`，`MIMOCODE_*` → `SWUST_CODE_*`
+- 580 个文件修改，2787 行替换
+- 原生支持 MiMo-Code 全部功能，无需手动移植
+
+**MiMo-Code 原生功能（新增）：**
+- Voice Input（语音输入，基于 TenVAD + MiMo ASR）
+- CC Memory Indexing（Claude Code 内存索引兼容）
+- 远程 Workspace 同步（SSE + HTTP replay）
+- 更先进的 Tool Pruning（soft-trim + hard-prune + 非必要内容剥离 + checkpoint 触发 + 压力等级）
+- 更成熟的 Workspace Adapter 系统
+
+**待移植功能（Phase 1）：**
+- @path Import（内存文件交叉引用）
+- Fact Store（one-fact-per-file 存储）
+- Document Validation（文档结构验证）
+
+---
+
 ## v0.4.0 (2026-06-15)
 
 本版继续按 MiMo Code 作为主参考进行 1:1 对齐，并把上一版仍分散在指令、工具或占位逻辑里的能力收束到真实运行时。代码仓库对应提交：`bcd90b7 feat: align agent runtime with MiMo patterns`。

@@ -4,7 +4,7 @@ layout: home
 hero:
   name: 龙山灵码
   text: 终端原生 AI 编程智能体
-  tagline: 基于 OpenCode v1.17.4 构建，优先对齐 MiMo Code 的智能体、compose、checkpoint 和任务运行时，并吸收 DevEco Code 与 DeepSeek-Reasonix 的工具和缓存能力。
+  tagline: 基于 MiMo-Code 构建，原生支持持久化记忆、智能体编排、Goal 驱动自治、Compose 工作流和 Dream/Distill 自我进化。
   actions:
     - theme: brand
       text: 快速开始
@@ -20,15 +20,15 @@ features:
     link: /features/memory
   - icon: 🧭
     title: 智能体模式
-    details: main、compose、goal、subagent、checkpoint-writer 统一到 MiMo 风格运行时。
+    details: build、plan、compose、goal、explore 多智能体，subagent 编排和 checkpoint-writer 均为 MiMo-Code 原生实现。
     link: /features/agents
   - icon: 🎯
     title: 目标驱动自治
-    details: Goal 已成为独立 Agent 模式，保留 LLM Judge，并在目标未达成时继续推进。
+    details: /goal 命令设置停止条件，独立 LLM Judge 评估目标是否达成，防止过早停止。
     link: /features/goal
   - icon: 🌱
     title: 自我进化
-    details: Dream 和 Distill 会启动带目标的自治 run，并支持 7/30 天后台自动触发。
+    details: /dream 扫描会话轨迹提取持久知识，/distill 发现重复工作流并打包为可复用技能。
     link: /features/dream
   - icon: 🛡️
     title: 安全防护
