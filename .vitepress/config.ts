@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: '龙山灵码',
-  description: '开源 AI 编程智能体 — 记得住、学得会、长得大',
+  description: '基于 MiMo-Code 的终端原生 AI 编程智能体',
   lang: 'zh-CN',
   base: '/',
 
@@ -15,13 +15,14 @@ export default defineConfig({
       label: '中文',
       lang: 'zh-CN',
       title: '龙山灵码',
-      description: '开源 AI 编程智能体',
+      description: '基于 MiMo-Code 的终端原生 AI 编程智能体',
       themeConfig: {
         nav: [
           { text: '指南', link: '/guide/start' },
           { text: '功能', link: '/features/memory' },
           { text: 'API', link: '/api/tools' },
           { text: '开发', link: '/dev/architecture' },
+          { text: '主线状态', link: '/mainline-status' },
           { text: '更新日志', link: '/changelog' },
           { text: 'GitHub', link: 'https://github.com/MakeBlackSheepGreat/swust-code' },
         ],
@@ -85,13 +86,14 @@ export default defineConfig({
       label: 'English',
       lang: 'en-US',
       title: 'SWUST Code',
-      description: 'Open-source AI coding agent',
+      description: 'Terminal-native AI coding agent built on MiMo-Code',
       themeConfig: {
         nav: [
           { text: 'Guide', link: '/en/guide/start' },
           { text: 'Features', link: '/en/features/memory' },
           { text: 'API', link: '/en/api/tools' },
           { text: 'Dev', link: '/en/dev/architecture' },
+          { text: 'Status', link: '/en/mainline-status' },
           { text: 'GitHub', link: 'https://github.com/MakeBlackSheepGreat/swust-code' },
         ],
         sidebar: {
@@ -140,6 +142,7 @@ export default defineConfig({
 
   themeConfig: {
     logo: '/logo.svg',
+    siteTitle: '龙山灵码',
     socialLinks: [
       { icon: 'github', link: 'https://github.com/MakeBlackSheepGreat/swust-code' },
     ],

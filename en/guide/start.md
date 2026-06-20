@@ -1,63 +1,116 @@
 # Quick Start
 
-SWUST Code is a terminal-native AI coding agent with persistent memory and self-improvement capabilities.
+SWUST Code is a terminal-native AI coding agent built on MiMo-Code. It is designed for long-running software engineering work: reading and editing code, running commands, using MCP / LSP / plugins, maintaining persistent project memory, and continuing work through goal, compose, subagents, and checkpoints.
 
-## Install
+## 1. Install
 
 ```bash
+# One-line install
+curl -fsSL https://raw.githubusercontent.com/MakeBlackSheepGreat/swust-code/main/install | bash
+
+# Or install via npm
 npm install -g @swust-code/cli
 ```
 
-## First Run
+Confirm that the CLI is available:
+
+```bash
+swust-code --version
+```
+
+## 2. First Run
 
 ```bash
 swust-code
 ```
 
-The first launch guides you through configuration automatically. You can use MiMo Auto, Xiaomi MiMo Platform login, Claude Code auth import, or any OpenAI-compatible provider.
+The first launch opens the provider setup guide.
 
-## Configure API Key
+| Option | Use When |
+|--------|----------|
+| MiMo Auto | You want a zero-config free-for-limited-time channel |
+| Xiaomi MiMo Platform | You want to sign in with MiMo OAuth |
+| Import from Claude Code | You already have Claude Code credentials on this machine |
+| Custom Provider | You use an OpenAI-compatible gateway or another model vendor |
+
+Provider and model names are not rebranded. `MiMo Auto`, `Xiaomi MiMo Platform`, `mimo/mimo-auto`, and `xiaomi/mimo-*` remain provider or model IDs.
+
+## 3. Common Provider Environment Variables
+
+You can also connect common providers with environment variables:
 
 ```bash
 export ANTHROPIC_API_KEY="your-key"
-# or
 export OPENAI_API_KEY="your-key"
+export GOOGLE_API_KEY="your-key"
 ```
 
-## Basic Usage
+To inspect or log in to providers:
 
 ```bash
-# Interactive mode
-swust-code
-
-# Single run
-swust-code run "explain this project"
-
-# Autonomous mode
-swust-code run --goal "fix all TypeScript errors" "start working"
-
-# Knowledge consolidation
-swust-code dream
-
-# Skill discovery
-swust-code distill
+swust-code providers list
+swust-code providers login
+swust-code providers login --provider xiaomi
 ```
 
-`dream` and `distill` launch autonomous `swust-code run --goal` sessions. After normal sessions finish, the system also checks 7-day Dream and 30-day Distill intervals for background triggering. Set `SWUST_CODE_AUTO_EVOLUTION=0` to disable auto-evolution.
+## 4. Everyday Commands
 
-## Memory System
+| Command | Purpose |
+|---------|---------|
+| `swust-code` | Start the interactive TUI |
+| `swust-code run "explain this repo"` | Run one prompt from the shell |
+| `swust-code run --goal "fix type errors" "start"` | Run with an autonomous stop condition |
+| `/goal <objective>` | Set a stop condition inside the TUI |
+| `/memory <query>` | Search persistent project memory |
+| `/dream` | Consolidate durable project knowledge |
+| `/distill` | Package repeated workflows into skills, subagents, or commands |
+| `/paste-image` | Attach an image from the clipboard |
+| `/model`, `/agent`, `/mcp`, `/skill`, `/effort` | Open common TUI controls through aliases |
 
-SWUST Code stores persistent memory under `~/.local/share/swust-code/memory/`:
+## 5. Memory And Checkpoints
 
-- `global/MEMORY.md` for cross-project preferences
-- `projects/<id>/MEMORY.md` for project knowledge
-- `sessions/<id>/checkpoint.md` for session checkpoints
+SWUST Code keeps cross-session memory on the local machine:
 
-The agent indexes these files automatically and retrieves relevant knowledge during conversations. Use `dream` to consolidate project memory when needed.
+```text
+~/.local/share/swust-code/memory/
+  global/MEMORY.md
+  projects/<project-id>/MEMORY.md
+  projects/<project-id>/facts/<fact>.md
+  sessions/<session-id>/checkpoint.md
+  sessions/<session-id>/notes.md
+  sessions/<session-id>/tasks/<task-id>/progress.md
+```
+
+Memory is searchable through SQLite FTS5 and reconstructed with checkpoint state when a session resumes or approaches the context limit. `/dream` consolidates durable project knowledge, while `/distill` turns repeated work into reusable workflows.
+
+## 6. Configuration
+
+Runtime configuration uses `swust-code.json` or `swust-code.jsonc`:
+
+```jsonc
+{
+  "model": "anthropic/claude-sonnet-4-6",
+  "permission": {
+    "bash": "ask",
+    "edit": "allow",
+    "read": "allow"
+  }
+}
+```
+
+Common locations:
+
+| Type | Path |
+|------|------|
+| Global runtime config | `~/.config/swust-code/swust-code.json` |
+| Project runtime config | `swust-code.json` in the project root |
+| Global TUI config | `~/.config/swust-code/tui.json` |
+| Project TUI config | `tui.json` in the project root |
 
 ## Next Steps
 
-- [Installation](/en/guide/install) — Detailed installation methods
-- [Configuration](/en/guide/config) — Configuration file reference
-- [LLM Providers](/en/guide/providers) — Supported models
-- [Persistent Memory](/en/features/memory) — Memory system deep dive
+- [Installation](/en/guide/install)
+- [Configuration](/en/guide/config)
+- [LLM Providers](/en/guide/providers)
+- [Persistent Memory](/en/features/memory)
+- [CLI Commands](/en/api/commands)

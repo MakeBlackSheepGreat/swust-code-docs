@@ -1,70 +1,116 @@
 # 快速开始
 
-龙山灵码是一个终端原生的 AI 编程助手，拥有持久记忆和自我进化能力。
+龙山灵码（SWUST Code）是基于 MiMo-Code 的终端原生 AI 编程智能体。它适合处理需要多轮推进的软件工程任务：读写代码、运行命令、使用 MCP / LSP / 插件、维护长期项目记忆，并通过 goal、compose、subagent 和 checkpoint 支持长任务连续工作。
 
-## 安装
+## 1. 安装
 
 ```bash
+# 一键安装
+curl -fsSL https://raw.githubusercontent.com/MakeBlackSheepGreat/swust-code/main/install | bash
+
+# 或通过 npm 安装
 npm install -g @swust-code/cli
 ```
 
-## 首次运行
+安装后确认 CLI 可用：
+
+```bash
+swust-code --version
+```
+
+## 2. 首次启动
 
 ```bash
 swust-code
 ```
 
-首次启动会自动引导配置。可选择 MiMo Auto（限时免费）、小米 MiMo 平台、从 Claude Code 导入认证，或添加任意 OpenAI 兼容 Provider。
+首次启动会进入 Provider 配置向导。
 
-## 配置 API Key
+| 选项 | 适用场景 |
+|------|----------|
+| MiMo Auto | 希望零配置开始使用限时免费通道 |
+| 小米 MiMo 平台 | 希望通过 MiMo OAuth 登录 |
+| 从 Claude Code 导入 | 本机已有 Claude Code 凭证 |
+| 自定义 Provider | 使用 OpenAI 兼容网关或其他模型服务商 |
+
+Provider 和模型名称保持原样。`MiMo Auto`、`小米 MiMo 平台`、`mimo/mimo-auto`、`xiaomi/mimo-*` 是服务商或模型 ID，不会被改名。
+
+## 3. 常用 Provider 环境变量
+
+也可以直接通过环境变量接入常见服务商：
 
 ```bash
-# Anthropic（推荐）
 export ANTHROPIC_API_KEY="your-key"
-
-# OpenAI
 export OPENAI_API_KEY="your-key"
-
-# Google
 export GOOGLE_API_KEY="your-key"
 ```
 
-或在 TUI 内通过首次启动向导和 Provider 配置入口完成。
-
-## 基本用法
+需要查看或登录 Provider：
 
 ```bash
-# 交互模式
-swust-code
-
-# 单次运行
-swust-code run "解释这个项目"
-
-# 自治模式（设定目标后自主工作）
-swust-code run --goal "修复所有 TypeScript 错误" "开始工作"
-
-# 知识提炼
-swust-code dream
-
-# 技能发现
-swust-code distill
+swust-code providers list
+swust-code providers login
+swust-code providers login --provider xiaomi
 ```
 
-`dream` 和 `distill` 会启动带 `--goal` 的自治 run。普通会话结束后，系统也会按 7 天 Dream、30 天 Distill 的间隔检查是否需要后台触发；可用 `SWUST_CODE_AUTO_EVOLUTION=0` 禁用自动进化。
+## 4. 日常命令
 
-## 记忆系统
+| 命令 | 用途 |
+|------|------|
+| `swust-code` | 启动交互式 TUI |
+| `swust-code run "解释这个仓库"` | 从 shell 运行一次提示 |
+| `swust-code run --goal "修复类型错误" "开始"` | 带自治停止条件运行 |
+| `/goal <目标>` | 在 TUI 内设置停止条件 |
+| `/memory <查询>` | 搜索持久化项目记忆 |
+| `/dream` | 整理可长期保留的项目知识 |
+| `/distill` | 将重复工作流沉淀为 skill、subagent 或 command |
+| `/paste-image` | 从剪贴板附加图片 |
+| `/model`、`/agent`、`/mcp`、`/skill`、`/effort` | 打开常用 TUI 控件别名 |
 
-龙山灵码自动在 `~/.local/share/swust-code/memory/` 下维护记忆文件：
+## 5. 记忆与 checkpoint
 
-- `global/MEMORY.md` — 跨项目偏好
-- `projects/<id>/MEMORY.md` — 项目知识
-- `sessions/<id>/checkpoint.md` — 会话检查点
+龙山灵码会在本机维护跨会话记忆：
 
-Agent 会自动索引这些文件，并在对话中检索相关知识。需要手动整理知识时，可以使用 `dream` 提炼项目记忆，也可以让 Agent 通过记忆工具搜索或写入长期信息。
+```text
+~/.local/share/swust-code/memory/
+  global/MEMORY.md
+  projects/<project-id>/MEMORY.md
+  projects/<project-id>/facts/<fact>.md
+  sessions/<session-id>/checkpoint.md
+  sessions/<session-id>/notes.md
+  sessions/<session-id>/tasks/<task-id>/progress.md
+```
+
+记忆通过 SQLite FTS5 搜索，并在会话恢复或接近上下文上限时和 checkpoint 一起重建上下文。`/dream` 用于整理长期项目知识，`/distill` 用于从重复操作中提炼可复用工作流。
+
+## 6. 配置文件
+
+运行时配置使用 `swust-code.json` 或 `swust-code.jsonc`：
+
+```jsonc
+{
+  "model": "anthropic/claude-sonnet-4-6",
+  "permission": {
+    "bash": "ask",
+    "edit": "allow",
+    "read": "allow"
+  }
+}
+```
+
+常见位置：
+
+| 类型 | 路径 |
+|------|------|
+| 全局运行时配置 | `~/.config/swust-code/swust-code.json` |
+| 项目运行时配置 | 项目根目录的 `swust-code.json` |
+| 全局 TUI 配置 | `~/.config/swust-code/tui.json` |
+| 项目 TUI 配置 | 项目根目录的 `tui.json` |
 
 ## 下一步
 
-- [安装指南](/guide/install) — 详细的安装方式
-- [配置](/guide/config) — 配置文件详解
-- [LLM 提供商](/guide/providers) — 支持的模型和接入方式
-- [持久化记忆](/features/memory) — 记忆系统详解
+- [安装指南](/guide/install)
+- [配置说明](/guide/config)
+- [LLM 提供商](/guide/providers)
+- [持久化记忆](/features/memory)
+- [CLI 命令](/api/commands)

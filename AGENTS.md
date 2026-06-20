@@ -33,11 +33,7 @@ Current version: v0.5.0
 The mainline uses MiMo-Code as its runtime base.
 ```
 
-Avoid this:
-
-```md
-PR #1 is open and mergeable; latest commit is abc1234; local preview build is ...
-```
+Avoid process-log wording such as open pull-request status, mergeability notes, local preview versions, temporary branch names, or raw commit identifiers in user-facing docs.
 
 ## MiMo-Code Base Principle
 
@@ -73,5 +69,5 @@ bun run docs:build
 Also scan for internal-process terms before pushing:
 
 ```bash
-rg -n "PR #|Mergeable|mimo-rebase|pr/mimo|preview build|commit [0-9a-f]{7}" --glob '!bun.lock'
+rg -n "PR #|Mergeable|mimo-rebase|pr/mimo|preview build|commit [0-9a-f]{7}" --glob '!bun.lock' --glob '!AGENTS.md'
 ```

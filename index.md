@@ -3,51 +3,39 @@ layout: home
 
 hero:
   name: 龙山灵码
-  text: 终端原生 AI 编程智能体
-  tagline: 基于 MiMo-Code 构建，继承持久化记忆、checkpoint、actor 编排、goal、Compose、Dream/Distill 和语音能力，并保留 SWUST Code 的工程化增强。
+  text: "基于 MiMo-Code 的终端原生 AI 编程智能体"
+  tagline: "面向长任务的软件工程 Agent。以 MiMo-Code 为运行时基座，保留持久化记忆、checkpoint、actor 编排、goal、Compose、Dream/Distill、语音、MCP、LSP 和插件能力，并叠加 SWUST Code 的中文体验与工程防护。"
   actions:
     - theme: brand
       text: 快速开始
       link: /guide/start
     - theme: alt
+      text: 主线状态
+      link: /mainline-status
+    - theme: alt
       text: GitHub
       link: https://github.com/MakeBlackSheepGreat/swust-code
 
 features:
-  - icon: 🧠
-    title: 持久化记忆
-    details: SQLite FTS5 索引、MEMORY.md 注入、@path 导入、checkpoint writer 和 one-fact-per-file 项目知识存储。
+  - title: MiMo-Code 基座优先
+    details: "MiMo 已有的能力保持 MiMo 原生实现，包括多 Provider、TUI、记忆、checkpoint、actor/subagent、goal、Compose、Dream/Distill、语音、MCP、LSP 和插件。"
+    link: /mainline-status
+  - title: 长任务上下文连续
+    details: "通过持久化记忆、checkpoint、任务进度和上下文重建，让 Agent 在恢复会话或接近上下文上限时继续工作，而不是重新理解项目。"
     link: /features/memory
-  - icon: 🧭
-    title: 智能体模式
-    details: build、plan、compose、goal、explore 多智能体，subagent 编排和 checkpoint-writer 均为 MiMo-Code 原生实现。
+  - title: 多智能体工作流
+    details: "build、plan、compose、goal 等主智能体配合 subagent 编排，覆盖探索、实现、评审、TDD、验证和规格驱动开发。"
     link: /features/agents
-  - icon: 🎯
-    title: 目标驱动自治
-    details: /goal 命令设置停止条件，独立 LLM Judge 评估目标是否达成，防止过早停止。
+  - title: 目标驱动自治
+    details: "使用 /goal 或 run --goal 设置停止条件，由独立 judge 判断目标是否真正完成，降低长任务中的过早停止风险。"
     link: /features/goal
-  - icon: 🌱
-    title: 自我进化
-    details: /dream 扫描会话轨迹提取持久知识，/distill 发现重复工作流并打包为可复用技能。
+  - title: 记忆与技能沉淀
+    details: "/dream 整理长期项目知识，/distill 将重复工作流沉淀为 skill、subagent 或 command，降低后续重复劳动。"
     link: /features/dream
-  - icon: 🛡️
-    title: 安全防护
-    details: 四步权限流水线 + Bash 命令安全分析，fail-closed 默认策略。
+  - title: 工程防护
+    details: "SWUST 层补充 Task Gate、Bash Safety、Write Guard、Document Validation、cache-stable 上下文和 @path 记忆导入。"
     link: /features/security
-  - icon: ⚙️
-    title: 工作流引擎
-    details: JavaScript 工作流可执行 host 函数、派生子 Agent，并写入持久化 JSONL journal。
-    link: /features/workflow
-  - icon: 🧩
-    title: 技能系统
-    details: SKILL.md 声明式技能，compose hidden skills 和动态 catalog 已接入运行时。
-    link: /features/skills
-  - icon: 🌐
-    title: 中英文 TUI
-    details: 命令面板、权限弹窗、语言切换、Logo 选择和下一条输入预测已接入 TUI。
-    link: /features/i18n
-  - icon: ✦
-    title: TUI 体验
-    details: 星空首页、双 Logo、龙山灵码主题和 ghost suggestion 改善日常终端交互。
+  - title: 中文优先的 TUI
+    details: "侧边栏、命令面板、权限弹窗、Getting Started、路径显示、主题、attention 通知和声音包配置面向日常终端使用优化。"
     link: /features/tui
 ---

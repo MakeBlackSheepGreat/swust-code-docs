@@ -1,87 +1,25 @@
-# SWUST Code Quick Start
+# Quick Start
 
-## Installation
+This page is kept as a short compatibility entry. For the maintained guide, use:
+
+- [中文快速开始](/guide/start)
+- [English Quick Start](/en/guide/start)
+
+## Minimal Commands
 
 ```bash
 npm install -g @swust-code/cli
-```
-
-## First Run
-
-```bash
-# Start interactive TUI
 swust-code
-
-# Run a single command
-swust-code run "explain this project"
-
-# Set an autonomous goal
-swust-code run --goal "fix all TypeScript errors" "start working"
 ```
 
-## Configuration
-
-Create `swust-code.jsonc` in your project root, or place global runtime config under `~/.config/swust-code/swust-code.jsonc`:
-
-```json
-{
-  "model": "anthropic/claude-sonnet-4-6",
-  "permission": {
-    "bash": "ask",
-    "edit": "allow",
-    "read": "allow"
-  }
-}
-```
-
-## Memory System
-
-SWUST Code remembers project knowledge across sessions:
+Run one prompt from the shell:
 
 ```bash
-# Memory files are stored at:
-# ~/.local/share/swust-code/memory/projects/<id>/MEMORY.md
-
-# The agent automatically:
-# - Indexes memory files for full-text search
-# - Injects relevant context into conversations
-# - Supports manual Dream and Distill entry points
+swust-code run "explain this repo"
 ```
 
-## Key Commands
+Run with an autonomous stop condition:
 
-| Command | Description |
-|---------|-------------|
-| `swust-code` | Start interactive TUI |
-| `swust-code run "msg"` | Run with a message |
-| `swust-code run --goal "cond" "msg"` | Goal-driven run with independent LLM Judge |
-| `swust-code dream` | Start an autonomous memory consolidation run |
-| `swust-code dream --yes --dir .` | Start Dream without confirmation for the current project |
-| `swust-code distill` | Start an autonomous workflow packaging run |
-| `swust-code mcp list` | List MCP servers |
-| `swust-code providers list` | List AI provider credentials |
-| `swust-code providers import` | Import credentials from MiMo-Code, Claude Code, or env vars |
-
-## Skills
-
-Create custom skills in `.swust-code/skill/<name>.md` or `.swust-code/skills/<name>/SKILL.md`:
-
-```markdown
----
-name: my-skill
-description: What this skill does
----
-
-# Instructions for the skill...
-```
-
-## Memory Files
-
-Organize knowledge in memory directories:
-
-```
-~/.local/share/swust-code/memory/
-  global/MEMORY.md              # Cross-project preferences
-  projects/<hash>/MEMORY.md     # Project-specific knowledge
-  sessions/<id>/checkpoint.md   # Session checkpoints
+```bash
+swust-code run --goal "fix type errors" "start"
 ```
