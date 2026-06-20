@@ -19,14 +19,26 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: '指南', link: '/guide/start' },
-          { text: '功能', link: '/features/memory' },
+          { text: '功能', link: '/features/agents' },
+          { text: 'SWUST 优势', link: '/DIFFERENCES' },
+          { text: '主线状态', link: '/mainline-status' },
           { text: 'API', link: '/api/tools' },
           { text: '开发', link: '/dev/architecture' },
-          { text: '主线状态', link: '/mainline-status' },
           { text: '更新日志', link: '/changelog' },
           { text: 'GitHub', link: 'https://github.com/MakeBlackSheepGreat/swust-code' },
         ],
         sidebar: {
+          '/': [
+            {
+              text: '概览',
+              items: [
+                { text: '首页', link: '/' },
+                { text: '快速开始', link: '/guide/start' },
+                { text: '主线状态', link: '/mainline-status' },
+                { text: 'SWUST 优势', link: '/DIFFERENCES' },
+              ],
+            },
+          ],
           '/guide/': [
             {
               text: '指南',
@@ -90,13 +102,25 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Guide', link: '/en/guide/start' },
-          { text: 'Features', link: '/en/features/memory' },
+          { text: 'Features', link: '/en/features/agents' },
+          { text: 'SWUST Advantages', link: '/en/DIFFERENCES' },
+          { text: 'Status', link: '/en/mainline-status' },
           { text: 'API', link: '/en/api/tools' },
           { text: 'Dev', link: '/en/dev/architecture' },
-          { text: 'Status', link: '/en/mainline-status' },
           { text: 'GitHub', link: 'https://github.com/MakeBlackSheepGreat/swust-code' },
         ],
         sidebar: {
+          '/en/': [
+            {
+              text: 'Overview',
+              items: [
+                { text: 'Home', link: '/en/' },
+                { text: 'Quick Start', link: '/en/guide/start' },
+                { text: 'Mainline Status', link: '/en/mainline-status' },
+                { text: 'SWUST Advantages', link: '/en/DIFFERENCES' },
+              ],
+            },
+          ],
           '/en/guide/': [
             {
               text: 'Guide',
@@ -135,7 +159,18 @@ export default defineConfig({
               ],
             },
           ],
+          '/en/dev/': [
+            {
+              text: 'Developer',
+              items: [
+                { text: 'Architecture', link: '/en/dev/architecture' },
+              ],
+            },
+          ],
         },
+        outline: { level: [2, 3] },
+        lastUpdated: { text: 'Last updated' },
+        docFooter: { prev: 'Previous page', next: 'Next page' },
       },
     },
   },

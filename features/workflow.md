@@ -1,66 +1,72 @@
 # 工作流引擎
 
-工作流运行时已经能执行脚本，并通过显式 host 函数完成多 Agent 编排。当前后端是受限 host-function runner，QuickJS 仍保留为未来可替换的执行边界。v0.4 后，`agent()` 走 MiMo 风格 ActorSpawn，并等待 actor outcome 后再写入 journal。
+龙山灵码的工作流引擎用于把多智能体任务写成可恢复、可记录、可重复执行的工程流程。它不是普通命令别名，而是面向长任务编排的运行时。
+
+## 它解决什么问题
+
+当任务开始同时涉及下面几件事时，工作流会比单轮对话更合适：
+
+- 要分阶段推进
+- 要派发多个子智能体
+- 要记录中间结果
+- 要在失败或中断后恢复
+- 要把一个流程多次重复执行
+
+这时，工作流引擎可以把“先做什么、并行做什么、什么时候收敛结果”写成明确结构。
+
+## 与 `compose`、`goal`、subagent 的关系
+
+| 能力 | 更适合解决什么问题 |
+|------|--------------------|
+| `compose` | 让主智能体按结构化方式组织复杂任务 |
+| `goal` | 让任务在停止前持续检查目标是否满足 |
+| subagent | 让局部任务由独立角色执行 |
+| workflow | 让整个多阶段过程变成可脚本化、可恢复的流程 |
+
+可以把 workflow 理解成更显式、更可复用的编排层。
 
 ## 运行模型
 
-`Workflow.Service` 当前提供：
+工作流脚本运行在受限环境中，通过显式 host 函数组织任务：
 
-| 方法 | 说明 |
+| 函数 | 作用 |
 |------|------|
-| `start(input)` | 启动工作流，立即返回 `running` 状态 |
-| `getStatus(runID)` | 查询运行状态 |
-| `cancel(runID)` | 通过 `AbortController` 取消 |
-| `getJournal(runID)` | 读取内存 journal |
+| `agent(prompt, opts?)` | 派生子智能体执行一步任务 |
+| `parallel(thunks)` | 并行执行多个任务 |
+| `pipeline(items, ...stages)` | 按阶段处理一批对象 |
+| `phase(title)` | 标记当前阶段 |
+| `log(message)` | 写入运行日志 |
+| `workflow(name, args?)` | 调用内置或已保存的工作流 |
 
-运行状态包括 `pending`、`running`、`completed`、`failed` 和 `cancelled`。脚本抛错会标记为 `failed`，取消会标记为 `cancelled`。
-
-## 脚本示例
-
-```javascript
-export const meta = {
-  name: 'my-workflow',
-  description: '自定义工作流',
-  phases: [{ title: 'Plan' }],
-}
-
-phase('Plan')
-log('planning')
-
-const result = await agent('summarize the plan', {
-  label: 'planner',
-  phase: 'Plan',
-})
-
-return { ok: true, text: result.text }
-```
-
-运行时会解析 `meta`，记录 `name` 和阶段，并将 host 函数注入脚本作用域。
-
-## Host 函数
-
-| 函数 | 当前行为 |
-|------|----------|
-| `agent(prompt, opts?)` | 通过 Actor Spawn 派生 ephemeral subagent，等待 outcome，记录 agent 计数和结果 |
-| `parallel(thunks)` | 并行执行任务；agent 并发受 `maxConcurrentAgents` 限制 |
-| `pipeline(items, ...stages)` | 按 stage 处理 item 数组 |
-| `phase(title)` | 更新当前阶段并写入 journal |
-| `log(message)` | 写入 journal |
-| `workflow(name, args?)` | 调用内置工作流，带最大深度 8 和环检测 |
-
-脚本不能使用 `import`、`export` 之外的模块加载、`process`、`Bun`、`Deno`、`fetch`、`eval`、`Function` 等宿主全局。
+这类脚本不能随意访问宿主环境的全部能力，目的是让工作流执行边界更清晰、更容易恢复。
 
 ## Journal 与恢复
 
-工作流会同时维护内存 journal 和磁盘 JSONL：
+工作流引擎会记录运行过程，而不是把一次执行当成不可回放的瞬时动作。
 
-| 文件 | 作用 |
-|------|------|
-| `<data>/workflow/<runID>.jsonl` | 记录 phase、log、agent result、error |
-| `<data>/workflow/<runID>.js` | 保存脚本内容，用于变更检测 |
+典型持久化内容包括：
 
-agent 调用使用 `sha256(prompt + agentType + model + schema + phase + occurrence)` 生成确定性 key。恢复时会重放已有结果；脚本内容变化会清空旧 journal，避免复用过期结果。
+- 当前 phase
+- 关键日志
+- 子智能体结果
+- 错误信息
+- 脚本内容和运行标识
+
+这使得工作流在中断后更容易恢复，也便于判断是“继续执行”还是“从头重跑”。
 
 ## 内置工作流
 
-内置注册表当前包含 `deep-research`，脚本定义了 Plan、Search、Extract、Group、Crosscheck、Report 六个阶段。`workflow("deep-research", args)` 可从其他脚本中调用。
+当前主线已经内置 `deep-research` 这类多阶段工作流。它适合把搜索、抽取、归类、交叉核验和报告组织成一条稳定流程，而不是全部塞进同一轮上下文里。
+
+工作流的价值不在于“脚本看起来高级”，而在于当任务越来越复杂时，执行过程仍然可控。
+
+## 什么时候应该用 workflow
+
+下面这些情况通常值得从普通会话切换到 workflow：
+
+- 一个任务会被多次重复执行
+- 需要把调查、实现、评审、验证拆成明确阶段
+- 需要同时调度多个子智能体
+- 需要保存中间结果并允许恢复
+
+如果任务只是一次性的小修小补，直接使用主智能体或 `compose` 往往更轻。

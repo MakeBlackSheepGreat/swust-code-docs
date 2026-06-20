@@ -1,41 +1,93 @@
 # Persistent Memory
 
-SWUST Code's memory system lets your AI coding assistant remember project knowledge across sessions.
+SWUST Code's memory system is not just an extra notebook for the model. It is part of the infrastructure that makes long-running work continuous.
 
-## How It Works
+## Why Memory Matters For Long Tasks
 
-Memory is stored as Markdown files and reconciled into a SQLite FTS5 full-text index. The core v2 runner loads memory context during system prompt assembly and injects global `MEMORY.md` content with a 4KB cap. When long sessions approach the context limit, v0.4 can start the checkpoint writer before rebuilding context from a checkpoint boundary.
+In real repositories, the issue is often not whether one answer is correct. The issue is whether the system can:
 
-## Memory Directory Structure
+- remember project constraints in the next phase
+- resume later without losing where the work stopped
+- bring subagent findings back into the main task
+- survive context pressure without collapsing continuity
 
-```
+That is why SWUST places memory, checkpoints, and context reconstruction on the same runtime path.
+
+## Three Memory Scopes
+
+| Scope | Best used for |
+|-------|---------------|
+| `global` | personal preferences and cross-project habits |
+| `projects/<project-id>` | architecture constraints, project rules, durable facts |
+| `sessions/<session-id>` | temporary notes, checkpoints, task progress |
+
+This separation keeps user-level, project-level, and session-level information from being mixed into one undifferentiated file.
+
+## How Memory Works With Checkpoints
+
+Long-task continuity usually follows this sequence:
+
+1. the session loads project memory and relevant global memory
+2. the agent searches existing knowledge with `/memory` and writes new facts when needed
+3. when context pressure grows, checkpointing writes `checkpoint.md`, `notes.md`, and task progress
+4. on resume, memory, checkpoints, and the recent tail are rebuilt into a usable working context
+
+Memory answers "what should still be known later." Checkpoints answer "where did this session get to."
+
+## Directory Structure
+
+```text
 ~/.local/share/swust-code/memory/
   global/
-    MEMORY.md              # Cross-project preferences
+    MEMORY.md
   projects/
-    <project_hash>/
-      MEMORY.md            # Project knowledge
+    <project-id>/
+      MEMORY.md
       facts/
-        <fact>.md          # One-fact-per-file store
+        <fact>.md
   sessions/
-    <session_id>/
-      checkpoint.md        # Session checkpoint (11 sections)
-      notes.md             # Temporary notes
+    <session-id>/
+      checkpoint.md
+      notes.md
       tasks/
-        <task_id>/
-          progress.md      # Subagent task progress
+        <task-id>/
+          progress.md
 ```
 
-## Memory Tools
+Two design choices matter here:
 
-- `memory` — Search persistent knowledge in the core v2 registry
-- `memory_write` — Write structured knowledge to memory files in the core v2 registry
+- project facts can be stored one fact per file
+- `MEMORY.md` supports `@path` imports for better topical organization
 
-## Automatic Behavior
+That makes the knowledge base easier to maintain over time.
 
-- **Pre-search sync**: Automatically syncs disk files to FTS index before each search
-- **Context injection**: Auto-injects MEMORY.md content into system prompt (4KB cap)
-- **Incremental sync**: Fingerprints based on file size and mtime, only processes changed files
-- **Imports**: `MEMORY.md` supports `@path` imports during local resolution
-- **Checkpoint writer**: A background system agent writes `checkpoint.md`, `MEMORY.md`, and task progress summaries
-- **Boundary rebuild**: `last_checkpoint_message_id` records the checkpoint boundary for future context rebuilds
+## Search And Consolidation
+
+SWUST Code reconciles memory files into a SQLite FTS5 index for full-text retrieval. In daily use, the important actions are:
+
+- `/memory <query>` for retrieval
+- `/dream` and `/distill` for consolidation and packaging
+
+More specifically:
+
+- `/dream` is oriented toward retaining durable project knowledge
+- `/distill` is oriented toward turning repeated work into reusable assets
+
+Both exist to reduce re-explanation in future work.
+
+## What Belongs In Memory
+
+The following are usually good project-memory candidates:
+
+- durable architecture decisions
+- recurring pitfalls and boundary conditions
+- repository conventions and naming rules
+- debugging conclusions that keep reappearing
+
+The following are usually better kept at the session layer:
+
+- one-off experiments
+- unconfirmed guesses
+- local observations that will quickly expire
+
+A good memory system is not only about storing more. It is about storing what remains useful.

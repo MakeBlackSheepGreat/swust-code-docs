@@ -1,62 +1,92 @@
 # 智能体模式
 
-v0.4 把龙山灵码的运行入口进一步对齐 MiMo Code：`compose`、`goal`、普通主 Agent、后台子 Agent 和系统 Agent 都按“智能体模式”组织。这样做的直接结果是提示词、技能目录、会话切片、任务状态和后台通知都能走同一套运行时。
+龙山灵码把主智能体、`goal`、`compose`、subagent 和系统智能体放在同一套运行时模型里。这样做的意义是：规划、执行、评审、恢复和沉淀不会被拆成几套互相割裂的机制。
 
-## 模式总览
+## 统一的智能体模型
 
-| 模式 | 入口 | 用途 |
-|------|------|------|
-| `main` | 默认会话 | 普通编码、问答、工具调用 |
-| `compose` | `--agent compose` 或配置选择 | 规划、并行、评审、合并等 MiMo 风格复合工作流 |
-| `goal` | `swust-code run --goal ...` | 目标驱动自治，未完成时继续推进 |
-| subagent | `actor` / `subagent` / workflow | 任务拆分、后台执行、结果回传 |
-| `checkpoint-writer` | 系统触发 | 写入 `checkpoint.md`、`MEMORY.md`、任务进度摘要 |
-| `dream` / `distill` | CLI 或后台周期触发 | 记忆整理与技能沉淀 |
+在日常使用里，可以把龙山灵码理解为一套有分工的协作系统：
 
-## Compose 智能体
+- 主智能体负责主线推进
+- `plan` 负责只读调研和方案组织
+- `compose` 负责规划、并行、复核和合并
+- `goal` 负责带停止条件的持续工作
+- subagent 负责可拆分的具体任务
+- 系统智能体负责 checkpoint、记忆整理和工作流沉淀
 
-`compose` 模式直接吸收 MiMo Code 的 compose 能力：内置 bundle 中包含 `plan`、`parallel`、`review`、`verify`、`merge`、`subagent`、`tdd` 等技能。运行时会把这些技能作为 compose 的隐藏技能目录注入，普通 Agent 的可用技能列表不会被污染。
+这些角色共享同一运行时的任务状态、上下文恢复和工具边界，因此协作成本更低。
 
-关键行为：
+## 主智能体角色
 
-- compose 专用 system reminder 会在 `agent === "compose"` 时注入。
-- hidden compose skills 只对 compose 模式可见。
-- `skill` 工具会生成动态 catalog，帮助模型按任务选择对应技能。
-- 复合任务优先使用规划、并行执行、复核和合并的闭环。
+| 智能体 | 适合做什么 |
+|--------|------------|
+| `build` | 默认开发、修复、实现、直接工具调用 |
+| `plan` | 只读分析、排查、方案设计、风险评估 |
+| `compose` | 大任务拆解、并行执行、评审、验证、合并结果 |
+| `goal` | 有明确停止条件的自治推进 |
 
-## Goal 智能体
+如果你的任务仍然属于“我知道下一步要做什么”，通常从 `build` 或 `plan` 开始就够了。只有当任务需要明确编排时，才需要 `compose` 或 `goal`。
 
-v0.4 把 Goal 从“命令参数触发的指令”改为一种智能体模式。`swust-code run --goal "目标"` 在没有显式 `--agent` 时默认路由到 `goal` Agent；如果用户指定了 `--agent`，显式 Agent 优先。
+## Subagent 如何参与工作
 
-Goal 模式保留 v0.3 的 LLM Judge 和 Goal Gate，同时新增独立 prompt 与 reminder 注入。这样自治目标、当前上下文和继续工作提醒都能绑定到同一个 Agent 身份，避免混在默认主 Agent 的普通对话提示里。
+子智能体不是单独的第二套产品，而是当前会话下的角色扩展：
 
-## Actor 运行时
+- 可以围绕一个子任务独立推进
+- 可以在前台等待结果，也可以后台持续执行
+- 会把结果和状态写回主任务链路
+- 可以和 task、checkpoint、记忆共同参与长任务推进
 
-Actor Spawn 已按 MiMo 风格重构：
+系统内部还会使用一些专用智能体，例如：
 
-- subagent 使用父会话，但通过 `agentID` 写入独立消息切片。
-- peer actor 仍使用 child session 做隔离。
-- 后台 actor 返回可等待的 outcome，前台调用会等待完成，后台调用可通过 wait/status/cancel 查询。
-- `preStop` 和 `postStop` hook 可触发 ReAct 重入。
-- 任务绑定会自动 start、done 或 block，并根据 return header 做结果归因。
-- Inbox、Actor Registry、Task Registry 持久化，后台子 Agent 的状态不会只停留在内存里。
+- `checkpoint-writer`
+- `dream`
+- `distill`
 
-## Checkpoint Writer
+这些角色通常不需要你手动管理，但它们解释了为什么龙山灵码可以在长任务里持续工作，而不只是单轮回答。
 
-v0.4 补齐了 MiMo 风格 checkpoint writer 的真实启动链：
+## `/subagent` 项目级个性化设置
 
-- 上下文溢出时优先插入 checkpoint boundary，再回退到传统 compaction。
-- writer 以后台子 Agent 运行，并使用 child session 隔离自身消息。
-- `parentSessionID` 会透传给 checkpoint splitover 插件，确保写入父会话的 `checkpoint.md` 和 `MEMORY.md`。
-- 同一会话同时只运行一个 writer；新请求进入 1-slot pending queue，新范围覆盖旧 pending。
-- writer 完成后推进 `last_checkpoint_message_id`，后续 rebuild 只加载 checkpoint 和保留 tail。
+龙山灵码当前主线新增了对可见子智能体的项目级个性化配置入口：
 
-## 何时使用
+- `/subagent`
+- `/subagents`
 
-| 场景 | 推荐模式 |
+在这个界面里，你可以针对单个子智能体设置：
+
+- 专属模型
+- 专属思考强度 / variant
+- 最大执行步数
+- 清除覆盖并回到默认行为
+
+这类设置保存在项目配置里，而不是写入全局默认值。它更适合真实工程中的角色约束，例如：
+
+- 调研子智能体使用更便宜、更快的模型
+- 评审子智能体使用更强推理 variant
+- 验证子智能体限制最大步数，避免过度展开
+
+## `compose`、`goal` 和 subagent 的关系
+
+这三者经常会被混在一起理解，但它们解决的问题并不相同：
+
+| 能力 | 主要作用 |
 |------|----------|
-| 一次性修复或问答 | `main` |
-| 明确目标、希望模型持续推进 | `goal` |
-| 大任务需要拆解、并行、复核 | `compose` |
-| 主 Agent 需要派发独立调查或实现任务 | `actor run` / `actor spawn` |
-| 长会话接近上下文上限 | 自动 checkpoint writer |
+| `compose` | 组织复杂任务的结构和阶段 |
+| `goal` | 在停止前持续检查目标是否真的达成 |
+| subagent | 把局部任务交给独立角色执行 |
+
+一个典型的大任务流程通常是：
+
+1. 用 `plan` 或 `compose` 先理解问题和拆解工作
+2. 用 subagent 派发调查、实现或验证
+3. 用 `goal` 保证任务不会在未达标时过早停止
+4. 在上下文压力增大时由 checkpoint 机制接管恢复
+
+## 什么时候用什么
+
+| 场景 | 推荐方式 |
+|------|----------|
+| 快速实现或修复 | `build` |
+| 只读探索仓库 | `plan` |
+| 大任务需要拆解与复核 | `compose` |
+| 明确目标、希望持续推进 | `goal` |
+| 单个局部任务需要独立角色 | subagent |
+| 长会话恢复与知识整理 | `checkpoint-writer`、`dream`、`distill` |

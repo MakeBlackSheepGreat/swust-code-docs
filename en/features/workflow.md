@@ -1,66 +1,72 @@
 # Workflow Engine
 
-The workflow runtime can execute scripts and orchestrate agents through explicit host functions. The current backend is a restricted host-function runner. QuickJS remains a possible future execution boundary. Since v0.4, `agent()` uses MiMo-style ActorSpawn and waits for actor outcome before writing journal results.
+SWUST Code's workflow engine turns multi-agent work into a recoverable, inspectable, repeatable engineering process. It is not just a command alias layer. It is an orchestration runtime for long tasks.
+
+## What Problem It Solves
+
+Workflow becomes more appropriate than a single conversational thread when the task:
+
+- needs explicit stages
+- needs multiple subagents
+- needs intermediate records
+- needs resume behavior after interruption
+- needs to be repeated more than once
+
+In those cases, the workflow engine makes the process itself part of the system rather than leaving it implicit in the conversation.
+
+## How It Relates To `compose`, `goal`, And Subagents
+
+| Capability | Better suited for |
+|------------|-------------------|
+| `compose` | giving a complex task structure from within the primary agent |
+| `goal` | continuing until a stop condition is truly satisfied |
+| subagents | handing local units of work to separate roles |
+| workflow | turning the whole multi-stage process into a scripted, resumable run |
+
+Workflow is the most explicit orchestration layer among them.
 
 ## Runtime Model
 
-`Workflow.Service` currently provides:
+Workflow scripts run in a restricted environment and use explicit host functions:
 
-| Method | Description |
-|--------|-------------|
-| `start(input)` | Starts a workflow and immediately returns a `running` record |
-| `getStatus(runID)` | Reads run status |
-| `cancel(runID)` | Cancels through `AbortController` |
-| `getJournal(runID)` | Reads the in-memory journal |
+| Function | Purpose |
+|----------|---------|
+| `agent(prompt, opts?)` | spawn a subagent for one task unit |
+| `parallel(thunks)` | run tasks concurrently |
+| `pipeline(items, ...stages)` | process a set of items through stages |
+| `phase(title)` | mark the current stage |
+| `log(message)` | write structured run output |
+| `workflow(name, args?)` | call a built-in or saved workflow |
 
-Statuses include `pending`, `running`, `completed`, `failed`, and `cancelled`. Thrown script errors mark the run as `failed`; cancellation marks it as `cancelled`.
-
-## Script Example
-
-```javascript
-export const meta = {
-  name: 'my-workflow',
-  description: 'Custom workflow',
-  phases: [{ title: 'Plan' }],
-}
-
-phase('Plan')
-log('planning')
-
-const result = await agent('summarize the plan', {
-  label: 'planner',
-  phase: 'Plan',
-})
-
-return { ok: true, text: result.text }
-```
-
-The runtime parses `meta`, records the name and phase, and injects host functions into the script scope.
-
-## Host Functions
-
-| Function | Current behavior |
-|----------|------------------|
-| `agent(prompt, opts?)` | Spawns an ephemeral subagent through Actor Spawn, waits for outcome, and records counters/results |
-| `parallel(thunks)` | Runs tasks in parallel; agent calls are bounded by `maxConcurrentAgents` |
-| `pipeline(items, ...stages)` | Processes item arrays through stages |
-| `phase(title)` | Updates current phase and writes journal entries |
-| `log(message)` | Writes journal entries |
-| `workflow(name, args?)` | Calls a built-in workflow with depth limit 8 and cycle detection |
-
-Scripts cannot access module loading or host globals such as `process`, `Bun`, `Deno`, `fetch`, `eval`, or `Function`.
+The point of the restricted environment is to keep execution boundaries clearer and recovery behavior more predictable.
 
 ## Journal And Resume
 
-The workflow runtime maintains both an in-memory journal and disk JSONL:
+The workflow engine records execution instead of treating every run as an unrepeatable transient action.
 
-| File | Purpose |
-|------|---------|
-| `<data>/workflow/<runID>.jsonl` | Records phase, log, agent result, and error events |
-| `<data>/workflow/<runID>.js` | Saves script content for change detection |
+Typical persisted state includes:
 
-Agent calls use `sha256(prompt + agentType + model + schema + phase + occurrence)` to build deterministic keys. Resume replays completed results. If the script content changes, the old journal is cleared to avoid stale replay.
+- current phase
+- important logs
+- subagent outputs
+- error events
+- script content and run identity
 
-## Built-In Workflow
+That makes it easier to decide whether a workflow should resume, continue, or restart cleanly.
 
-The built-in registry currently includes `deep-research`, with Plan, Search, Extract, Group, Crosscheck, and Report phases. It can be invoked from another script with `workflow("deep-research", args)`.
+## Built-In Workflows
+
+The current mainline already includes built-in workflows such as `deep-research`. They are useful when search, extraction, grouping, cross-checking, and reporting should be kept as separate phases instead of being compressed into one conversational turn.
+
+The real value of workflow is not that the script looks advanced. The value is that the process stays understandable as the task grows.
+
+## When To Switch To Workflow
+
+Workflow is usually worth it when:
+
+- the task will be repeated
+- research, implementation, review, and verification should be separated clearly
+- multiple subagents need coordinated execution
+- intermediate results must survive interruption
+
+For a small one-off task, the primary agent or `compose` is usually lighter.

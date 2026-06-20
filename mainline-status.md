@@ -1,63 +1,89 @@
 # 主线状态
 
-> 更新日期：2026-06-20  
-> 代码仓库：<https://github.com/MakeBlackSheepGreat/swust-code>  
 > 当前声明版本：v0.6.0
+> 代码仓库：<https://github.com/MakeBlackSheepGreat/swust-code>
 
-## 当前定位
+## 当前主线是什么
 
-龙山灵码（SWUST Code）当前主线以 MiMo-Code 为运行时基座。项目保留 SWUST Code 的品牌、中文体验和工程化增强，但不把 MiMo-Code 已有能力重写成旧 OpenCode 风格。
+龙山灵码当前主线以 MiMo-Code 为运行时基座。这个判断不是一句品牌说明，而是实际的维护原则：
 
-维护原则：
+- MiMo-Code 已有的运行时能力，继续沿用 MiMo 当前主线实现
+- SWUST 的新增内容，尽量以独立增强层叠加，而不是把底座改回旧 OpenCode 风格
+- Provider、模型和服务名称保持原始命名，不做产品品牌替换
 
-| 场景 | 处理方式 |
-|------|----------|
-| MiMo-Code 已经提供能力 | 以 MiMo-Code 原生实现为准 |
-| MiMo-Code 没有该能力 | 以最小改动叠加 SWUST 层实现 |
-| Provider 或模型名称 | 保持服务商原名，不做品牌替换 |
-| 旧 SWUST Code 与 MiMo-Code 行为冲突 | 优先保留 MiMo-Code 行为 |
+因此，当前主线应被理解为“**MiMo-Code 基座上的 SWUST 产品层**”，而不是历史版本的回退。
 
-## 当前能力边界
+## 主线继承了什么
 
-MiMo-Code 基座提供：
+当前主线继承 MiMo-Code 的核心运行时能力：
 
-- 终端 TUI、server runtime、Web / Desktop 入口
-- 多 Provider 模型路由和 OpenAI 兼容接入
+- 终端 TUI、Server Runtime、Web / Desktop 入口
+- 多 Provider 模型路由与 OpenAI 兼容接入
 - LSP、MCP、插件、自定义命令、技能系统
 - 持久化记忆、checkpoint、上下文重建
 - actor / subagent 编排与任务追踪
 - `goal`、`compose`、Dream / Distill、语音输入
 
-SWUST 层补充：
+这些能力在文档里应被视为 MiMo 基座能力。SWUST 不会把它们重新包装成“SWUST 首创”。
 
-- 龙山灵码品牌与中文本地化
-- 更完整的 TUI 侧边栏上下文和 Getting Started 提示
+## SWUST 额外强化了什么
+
+在 MiMo 基座之上，当前主线额外强化了更偏工程使用的部分：
+
+- 龙山灵码品牌、中文文案与中文优先的信息组织
+- 更完整的 TUI 侧边栏上下文与 getting started 提示
 - attention 通知与声音包配置
 - Task Gate、Bash Safety、Write Guard
-- Document Validation、cache-stable 上下文布局
+- Document Validation 与 cache-stable 上下文布局
 - `@path` 记忆导入与 one-fact-per-file 事实存储
-- `/memory`、`/paste-image` 和常用 TUI 控件别名
-- `/subagent` / `/subagents` 子智能体项目级模型、思考强度和最大步数配置
+- `/memory`、`/paste-image` 与常用控制项别名
+- `/subagent` / `/subagents` 子智能体项目级个性化设置
 
-## TUI 状态
+这里的重点不是“堆功能名”，而是让主线更适合长期工程任务，而不是只适合短会话演示。
 
-当前主线保留 MiMo/OpenTUI 的终端体验，同时迁移旧 SWUST Code 较好的侧边栏组织方式。侧边栏覆盖工作目录、指令文件、Goal、Task、Todo、LSP、MCP、变更文件、上下文窗口、token、费用和缓存指标。
+## 当前能力边界
 
-首页 Logo 已调整为 SWUST Code 深蓝主色；侧边栏颜色保持接近旧 SWUST Code 的阅读体验。可见子智能体可通过 `/subagent` 在项目内设置专属模型、思考强度和最大执行步数。
+龙山灵码当前主线主要面向以下工作：
 
-## Provider 命名
+| 任务类型 | 当前状态 |
+|----------|----------|
+| 真实仓库内的多轮编码任务 | 适合 |
+| 长任务恢复、续跑、分阶段推进 | 适合 |
+| 子智能体拆分、复核、并行执行 | 适合 |
+| 项目知识沉淀与长期记忆维护 | 适合 |
+| 一次性浅层问答或演示式聊天 | 不是主要优化目标 |
 
-这些名称是服务商或模型 ID，不属于 SWUST 品牌替换范围：
+这意味着主线价值更多体现在连续工作能力、工程约束意识和恢复能力，而不是单轮回答速度。
+
+## TUI 与使用体验
+
+当前主线保留 MiMo 的终端运行模型，同时保留了 SWUST 更适合中文用户的若干体验决定：
+
+- 首页与主题以深蓝主色为主
+- 侧边栏延续旧 SWUST 较好的阅读节奏和信息密度
+- 关键命令、提示和面板文案以中文优先组织
+- 可见子智能体可在项目内单独设置模型、思考强度和最大执行步数
+
+对于日常终端使用者，这些调整的目标是减少来回切换和重复解释，而不是单纯改变视觉皮肤。
+
+## Provider 命名说明
+
+以下名称是服务商或模型标识，不属于 SWUST 品牌替换范围：
 
 - `MiMo Auto`
 - `小米 MiMo 平台`
 - `mimo/mimo-auto`
 - `xiaomi/mimo-*`
 
-## 验证状态
+文档、界面和配置都应保留这些原名。
 
-当前主线已通过全仓 TypeScript 类型检查，并覆盖子智能体配置更新相关回归测试。正式发布前仍建议执行完整构建、完整测试、release 和 npm publish 验证。
+## 面向后续维护的原则
 
-## 文档维护要求
+后续继续演进主线时，建议保持以下判断顺序：
 
-文档只描述稳定的当前能力和用户可执行路径。临时分支、PR 状态、本地构建记录、commit hash 和 Agent 会话过程不应写入公开文档。
+1. 先确认 MiMo 当前主线是否已经提供能力
+2. 如果已有能力，优先继承而不是重写
+3. 如果没有，再补 SWUST 层
+4. 如果只是历史版本有而 MiMo 当前没有，再判断它是否仍然值得纳入当前主线
+
+这也是当前公开文档、README 和版本说明的统一口径。

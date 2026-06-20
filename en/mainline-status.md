@@ -1,63 +1,89 @@
 # Mainline Status
 
-> Updated: 2026-06-20  
-> Repository: <https://github.com/MakeBlackSheepGreat/swust-code>  
 > Current declared version: v0.6.0
+> Repository: <https://github.com/MakeBlackSheepGreat/swust-code>
 
-## Current Position
+## What The Current Mainline Is
 
-SWUST Code now uses MiMo-Code as its runtime base. The project keeps SWUST branding, Chinese-first UX, and engineering safeguards, but it does not rewrite MiMo-Code capabilities back toward the older OpenCode-style implementation.
+The current SWUST Code mainline uses MiMo-Code as its runtime base. This is an implementation rule, not just branding language:
 
-Maintenance rules:
+- if MiMo-Code already provides the runtime capability, the mainline keeps the MiMo implementation
+- SWUST-specific work is added as a product layer where possible instead of rewriting the base back toward older OpenCode-era behavior
+- provider, model, and service names stay unchanged
 
-| Case | Rule |
-|------|------|
-| MiMo-Code already provides the capability | Keep the MiMo-Code native implementation |
-| MiMo-Code does not provide the capability | Add the SWUST layer with minimal change |
-| Provider or model names | Keep upstream service names unchanged |
-| Old SWUST Code behavior conflicts with MiMo-Code | Prefer MiMo-Code behavior |
+The mainline should therefore be understood as **a SWUST product layer on top of the MiMo-Code base**, not a regression to the historical pre-MiMo stack.
 
-## Capability Boundary
+## What It Inherits From MiMo-Code
 
-The MiMo-Code base provides:
+The current mainline inherits MiMo-Code's core runtime capabilities:
 
-- terminal TUI, server runtime, web / desktop surfaces
-- multi-provider model routing and OpenAI-compatible providers
-- LSP, MCP, plugins, custom commands, skills
-- persistent memory, checkpoints, context reconstruction
+- terminal TUI, server runtime, and web / desktop surfaces
+- multi-provider model routing and OpenAI-compatible integrations
+- LSP, MCP, plugins, custom commands, and skills
+- persistent memory, checkpoints, and context reconstruction
 - actor / subagent orchestration and task tracking
 - `goal`, `compose`, Dream / Distill, and voice input
 
-The SWUST layer adds:
+In public documentation, these should be described as inherited MiMo capabilities, not relabeled as SWUST inventions.
 
-- 龙山灵码 branding and Chinese localization
-- richer TUI sidebar context and getting-started hints
+## What The SWUST Layer Adds
+
+On top of the MiMo base, the current mainline strengthens the product around real engineering use:
+
+- SWUST branding, Chinese localization, and Chinese-first information flow
+- richer TUI sidebar context and getting-started guidance
 - attention notifications and sound-pack configuration
 - Task Gate, Bash Safety, and Write Guard
 - Document Validation and cache-stable context layout
 - `@path` memory imports and one-fact-per-file fact storage
-- `/memory`, `/paste-image`, and common TUI control aliases
-- `/subagent` / `/subagents` project-level model, reasoning variant, and max-step settings for visible subagents
+- `/memory`, `/paste-image`, and familiar control aliases
+- `/subagent` / `/subagents` for project-level visible-subagent customization
 
-## TUI Status
+The point is not to accumulate feature labels. The point is to make the mainline more usable for long-running engineering work.
 
-The current mainline keeps the MiMo/OpenTUI terminal experience while carrying over the useful old SWUST Code sidebar organization. The sidebar covers working directory, instruction files, Goal, Task, Todo, LSP, MCP, changed files, context window, token, cost, and cache sections.
+## Capability Boundary
 
-The home Logo uses the SWUST Code deep-blue primary color. Sidebar colors stay close to the old SWUST Code reading experience. Visible subagents can be configured through `/subagent` with project-level model, reasoning variant, and max execution steps.
+The current mainline is primarily designed for:
+
+| Workload | Fit |
+|----------|-----|
+| multi-step coding work inside real repositories | strong |
+| long tasks that must resume and continue | strong |
+| subagent delegation, review, and parallel work | strong |
+| durable project knowledge accumulation | strong |
+| short one-shot chat or demo prompting | not the primary target |
+
+That means the mainline's value is mostly in continuity, engineering constraint awareness, and recovery behavior rather than single-turn speed.
+
+## TUI And Daily Use
+
+The current mainline keeps MiMo's terminal runtime model while preserving several SWUST choices that matter in daily use:
+
+- a deep-blue SWUST visual identity on the home surface
+- sidebar organization and density closer to the stronger parts of earlier SWUST builds
+- Chinese-first wording for key commands, prompts, and panels
+- per-project model, reasoning-variant, and step overrides for visible subagents
+
+These changes are meant to reduce friction during real terminal work, not just change the skin.
 
 ## Provider Naming
 
-These names are provider or model IDs and are not part of SWUST branding replacement:
+The following names are provider or model identifiers and are intentionally not rebranded:
 
 - `MiMo Auto`
 - `Xiaomi MiMo Platform`
 - `mimo/mimo-auto`
 - `xiaomi/mimo-*`
 
-## Validation Status
+Documentation, UI, and configuration should keep these original names.
 
-The current mainline has passed full TypeScript typecheck and regression coverage for subagent configuration updates. Before a formal release, run the full build, full test suite, release flow, and npm publish validation.
+## Ongoing Maintenance Rule
 
-## Documentation Rule
+As the mainline continues to evolve, the recommended decision order is:
 
-Public documentation should describe stable current capabilities and user-executable paths. Temporary branches, PR state, local build notes, commit hashes, and agent-session process logs should not be added to the docs site.
+1. check whether MiMo current mainline already provides the capability
+2. if it does, inherit it instead of rewriting it
+3. if it does not, add the SWUST layer
+4. if an older SWUST branch had it but MiMo current mainline does not, decide whether it still belongs in the current mainline
+
+That is the stable documentation rule for the current public mainline.
