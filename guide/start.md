@@ -5,7 +5,7 @@
 ## 安装
 
 ```bash
-npm install -g swust-code
+npm install -g @swust-code/cli
 ```
 
 ## 首次运行
@@ -14,7 +14,7 @@ npm install -g swust-code
 swust-code
 ```
 
-首次启动自动引导配置，选择 LLM 提供商并输入 API Key。
+首次启动会自动引导配置。可选择 MiMo Auto（限时免费）、小米 MiMo 平台、从 Claude Code 导入认证，或添加任意 OpenAI 兼容 Provider。
 
 ## 配置 API Key
 
@@ -29,7 +29,7 @@ export OPENAI_API_KEY="your-key"
 export GOOGLE_API_KEY="your-key"
 ```
 
-或在 TUI 内通过 `/providers` 命令配置。
+或在 TUI 内通过首次启动向导和 Provider 配置入口完成。
 
 ## 基本用法
 
@@ -66,6 +66,7 @@ Agent 自动索引这些文件，在对话中检索相关知识。
 
 ## 下一步
 
+- [主线状态](/mainline-status) — 当前 MiMo-Code 基座迁移和 PR 状态
 - [安装指南](/guide/install) — 详细的安装方式
 - [配置](/guide/config) — 配置文件详解
 - [LLM 提供商](/guide/providers) — 支持的模型和接入方式

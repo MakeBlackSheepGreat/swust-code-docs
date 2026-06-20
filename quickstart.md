@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-npm install -g swust-code
+npm install -g @swust-code/cli
 ```
 
 ## First Run
@@ -21,7 +21,7 @@ swust-code run --goal "fix all TypeScript errors" "start working"
 
 ## Configuration
 
-Create `swust-code.jsonc` in your project root, or place it under `.swust-code/swust-code.jsonc`:
+Create `swust-code.jsonc` in your project root, or place global runtime config under `~/.config/swust-code/swust-code.jsonc`:
 
 ```json
 {

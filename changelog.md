@@ -1,5 +1,36 @@
 # 更新日志
 
+## 2026-06-20 主线同步：MiMo-Code 基座迁移 PR 就绪
+
+### 主线状态
+
+- 已创建 GitHub PR [#1](https://github.com/MakeBlackSheepGreat/swust-code/pull/1)：`pr/mimo-rebase-to-main` → `main`。
+- PR 当前状态为 Open / Mergeable。
+- 因旧 `main` 与 MiMo-Code 基座迁移分支没有共同 merge base，本次使用 bridge PR 分支；该分支最终文件树与 `swust-code/mimo-rebase` 完全一致。
+- 最新迁移提交：`520db45 docs: rewrite swust code readme`。
+
+### 已完成迁移校准
+
+- Phase 1 待移植项已补齐：`@path` import、Fact Store、Document Validation。
+- SWUST 增量能力已接入新基座：Task Gate、Bash Safety、Cache-Stable Prefix、Write Guard、Memory initializer/import resolver/fact store、Document Validation。
+- 旧 SWUST Code 侧边栏体验已迁移：工作目录、指令文件、getting-started、goal/task/todo、LSP/MCP、变更文件、上下文窗口、费用和缓存指标。
+- Attention 通知和声音包配置已接入。
+- README / README.zh 已按旧 SWUST Code 风格重写，并修正为 MiMo-Code fork 基座表述。
+
+### 验证
+
+- 迁移分支推送前：`bun turbo typecheck`，12/12 tasks successful。
+- PR 分支推送前：`bun turbo typecheck`，12/12 tasks successful。
+- 本地 Bun 版本为 `1.3.14`，仓库声明为 `bun@1.3.11`，当前只是版本提示。
+
+### 版本声明
+
+- 代码包声明版本：`0.1.1`（`packages/opencode/package.json` 及各 package 当前一致）。
+- 构建注入版本来自 `SWUST_CODE_VERSION = Script.version`。
+- 当前本地非 release 分支预览构建版本：`0.0.0-swust-code-rebrand-202606200248`。
+
+---
+
 ## v0.5.0 (2026-06-19)
 
 ### 基座切换：OpenCode → MiMo-Code
@@ -19,7 +50,7 @@
 - 更先进的 Tool Pruning（soft-trim + hard-prune + 非必要内容剥离 + checkpoint 触发 + 压力等级）
 - 更成熟的 Workspace Adapter 系统
 
-**待移植功能（Phase 1）：**
+**当时待补齐功能（Phase 1，已在 2026-06-20 主线同步中补齐）：**
 - @path Import（内存文件交叉引用）
 - Fact Store（one-fact-per-file 存储）
 - Document Validation（文档结构验证）

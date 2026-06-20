@@ -3,7 +3,7 @@
 ## npm 安装（推荐）
 
 ```bash
-npm install -g swust-code
+npm install -g @swust-code/cli
 ```
 
 ## 从源码构建
@@ -23,7 +23,7 @@ bun run dev
 
 ## 系统要求
 
-- **Bun** 1.3.14（源码运行和构建使用 Bun）
+- **Bun** 1.3.11（源码运行和构建使用 Bun）
 - **Node.js** 18+（部分生态工具仍会用到）
 - **操作系统** macOS / Linux / Windows（PowerShell、Git Bash 或 WSL 均可）
 - **内存** 4GB+ 推荐

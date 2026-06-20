@@ -5,7 +5,7 @@ SWUST Code is a terminal-native AI coding agent with persistent memory and self-
 ## Install
 
 ```bash
-npm install -g swust-code
+npm install -g @swust-code/cli
 ```
 
 ## First Run
@@ -14,7 +14,7 @@ npm install -g swust-code
 swust-code
 ```
 
-The first launch guides you through configuration automatically.
+The first launch guides you through configuration automatically. You can use MiMo Auto, Xiaomi MiMo Platform login, Claude Code auth import, or any OpenAI-compatible provider.
 
 ## Configure API Key
 
@@ -47,6 +47,7 @@ swust-code distill
 
 ## Next Steps
 
+- [Mainline Status](/en/mainline-status) — Current MiMo-Code base migration and PR status
 - [Installation](/en/guide/install) — Detailed installation methods
 - [Configuration](/en/guide/config) — Configuration file reference
 - [LLM Providers](/en/guide/providers) — Supported models

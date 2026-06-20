@@ -6,10 +6,10 @@
 
 | 范围 | 路径 |
 |------|------|
-| 全局级 | `~/.config/swust-code/config.json`、`swust-code.json`、`swust-code.jsonc` |
+| 全局级 | `~/.config/swust-code/swust-code.json`、`~/.config/swust-code/swust-code.jsonc` |
 | 项目级 | `swust-code.json`、`swust-code.jsonc`（从当前目录向上查找） |
 | 项目目录 | `.swust-code/swust-code.json`、`.swust-code/swust-code.jsonc` |
-| TUI | `tui.json`、`tui.jsonc`，可放在全局目录或项目 `.swust-code` 目录 |
+| TUI | `~/.config/swust-code/tui.json`、项目根目录 `tui.json`，也支持 `tui.jsonc` |
 
 项目级配置优先于全局配置；更靠近当前工作目录的配置优先级更高。可以用 `SWUST_CODE_CONFIG` 指定单个配置文件，用 `SWUST_CODE_CONFIG_DIR` 指定额外配置目录。
 

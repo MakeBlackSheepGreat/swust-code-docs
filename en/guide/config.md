@@ -6,10 +6,10 @@ SWUST Code uses JSON/JSONC config files for models, permissions, providers, MCP,
 
 | Scope | Paths |
 |-------|-------|
-| Global | `~/.config/swust-code/config.json`, `swust-code.json`, `swust-code.jsonc` |
+| Global | `~/.config/swust-code/swust-code.json`, `~/.config/swust-code/swust-code.jsonc` |
 | Project | `swust-code.json`, `swust-code.jsonc` discovered upward from the current directory |
 | Project directory | `.swust-code/swust-code.json`, `.swust-code/swust-code.jsonc` |
-| TUI | `tui.json`, `tui.jsonc` in global or project `.swust-code` directories |
+| TUI | `~/.config/swust-code/tui.json`, project-root `tui.json`, and `tui.jsonc` variants |
 
 Project config overrides global config, and the closest project config wins. Use `SWUST_CODE_CONFIG` for one explicit file or `SWUST_CODE_CONFIG_DIR` for an additional config directory.
 

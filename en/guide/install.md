@@ -3,7 +3,7 @@
 ## npm (recommended)
 
 ```bash
-npm install -g swust-code
+npm install -g @swust-code/cli
 ```
 
 ## From Source
@@ -23,7 +23,7 @@ bun run dev
 
 ## Requirements
 
-- **Bun** 1.3.14 for source development and builds
+- **Bun** 1.3.11 for source development and builds
 - **Node.js** 18+ for ecosystem tooling
 - **OS** macOS / Linux / Windows with PowerShell, Git Bash, or WSL
 - **Memory** 4GB+ recommended

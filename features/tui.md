@@ -1,6 +1,23 @@
 # TUI 体验
 
-v0.3 把 TUI 从基础翻译推进到可见交互层：命令面板、权限弹窗、首页、Logo 和提示输入都接入了新的本地化与视觉逻辑。
+当前 MiMo-Code 基座迁移分支已经把旧 SWUST Code 的侧边栏体验迁移到新 TUI。除命令面板、权限弹窗、首页、Logo 和提示输入外，侧边栏现在会展示工作目录、指令文件、getting-started 提示、goal/task/todo、LSP/MCP、变更文件、上下文窗口、token、费用和缓存指标。
+
+## 侧边栏
+
+侧边栏默认服务于长会话和自治任务的运行态观察：
+
+- 工作目录和指令文件位置
+- Goal、Task、Todo 当前状态
+- LSP、MCP、变更文件
+- 上下文窗口健康度、请求 token、会话 token、压缩触发状态
+- 本轮费用、会话费用、cache read/write 和 cache hit
+- 免费模型与 Provider 配置的 getting-started 提示
+
+`TuiPathsProvider` 已接入 app runtime，插件和侧边栏组件可以稳定读取当前工作目录、配置路径和运行时路径。
+
+## Attention 通知
+
+新 TUI 已接入 attention 通知与声音包配置。相关配置位于 `tui.json` / `tui.jsonc` 的 `attention` 字段，可控制是否启用通知、声音、音量和 sound pack。
 
 ## 命令面板
 
