@@ -1,59 +1,43 @@
 # 更新日志
 
-## 2026-06-20 主线同步：MiMo-Code 基座迁移 PR 就绪
-
-### 主线状态
-
-- 已创建 GitHub PR [#1](https://github.com/MakeBlackSheepGreat/swust-code/pull/1)：`pr/mimo-rebase-to-main` → `main`。
-- PR 当前状态为 Open / Mergeable。
-- 因旧 `main` 与 MiMo-Code 基座迁移分支没有共同 merge base，本次使用 bridge PR 分支；该分支最终文件树与 `swust-code/mimo-rebase` 完全一致。
-- 最新迁移提交：`520db45 docs: rewrite swust code readme`。
-
-### 已完成迁移校准
-
-- Phase 1 待移植项已补齐：`@path` import、Fact Store、Document Validation。
-- SWUST 增量能力已接入新基座：Task Gate、Bash Safety、Cache-Stable Prefix、Write Guard、Memory initializer/import resolver/fact store、Document Validation。
-- 旧 SWUST Code 侧边栏体验已迁移：工作目录、指令文件、getting-started、goal/task/todo、LSP/MCP、变更文件、上下文窗口、费用和缓存指标。
-- Attention 通知和声音包配置已接入。
-- README / README.zh 已按旧 SWUST Code 风格重写，并修正为 MiMo-Code fork 基座表述。
-
-### 验证
-
-- 迁移分支推送前：`bun turbo typecheck`，12/12 tasks successful。
-- PR 分支推送前：`bun turbo typecheck`，12/12 tasks successful。
-- 本地 Bun 版本为 `1.3.14`，仓库声明为 `bun@1.3.11`，当前只是版本提示。
-
-### 版本声明
-
-- 代码包声明版本：`0.1.1`（`packages/opencode/package.json` 及各 package 当前一致）。
-- 构建注入版本来自 `SWUST_CODE_VERSION = Script.version`。
-- 当前本地非 release 分支预览构建版本：`0.0.0-swust-code-rebrand-202606200248`。
-
----
-
 ## v0.5.0 (2026-06-19)
 
 ### 基座切换：OpenCode → MiMo-Code
 
-将项目基座从 OpenCode 切换为 MiMo-Code（小米开源 AI 编程助手）。MiMo-Code 本身是 OpenCode 的 fork，已内置持久化记忆、智能体编排、Goal 驱动自治、Compose 工作流、Dream/Distill 自我进化等核心能力。
+将项目主线从 OpenCode 基座切换为 MiMo-Code 基座。MiMo-Code 本身是 OpenCode 的 fork，已内置持久化记忆、智能体编排、Goal 驱动自治、Compose 工作流、Dream/Distill 自我进化、语音输入等核心能力。
 
-**变更内容：**
-- 基座从 OpenCode v1.17.4 切换为 MiMo-Code（2026-06-19 最新版）
+### 主线变更
+
+- 基座从 OpenCode v1.17.4 切换为 MiMo-Code
 - 品牌替换：`@mimo-ai/*` → `@swust-code/*`，`.mimocode/` → `.swust-code/`，`MIMOCODE_*` → `SWUST_CODE_*`
-- 580 个文件修改，2787 行替换
-- 原生支持 MiMo-Code 全部功能，无需手动移植
+- CLI 命令统一为 `swust-code`
+- 内部包版本声明更新为 `0.5.0`
+- AI 服务商和模型名称保持原样：MiMo Auto、小米 MiMo 平台、`mimo/mimo-auto`、`xiaomi/mimo-*`
 
-**MiMo-Code 原生功能（新增）：**
+### MiMo-Code 原生能力
+
 - Voice Input（语音输入，基于 TenVAD + MiMo ASR）
 - CC Memory Indexing（Claude Code 内存索引兼容）
 - 远程 Workspace 同步（SSE + HTTP replay）
 - 更先进的 Tool Pruning（soft-trim + hard-prune + 非必要内容剥离 + checkpoint 触发 + 压力等级）
 - 更成熟的 Workspace Adapter 系统
+- 持久化记忆、checkpoint、actor/subagent、goal、Compose、Dream/Distill 原生运行时
 
-**当时待补齐功能（Phase 1，已在 2026-06-20 主线同步中补齐）：**
+### SWUST 增强能力
+
+- Task Gate：停止前检查未完成任务
+- Bash Safety：高风险 shell 命令安全分析
+- Cache-Stable Prefix：稳定上下文前缀，提升 provider cache 命中率
 - @path Import（内存文件交叉引用）
 - Fact Store（one-fact-per-file 存储）
 - Document Validation（文档结构验证）
+- Write Guard 和 memory initializer
+
+### TUI 与文档
+
+- 迁移旧 SWUST Code 侧边栏体验：工作目录、指令文件、Goal、Task、Todo、LSP、MCP、变更文件、上下文窗口、token、费用和缓存指标。
+- 接入 getting-started 提示、路径显示、中文 i18n、attention 通知和声音包配置。
+- README 与文档站统一为 MiMo-Code 基座口径。
 
 ---
 

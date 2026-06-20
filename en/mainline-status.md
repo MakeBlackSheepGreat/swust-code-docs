@@ -1,61 +1,30 @@
-# Mainline Status
+# Project Status
 
 > Updated: 2026-06-20  
-> Code repository: <https://github.com/MakeBlackSheepGreat/swust-code>  
-> Mainline PR: [#1](https://github.com/MakeBlackSheepGreat/swust-code/pull/1)
+> Repository: <https://github.com/MakeBlackSheepGreat/swust-code>  
+> Current version: v0.5.0
 
-## Current State
+## Current Position
 
-The MiMo-Code based SWUST Code migration is ready for mainline review. The old `main` branch and the MiMo-based `mimo-rebase` branch do not share a merge base, so the mainline update uses a bridge PR branch.
+SWUST Code now uses MiMo-Code as its mainline base. The project keeps SWUST branding, Chinese-first experience, and engineering enhancements while relying on MiMo-Code native runtime capabilities.
 
-| Item | State |
-|------|-------|
-| Base branch | `main` |
-| Migration branch | `mimo-rebase` |
-| PR branch | `pr/mimo-rebase-to-main` |
-| PR status | Open / Mergeable |
-| Latest migration commit | `520db45 docs: rewrite swust code readme` |
-| Internal package version | `0.1.1` |
-| Current local preview build version | `0.0.0-swust-code-rebrand-202606200248` |
+## Mainline Capabilities
 
-The bridge PR branch resolves to the exact same file tree as `swust-code/mimo-rebase`. Its first parent is the old `main`, and its second parent is `mimo-rebase`, allowing GitHub to create and merge the PR while preserving the migration branch history.
+- MiMo-Code native capabilities: persistent memory, checkpoints, actor/subagent orchestration, tasks, goal, Compose, Dream/Distill, voice input, TUI, LSP, MCP, and plugins.
+- SWUST enhancements: Task Gate, Bash Safety, Cache-Stable Prefix, `@path` memory imports, Fact Store, Write Guard, and Document Validation.
+- Branding and paths: the CLI is `swust-code`, project config lives under `.swust-code/`, and environment variables use the `SWUST_CODE_*` prefix.
+- Provider names stay unchanged: `MiMo Auto`, Xiaomi MiMo Platform, `mimo/mimo-auto`, and `xiaomi/mimo-*` remain provider or model names.
 
-## Completed
+## TUI Status
 
-### MiMo-Code Base Migration
+The current mainline includes the SWUST sidebar experience: working directory, instruction files, Goal, Task, Todo, LSP, MCP, changed files, context window, token, cost, and cache sections. Getting-started hints, path display, Chinese i18n, attention notifications, and sound-pack configuration are also wired in.
 
-- Switched the project base to the MiMo-Code fork.
-- Kept MiMo-Code native capabilities: providers, TUI, LSP, MCP, plugins, persistent memory, checkpoints, actors/subagents, tasks, goal, Compose, Dream/Distill, and voice.
-- Rebranded packages, CLI, environment variables, config paths, documentation links, and UI copy to SWUST Code / 龙山灵码.
-- Preserved provider names: `MiMo Auto`, `Xiaomi MiMo Platform`, `mimo/mimo-auto`, and `xiaomi/mimo-*` remain provider/model names.
+## Validation Status
 
-### SWUST Layer
+The current mainline passed TypeScript typecheck before push. Before a formal release, run the full test, build, release, and npm publish validation flow.
 
-- Task Gate for unfinished-work checks before agent stop.
-- Bash Safety for risky shell command analysis.
-- Cache-Stable Prefix for provider cache hit improvement.
-- `@path` memory imports and one-fact-per-file fact store.
-- Memory and task progress write guards.
-- Document validation for spec-driven files.
+## Maintenance Rules
 
-### TUI And Docs
-
-- The SWUST sidebar experience is migrated: working directory, instruction files, goal, task, todo, LSP, MCP, changed files, context window, token, cost, and cache sections.
-- `TuiPathsProvider` is wired into the TUI app runtime.
-- Getting-started hints, path display, and Chinese i18n are present.
-- Attention notifications and sound-pack configuration are wired.
-- README / README.zh were rewritten in the old SWUST Code style while correcting the base relationship to MiMo-Code.
-
-## Validation
-
-- `bun turbo typecheck` before pushing the migration branch: 12/12 tasks successful.
-- `bun turbo typecheck` before pushing the PR branch: 12/12 tasks successful.
-- GitHub PR [#1](https://github.com/MakeBlackSheepGreat/swust-code/pull/1) is currently `MERGEABLE`.
-- Local note: Bun is `1.3.14`; the repository declares `bun@1.3.11`.
-
-## Follow-up
-
-- After PR #1 is merged into `main`, verify automatic deployment, release, and npm publish flows.
-- For a formal release build, use a release channel so the build version resolves to `packages/opencode/package.json` version `0.1.1` instead of a branch preview version.
-- Continue syncing provider/config documentation from the new repository's `packages/web/src/content/docs`.
-
+- If MiMo-Code already provides a capability, prefer the MiMo-Code implementation.
+- Only migrate old SWUST Code / OpenCode behavior when MiMo-Code does not provide it.
+- Documentation should describe stable current behavior, not temporary branches, commit hashes, or local preview build metadata.

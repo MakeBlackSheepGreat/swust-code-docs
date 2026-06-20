@@ -22,7 +22,6 @@ export default defineConfig({
           { text: '功能', link: '/features/memory' },
           { text: 'API', link: '/api/tools' },
           { text: '开发', link: '/dev/architecture' },
-          { text: '主线状态', link: '/mainline-status' },
           { text: '更新日志', link: '/changelog' },
           { text: 'GitHub', link: 'https://github.com/MakeBlackSheepGreat/swust-code' },
         ],
@@ -93,7 +92,6 @@ export default defineConfig({
           { text: 'Features', link: '/en/features/memory' },
           { text: 'API', link: '/en/api/tools' },
           { text: 'Dev', link: '/en/dev/architecture' },
-          { text: 'Status', link: '/en/mainline-status' },
           { text: 'GitHub', link: 'https://github.com/MakeBlackSheepGreat/swust-code' },
         ],
         sidebar: {

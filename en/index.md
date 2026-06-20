@@ -4,7 +4,7 @@ layout: home
 hero:
   name: SWUST Code
   text: Terminal-Native AI Coding Agent
-  tagline: Built as a MiMo-Code fork. The mainline migration PR is open and mergeable, inheriting native memory, checkpoints, actors, goal, Compose, Dream/Distill, and voice.
+  tagline: Built on MiMo-Code, inheriting persistent memory, checkpoints, actor orchestration, goal, Compose, Dream/Distill, and voice while keeping SWUST Code engineering enhancements.
   actions:
     - theme: brand
       text: Quick Start
@@ -14,10 +14,6 @@ hero:
       link: https://github.com/MakeBlackSheepGreat/swust-code
 
 features:
-  - icon: 🚦
-    title: Mainline Status
-    details: Tracks the MiMo-Code base migration, PR #1, version declarations, validation, and post-merge follow-up.
-    link: /en/mainline-status
   - icon: 🧠
     title: Persistent Memory
     details: SQLite FTS5 indexing, MEMORY.md injection, @path imports, checkpoint writer, and one-fact-per-file project knowledge.

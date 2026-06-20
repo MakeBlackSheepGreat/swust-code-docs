@@ -45,9 +45,18 @@ swust-code distill
 
 `dream` and `distill` launch autonomous `swust-code run --goal` sessions. After normal sessions finish, the system also checks 7-day Dream and 30-day Distill intervals for background triggering. Set `SWUST_CODE_AUTO_EVOLUTION=0` to disable auto-evolution.
 
+## Memory System
+
+SWUST Code stores persistent memory under `~/.local/share/swust-code/memory/`:
+
+- `global/MEMORY.md` for cross-project preferences
+- `projects/<id>/MEMORY.md` for project knowledge
+- `sessions/<id>/checkpoint.md` for session checkpoints
+
+The agent indexes these files automatically and retrieves relevant knowledge during conversations. Use `dream` to consolidate project memory when needed.
+
 ## Next Steps
 
-- [Mainline Status](/en/mainline-status) — Current MiMo-Code base migration and PR status
 - [Installation](/en/guide/install) — Detailed installation methods
 - [Configuration](/en/guide/config) — Configuration file reference
 - [LLM Providers](/en/guide/providers) — Supported models

@@ -60,13 +60,10 @@ swust-code distill
 - `projects/<id>/MEMORY.md` — 项目知识
 - `sessions/<id>/checkpoint.md` — 会话检查点
 
-Agent 自动索引这些文件，在对话中检索相关知识。
-
-当前核心 v2 工具注册表包含 `memory` 和 `memory_write`，用于搜索和写入持久记忆；TUI/旧会话路径仍保留自己的工具注册表，因此具体会话里展示的工具列表以运行时为准。
+Agent 会自动索引这些文件，并在对话中检索相关知识。需要手动整理知识时，可以使用 `dream` 提炼项目记忆，也可以让 Agent 通过记忆工具搜索或写入长期信息。
 
 ## 下一步
 
-- [主线状态](/mainline-status) — 当前 MiMo-Code 基座迁移和 PR 状态
 - [安装指南](/guide/install) — 详细的安装方式
 - [配置](/guide/config) — 配置文件详解
 - [LLM 提供商](/guide/providers) — 支持的模型和接入方式

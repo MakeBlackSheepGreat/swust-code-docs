@@ -4,7 +4,7 @@ layout: home
 hero:
   name: 龙山灵码
   text: 终端原生 AI 编程智能体
-  tagline: 基于 MiMo-Code fork 构建，主线迁移 PR 已创建并处于可合入状态；原生继承记忆、checkpoint、actor、goal、Compose、Dream/Distill 和语音能力。
+  tagline: 基于 MiMo-Code 构建，继承持久化记忆、checkpoint、actor 编排、goal、Compose、Dream/Distill 和语音能力，并保留 SWUST Code 的工程化增强。
   actions:
     - theme: brand
       text: 快速开始
@@ -14,10 +14,6 @@ hero:
       link: https://github.com/MakeBlackSheepGreat/swust-code
 
 features:
-  - icon: 🚦
-    title: 主线状态
-    details: 记录 MiMo-Code 基座迁移、PR #1、版本声明、验证结果和合并后的待办事项。
-    link: /mainline-status
   - icon: 🧠
     title: 持久化记忆
     details: SQLite FTS5 索引、MEMORY.md 注入、@path 导入、checkpoint writer 和 one-fact-per-file 项目知识存储。

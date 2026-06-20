@@ -1,6 +1,6 @@
 # TUI 体验
 
-当前 MiMo-Code 基座迁移分支已经把旧 SWUST Code 的侧边栏体验迁移到新 TUI。除命令面板、权限弹窗、首页、Logo 和提示输入外，侧边栏现在会展示工作目录、指令文件、getting-started 提示、goal/task/todo、LSP/MCP、变更文件、上下文窗口、token、费用和缓存指标。
+龙山灵码的 TUI 基于 MiMo-Code 运行时扩展，并保留旧 SWUST Code 的侧边栏体验。除命令面板、权限弹窗、首页、Logo 和提示输入外，侧边栏会展示工作目录、指令文件、getting-started 提示、Goal、Task、Todo、LSP/MCP、变更文件、上下文窗口、token、费用和缓存指标。
 
 ## 侧边栏
 
