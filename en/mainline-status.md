@@ -27,4 +27,4 @@ The current mainline passed TypeScript typecheck before push. Before a formal re
 
 - If MiMo-Code already provides a capability, prefer the MiMo-Code implementation.
 - Only migrate old SWUST Code / OpenCode behavior when MiMo-Code does not provide it.
-- Documentation should describe stable current behavior, not temporary branches, commit hashes, or local preview build metadata.
+- Documentation should describe stable current behavior, not temporary branches, commit hashes, or local build metadata.
