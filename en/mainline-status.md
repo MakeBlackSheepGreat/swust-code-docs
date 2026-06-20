@@ -2,7 +2,7 @@
 
 > Updated: 2026-06-20  
 > Repository: <https://github.com/MakeBlackSheepGreat/swust-code>  
-> Current declared version: v0.5.0
+> Current declared version: v0.6.0
 
 ## Current Position
 
@@ -37,12 +37,13 @@ The SWUST layer adds:
 - Document Validation and cache-stable context layout
 - `@path` memory imports and one-fact-per-file fact storage
 - `/memory`, `/paste-image`, and common TUI control aliases
+- `/subagent` / `/subagents` project-level model, reasoning variant, and max-step settings for visible subagents
 
 ## TUI Status
 
 The current mainline keeps the MiMo/OpenTUI terminal experience while carrying over the useful old SWUST Code sidebar organization. The sidebar covers working directory, instruction files, Goal, Task, Todo, LSP, MCP, changed files, context window, token, cost, and cache sections.
 
-The home Logo uses the SWUST Code deep-blue primary color. Sidebar colors stay close to the old SWUST Code reading experience.
+The home Logo uses the SWUST Code deep-blue primary color. Sidebar colors stay close to the old SWUST Code reading experience. Visible subagents can be configured through `/subagent` with project-level model, reasoning variant, and max execution steps.
 
 ## Provider Naming
 
@@ -55,7 +56,7 @@ These names are provider or model IDs and are not part of SWUST branding replace
 
 ## Validation Status
 
-Before the latest push, the mainline passed TypeScript typecheck for the CLI package and command-related tests. Before a formal release, run the full build, full test suite, release flow, and npm publish validation.
+The current mainline has passed full TypeScript typecheck and regression coverage for subagent configuration updates. Before a formal release, run the full build, full test suite, release flow, and npm publish validation.
 
 ## Documentation Rule
 

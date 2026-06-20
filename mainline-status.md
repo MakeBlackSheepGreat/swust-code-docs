@@ -2,7 +2,7 @@
 
 > 更新日期：2026-06-20  
 > 代码仓库：<https://github.com/MakeBlackSheepGreat/swust-code>  
-> 当前声明版本：v0.5.0
+> 当前声明版本：v0.6.0
 
 ## 当前定位
 
@@ -37,12 +37,13 @@ SWUST 层补充：
 - Document Validation、cache-stable 上下文布局
 - `@path` 记忆导入与 one-fact-per-file 事实存储
 - `/memory`、`/paste-image` 和常用 TUI 控件别名
+- `/subagent` / `/subagents` 子智能体项目级模型、思考强度和最大步数配置
 
 ## TUI 状态
 
 当前主线保留 MiMo/OpenTUI 的终端体验，同时迁移旧 SWUST Code 较好的侧边栏组织方式。侧边栏覆盖工作目录、指令文件、Goal、Task、Todo、LSP、MCP、变更文件、上下文窗口、token、费用和缓存指标。
 
-首页 Logo 已调整为 SWUST Code 深蓝主色；侧边栏颜色保持接近旧 SWUST Code 的阅读体验。
+首页 Logo 已调整为 SWUST Code 深蓝主色；侧边栏颜色保持接近旧 SWUST Code 的阅读体验。可见子智能体可通过 `/subagent` 在项目内设置专属模型、思考强度和最大执行步数。
 
 ## Provider 命名
 
@@ -55,7 +56,7 @@ SWUST 层补充：
 
 ## 验证状态
 
-当前主线在最近一次推送前已完成针对 CLI 包的 TypeScript 类型检查和命令相关测试。正式发布前仍建议执行完整构建、完整测试、release 和 npm publish 验证。
+当前主线已通过全仓 TypeScript 类型检查，并覆盖子智能体配置更新相关回归测试。正式发布前仍建议执行完整构建、完整测试、release 和 npm publish 验证。
 
 ## 文档维护要求
 

@@ -29,7 +29,7 @@ Do not put temporary engineering status into public docs, including:
 If project status must be documented, write it as stable state, for example:
 
 ```md
-Current version: v0.5.0
+Current version: v0.6.0
 The mainline uses MiMo-Code as its runtime base.
 ```
 
@@ -37,7 +37,7 @@ Avoid process-log wording such as open pull-request status, mergeability notes, 
 
 ## MiMo-Code Base Principle
 
-SWUST Code v0.5.0 and later is based on MiMo-Code. When describing implementation:
+SWUST Code v0.5.0+ is based on MiMo-Code. When describing implementation:
 
 - If MiMo-Code already provides a capability, describe it as inherited from the MiMo-Code base.
 - Only describe SWUST Code as adding behavior when the capability is actually SWUST-specific.
@@ -49,7 +49,7 @@ SWUST Code v0.5.0 and later is based on MiMo-Code. When describing implementatio
 - Changelog entries should describe release-level changes.
 - Do not create separate entries for temporary PR syncs, local validation notes, or branch housekeeping.
 - Fold follow-up fixes for the same release into the release section when appropriate.
-- Use semantic versions such as `v0.5.0`.
+- Use semantic versions such as `v0.6.0`.
 
 ## Navigation And Home Page Rules
 

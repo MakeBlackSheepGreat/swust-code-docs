@@ -24,7 +24,7 @@ features:
     details: "通过持久化记忆、checkpoint、任务进度和上下文重建，让 Agent 在恢复会话或接近上下文上限时继续工作，而不是重新理解项目。"
     link: /features/memory
   - title: 多智能体工作流
-    details: "build、plan、compose、goal 等主智能体配合 subagent 编排，覆盖探索、实现、评审、TDD、验证和规格驱动开发。"
+    details: "build、plan、compose、goal 等主智能体配合 subagent 编排，覆盖探索、实现、评审、TDD、验证和规格驱动开发，并支持可见子智能体的项目级个性化配置。"
     link: /features/agents
   - title: 目标驱动自治
     details: "使用 /goal 或 run --goal 设置停止条件，由独立 judge 判断目标是否真正完成，降低长任务中的过早停止风险。"

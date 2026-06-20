@@ -1,5 +1,17 @@
 # 更新日志
 
+## v0.6.0 (2026-06-20)
+
+### 子智能体个性化配置
+
+- 新增 `/subagent` / `/subagents` TUI 入口，可为可见子智能体配置项目级模型、思考强度和最大执行步数。
+- Actor / subagent 运行路径补齐 `variant` 传递，子智能体会实际使用配置的思考强度。
+- 项目级配置支持清除 `agent.<name>.model`、`variant`、`steps` 覆盖值，清除后回退到 MiMo-Code 原生默认行为。
+- 保持 MiMo-Code 原生 agent registry 和 Actor 架构，只在 SWUST 层补充配置入口与参数传递。
+- 内部包版本声明更新为 `0.6.0`。
+
+---
+
 ## v0.5.0 (2026-06-19)
 
 ### 基座切换：OpenCode → MiMo-Code
