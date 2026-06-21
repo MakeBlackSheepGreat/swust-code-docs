@@ -3,131 +3,80 @@ layout: home
 
 hero:
   name: SWUST Code
-  text: "Terminal-native AI coding agent built on MiMo-Code"
-  tagline: "Work inside real repositories from the terminal: read code, edit files, run commands, delegate to subagents, write checkpoints, and keep project knowledge for the next session."
+  text: "龙山灵码"
+  tagline: "A terminal AI coding tool based on MiMo-Code. The current mainline inherits MiMo-Code memory, checkpoints, subagents, goal, compose, MCP, LSP, and plugins, with added Chinese TUI work, engineering safeguards, and project-level subagent settings."
   actions:
     - theme: brand
       text: Quick Start
       link: /en/guide/start
     - theme: alt
-      text: SWUST Advantages
-      link: /en/DIFFERENCES
-    - theme: alt
       text: Mainline Status
       link: /en/mainline-status
+    - theme: alt
+      text: SWUST Advantages
+      link: /en/DIFFERENCES
 
 features:
-  - title: Long-Task Continuity
-    details: "Memory, checkpoints, task progress, and context reconstruction work together so resumed sessions do not start from zero."
+  - title: MiMo-Code Base
+    details: "The current mainline inherits MiMo-Code runtime behavior. If MiMo already provides a feature, the MiMo implementation remains the default."
+    link: /en/mainline-status
+  - title: Memory And Checkpoints
+    details: "MEMORY.md, facts, checkpoint.md, and task progress store project facts, session state, and task progress."
     link: /en/features/memory
-  - title: Multi-Agent Collaboration
-    details: "build, plan, compose, goal, and subagents share one runtime path for planning, execution, review, and verification."
+  - title: Multi-Agent Runtime
+    details: "build, plan, compose, goal, and subagents are used for analysis, execution, orchestration, and verification."
     link: /en/features/agents
   - title: Engineering Safeguards
-    details: "Task Gate, Bash Safety, Write Guard, and Document Validation handle premature stops, risky shell commands, bad writes, and structured-document errors."
+    details: "Task Gate, Bash Safety, Write Guard, and Document Validation handle premature stops, risky commands, bad writes, and document-structure errors."
     link: /en/features/security
-  - title: Chinese-First TUI
-    details: "Sidebar layout, command aliases, prompts, feedback, and theme choices are tuned for daily terminal work by Chinese-speaking developers."
+  - title: Workflow And Consolidation
+    details: "workflow is used for resumable multi-stage work; dream and distill consolidate project knowledge and repeated processes."
+    link: /en/features/workflow
+  - title: Chinese TUI
+    details: "Chinese command text, sidebar information, and theme configuration are tuned for daily terminal work."
     link: /en/features/tui
-  - title: Evolving Project Knowledge
-    details: "/dream consolidates durable knowledge; /distill packages repeated work into skills, commands, subagents, or workflows."
-    link: /en/features/dream
-  - title: Per-Subagent Control
-    details: "/subagent sets project-level model, reasoning variant, and max-step limits for visible subagents."
-    link: /en/features/agents
 ---
-
-<div class="swust-signal-row">
-  <a class="swust-signal" href="/en/mainline-status">
-    <span class="swust-signal-label">Mainline</span>
-    <strong>MiMo-Code base</strong>
-    <span>v0.6.0</span>
-  </a>
-  <a class="swust-signal" href="/en/features/agents">
-    <span class="swust-signal-label">Agents</span>
-    <strong>build / plan / compose / goal</strong>
-    <span>project-level subagent settings</span>
-  </a>
-  <a class="swust-signal" href="/en/features/memory">
-    <span class="swust-signal-label">Continuity</span>
-    <strong>memory + checkpoint</strong>
-    <span>resume, compact, rebuild context</span>
-  </a>
-</div>
-
-<div class="swust-terminal">
-  <div class="swust-terminal-bar">
-    <span></span><span></span><span></span>
-    <strong>swust-code</strong>
-  </div>
-  <div class="swust-terminal-body">
-
-```bash
-$ swust-code
-> /goal fix type errors and update tests
-> /subagent
-> /dream
-```
-
-  </div>
-</div>
-
-## Product Position
-
-SWUST Code is not trying to be a terminal chat assistant with a thin coding wrapper. It is built around **long-horizon continuity, goal-driven autonomy, subagent coordination, and engineering safeguards** in one runtime model.
-
-It fits work such as:
-
-- repository-scale fixes, migrations, refactors, and validation
-- multi-step engineering tasks that need planning, execution, review, and follow-through
-- sessions that must resume with context intact rather than restart from scratch
-- projects that want to accumulate durable rules, architecture knowledge, and reusable workflows
 
 ## Start Here
 
-| Page | Why to read it |
-|------|----------------|
-| [Quick Start](/en/guide/start) | Install, configure a provider, and learn the daily command surface |
-| [Mainline Status](/en/mainline-status) | Understand what the current mainline inherits from MiMo-Code and what SWUST adds |
-| [SWUST Advantages](/en/DIFFERENCES) | Understand why the current mainline keeps MiMo first and where the SWUST layer adds product value |
-| [Persistent Memory](/en/features/memory) | Learn how memory, checkpoints, and context reconstruction work together |
-| [Agent Modes](/en/features/agents) | Learn how build, plan, compose, goal, and subagents cooperate |
-| [Workflow Engine](/en/features/workflow) | Learn how multi-agent execution is scripted and resumed |
+| Goal | Page |
+|------|------|
+| Install and complete the first launch | [Quick Start](/en/guide/start) |
+| Check what the current mainline is based on | [Mainline Status](/en/mainline-status) |
+| Understand what SWUST adds beyond MiMo | [SWUST Advantages](/en/DIFFERENCES) |
+| Understand agents, subagents, goal, and compose | [Agent Modes](/en/features/agents) |
+| Understand memory and checkpoint recovery | [Persistent Memory](/en/features/memory) |
+| Read CLI and config details | [CLI Commands](/en/api/commands), [Config Schema](/en/api/config-schema) |
 
-## Four Tracks
+## Basic Facts
 
-<div class="swust-flow-grid">
-  <a class="swust-flow-card" href="/en/features/agents">
-    <span>01</span>
-    <strong>Agent Roles</strong>
-    <p>Use build, plan, compose, goal, and subagents for the main thread, research, orchestration, autonomy, and local execution.</p>
-  </a>
-  <a class="swust-flow-card" href="/en/features/memory">
-    <span>02</span>
-    <strong>Memory And Resume</strong>
-    <p>Use MEMORY.md, facts, checkpoints, and task progress to preserve context that can continue later.</p>
-  </a>
-  <a class="swust-flow-card" href="/en/features/security">
-    <span>03</span>
-    <strong>Engineering Safeguards</strong>
-    <p>Handle risky shell commands, bad writes, premature stops, and structured-document mistakes in the runtime.</p>
-  </a>
-  <a class="swust-flow-card" href="/en/features/workflow">
-    <span>04</span>
-    <strong>Workflow Packaging</strong>
-    <p>Turn repeated multi-agent processes into recoverable, recorded, repeatable workflows.</p>
-  </a>
-</div>
+| Item | Current value |
+|------|---------------|
+| Chinese name | 龙山灵码 |
+| English name | SWUST Code |
+| CLI command | `swust-code` |
+| Declared version | `v0.6.0` |
+| Runtime base | MiMo-Code |
+| Project directory | `.swust-code/` |
+| Runtime config | `swust-code.json` or `swust-code.jsonc` |
 
-## Best-Fit Workloads
+## Fit
 
-| Scenario | How SWUST approaches it |
-|----------|--------------------------|
-| Long-running fixes | goal, task state, and checkpoints keep work moving |
-| Multi-stage implementation | compose, subagents, and workflow runtime organize the path |
-| Project knowledge accumulation | memory, dream, and distill turn repeated work into durable assets |
-| Risky engineering actions | permission layers, bash safety, and write guards reduce operational mistakes |
+SWUST Code is better suited for repository work that needs more than one turn, such as:
 
-## What It Does Not Optimize For
+- fixing a set of type, test, or build failures
+- completing a refactor, upgrade, or feature in phases
+- delegating investigation, implementation, review, or verification to subagents
+- keeping project rules and progress across sessions
 
-SWUST Code is not primarily optimized for short one-shot prompting or demo-style coding. Its design target is real repositories, real constraints, and long-running engineering work.
+It is not mainly a short-answer chat interface. For a brief explanation, a normal chat tool is often simpler.
+
+## Relationship To MiMo-Code
+
+The maintenance rule is:
+
+1. If MiMo-Code already provides a capability, keep the MiMo implementation first.
+2. If MiMo-Code does not provide it, add the SWUST layer.
+3. Keep provider and model names unchanged, including `MiMo Auto`, `mimo/mimo-auto`, and `xiaomi/mimo-*`.
+
+This rule prevents the current mainline from drifting back toward the older OpenCode-era implementation and keeps inherited behavior separate from SWUST-specific additions.
