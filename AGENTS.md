@@ -54,7 +54,7 @@ Do not copy another site's visual identity, colors, imagery, or layout gimmicks.
 
 ## Common Failure Modes To Avoid
 
-The most recent rejected draft failed because it sounded like an internal maintenance memo. Do not repeat these patterns:
+User feedback about documentation quality is editorial guidance for the agent. Internal critique, rejected wording, and repair instructions must be incorporated into this file, not repeated in public documentation. Do not repeat these patterns:
 
 - Do not put sections named `当前主线`, `先确认这三件事`, `命名边界`, `维护原则`, or similar governance headings on the home page.
 - Do not use audit-table language such as `模块 / 当前行为`, `问题 / 结论 / 继续阅读`, or `层级 / 内容 / 说明` on the home page. These tables belong in reference pages only when they answer a real user question.

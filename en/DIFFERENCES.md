@@ -11,7 +11,7 @@ The usefulness of a terminal tool depends heavily on whether state and actions a
 - command descriptions, prompts, and common dialogs use Chinese wording
 - the sidebar shows working directory, Goal, Task, Todo, LSP, MCP, changed files, token usage, cost, and cache state
 - getting-started prompts point to common entry points
-- the theme uses deep blue as the main color instead of keeping MiMo's orange home-screen identity
+- the theme uses deep blue as the main color and matches the current SWUST Code TUI
 
 These interface changes reduce the time spent looking for state and commands in the terminal.
 
