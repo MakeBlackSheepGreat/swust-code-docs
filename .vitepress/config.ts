@@ -5,6 +5,7 @@ export default defineConfig({
   description: '基于 MiMo-Code 的终端原生 AI 编程智能体',
   lang: 'zh-CN',
   base: '/',
+  srcExclude: ['AGENTS.md', 'README.md'],
 
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],

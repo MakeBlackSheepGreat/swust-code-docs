@@ -7,24 +7,22 @@
 - 新增 `/subagent` / `/subagents` TUI 入口，可为可见子智能体配置项目级模型、思考强度和最大执行步数。
 - Actor / subagent 运行路径补齐 `variant` 传递，子智能体会实际使用配置的思考强度。
 - 项目级配置支持清除 `agent.<name>.model`、`variant`、`steps` 覆盖值，清除后回退到 MiMo-Code 原生默认行为。
-- 保持 MiMo-Code 原生 agent registry 和 Actor 架构，只在 SWUST 层补充配置入口与参数传递。
-- 内部包版本声明更新为 `0.6.0`。
+- 子智能体配置入口复用现有 agent registry 和 Actor 架构。
+- 版本声明更新为 `0.6.0`。
 
 ---
 
 ## v0.5.0 (2026-06-19)
 
-### 基座切换：OpenCode → MiMo-Code
+### 运行时更新
 
-将项目主线从 OpenCode 基座切换为 MiMo-Code 基座。MiMo-Code 本身是 OpenCode 的 fork，已内置持久化记忆、智能体编排、Goal 驱动自治、Compose 工作流、Dream/Distill 自我进化、语音输入等核心能力。
+v0.5.0 接入 MiMo-Code 运行时，获得持久化记忆、智能体编排、Goal 驱动自治、Compose 工作流、Dream/Distill 自我进化、语音输入等能力。
 
 ### 主线变更
 
-- 基座从 OpenCode v1.17.4 切换为 MiMo-Code
-- 品牌替换：`@mimo-ai/*` → `@swust-code/*`，`.mimocode/` → `.swust-code/`，`MIMOCODE_*` → `SWUST_CODE_*`
+- 包名、配置目录和环境变量前缀更新为 SWUST Code 命名
 - CLI 命令统一为 `swust-code`
-- 内部包版本声明更新为 `0.5.0`
-- AI 服务商和模型名称保持原样：MiMo Auto、小米 MiMo 平台、`mimo/mimo-auto`、`xiaomi/mimo-*`
+- 版本声明更新为 `0.5.0`
 
 ### MiMo-Code 原生能力
 
@@ -47,15 +45,14 @@
 
 ### TUI 与文档
 
-- 迁移旧 SWUST Code 侧边栏体验：工作目录、指令文件、Goal、Task、Todo、LSP、MCP、变更文件、上下文窗口、token、费用和缓存指标。
+- 侧边栏展示工作目录、指令文件、Goal、Task、Todo、LSP、MCP、变更文件、上下文窗口、token、费用和缓存指标。
 - 接入 getting-started 提示、路径显示、中文 i18n、attention 通知和声音包配置。
-- README 与文档站统一为 MiMo-Code 基座口径。
 
 ---
 
 ## v0.4.0 (2026-06-15)
 
-本版继续按 MiMo Code 作为主参考进行 1:1 对齐，并把上一版仍分散在指令、工具或占位逻辑里的能力收束到真实运行时。代码仓库对应提交：`bcd90b7 feat: align agent runtime with MiMo patterns`。
+本版把智能体模式、Actor 运行时、checkpoint writer 和工作流能力接入实际会话路径。
 
 ### 智能体模式
 
@@ -80,23 +77,16 @@
 - writer 完成后推进 `last_checkpoint_message_id`；溢出时优先插入 checkpoint boundary，再回退到传统 compaction。
 - 新增 checkpoint 模板、校验器、splitover 插件、progress reconcile 和 rebuild boundary 测试。
 
-### 文档与可读性
+### 文档
 
-- 新增“智能体模式”功能页，集中说明 `main`、`compose`、`goal`、subagent、`checkpoint-writer` 的使用边界。
-- 更新首页、Goal、Memory、Skills、Workflow、Tools 和 Commands 页面，使描述对齐 v0.4 代码状态。
-- 文档站新增 VitePress 主题样式：优化正文行宽、行距、标题间距、表格横向滚动、长路径和 inline code 换行。
-
-### 验证
-
-- `bun typecheck` 通过。
-- 定向回归通过：`154 pass, 14 skip, 0 fail`，覆盖 checkpoint、message-v2、actor、prompt、reminders、goal-agent routing 和 workflow runtime。
-- `git diff --check` 通过，仅有 Windows 换行提示。
+- 新增“智能体模式”功能页，说明 `main`、`compose`、`goal`、subagent、`checkpoint-writer` 的使用边界。
+- 文档站新增 VitePress 主题样式，优化正文行宽、行距、标题间距、表格横向滚动、长路径和 inline code 换行。
 
 ---
 
 ## v0.3.0 (2026-06-14)
 
-根据当前 `swust-code` 最新代码状态更新文档站：本版重点是把 0.2 中仍处于占位或待接入的能力推进到可运行路径，并补齐 TUI 体验文档。
+本版把 0.2 中仍处于说明或早期接入阶段的能力推进到可运行路径，并补齐 TUI 体验文档。
 
 ### 目标驱动自治
 
@@ -138,21 +128,20 @@
 
 ## v0.2.0 (2026-06-14)
 
-移植自 DeepSeek-Reasonix（esengine）和 MiMo-Code/Claude-Code 的 Session 增强。
+本版新增 Session 增强，包括缓存、记忆、重试、循环检测、token 估算和工具输出裁剪。
 
-### 文档状态校准
+### 文档更新
 
-- 根据当前 `swust-code` 代码重新校准文档站描述
 - 修正 Goal Judge、Dream/Distill 自动调度、Workflow QuickJS、技能条件激活和 i18n 的成熟度说明
 - 新增英文 API 参考与配置 Schema 页面
 
-### 缓存优先架构（移植自 DeepSeek-Reasonix）
+### 缓存优先架构
 
 - System prompt 分为字节稳定前缀 + 每轮 tail
 - 前缀在会话内保持不变，LLM Provider 缓存持续命中
 - 降低长会话的 token 成本
 
-### 记忆增强（移植自 DeepSeek-Reasonix）
+### 记忆增强
 
 - `@path` 导入指令：MEMORY.md 中可 `@path` 导入其他文件，递归解析，深度限制 5
 - One-Fact-Per-File 存储：每个事实一个 md 文件 + frontmatter，MEMORY.md 自动索引
@@ -160,12 +149,12 @@
 
 ### Session 增强
 
-- **Retry 策略**（移植自 MiMo-Code）：header-aware 指数退避，transient error 检测（429/5xx/ECONNRESET）
-- **Doom Loop 检测**（移植自 MiMo-Code）：3 次相同 tool call + 相同 input 自动打断循环
-- **Token 估算**（移植自 Claude-Code）：三层估算（rough → API → fallback），auto-compact 阈值，context window 管理
-- **Tool Output 裁剪**（移植自 DevEco Code）：保护最近 40K tokens，旧 tool output 标记为 compacted
+- **Retry 策略**：header-aware 指数退避，transient error 检测（429/5xx/ECONNRESET）
+- **Doom Loop 检测**：3 次相同 tool call + 相同 input 自动打断循环
+- **Token 估算**：三层估算（rough → API → fallback），auto-compact 阈值，context window 管理
+- **Tool Output 裁剪**：保护最近 40K tokens，旧 tool output 标记为 compacted
 
-### 国际化（移植自 MiMo-Code）
+### 国际化
 
 - 17 种语言类型定义，当前完整字典落地为 en/zh，其余 locale 保留类型与标签
 - 三层语言自动检测：时区 → 环境变量 → Intl API
@@ -176,9 +165,8 @@
 
 ### 代码质量
 
-- 接入所有孤立模块（import-resolver、token-estimation、fact-store）
-- 消除重复代码，统一使用共享工具函数
-- 全面审计：10 个模块接入状态验证，6 个孤立模块修复
+- 接入 import-resolver、token-estimation、fact-store
+- 统一相关工具函数，减少重复实现
 
 ### 凭证导入
 
@@ -197,7 +185,7 @@
 
 ### 初始版本
 
-基于 OpenCode v1.17.4 构建，移植自 MiMo-Code（小米）和 DevEco Code（nicognaW）。
+初始版本提供记忆、目标驱动自治、安全防护、多 Agent 编排、工作流和扩展能力。
 
 ### 核心特性
 
@@ -227,7 +215,7 @@
 
 **多 Agent 编排**
 - Actor/Spawn 子 Agent 系统
-- Fork Cache 对齐
+- Fork Cache
 - Coordinator 协议
 
 **工作流引擎**

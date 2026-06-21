@@ -42,8 +42,6 @@ swust-code
 | `从 Claude Code 导入` | 本机已有 Claude Code 凭证 |
 | `自定义 Provider` | 使用 OpenAI 兼容网关或其他模型服务 |
 
-Provider 和模型名称保持原名。`MiMo Auto`、`小米 MiMo 平台`、`mimo/mimo-auto`、`xiaomi/mimo-*` 都是服务商或模型标识。
-
 如果你更习惯从终端管理 Provider：
 
 ```bash

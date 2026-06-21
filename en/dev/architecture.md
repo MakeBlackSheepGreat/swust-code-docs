@@ -1,8 +1,8 @@
 # Architecture
 
-## Runtime Layers
+SWUST Code is organized around terminal interfaces, task orchestration, session runtime, tools, and project-state storage. A useful first pass is to read the system by responsibility rather than by exact source directory.
 
-SWUST Code keeps the MiMo-Code runtime foundation and adds a SWUST product layer on top of it. A practical way to read the system is as five layers:
+## Runtime Layers
 
 ```text
 Interface Layer
@@ -21,43 +21,38 @@ Foundation Layer
   Effect services / SQLite + Drizzle / config / filesystem / project state
 ```
 
-## What Matters Most
+This diagram describes responsibility boundaries. It does not map one-to-one to every source directory.
 
-For everyday users, the most important architectural point is that memory, checkpoints, task state, and subagent execution are not isolated features. They participate in the same runtime path that drives long-running work.
+## Monorepo Areas
 
-That is why SWUST Code behaves differently from a simple terminal wrapper around an LLM:
+| Package group | Main responsibility |
+|---------------|---------------------|
+| `opencode` | runtime, CLI, sessions, tools, config, server routes |
+| `app` / `desktop` / `web` / `console` | user interfaces and interaction surfaces |
+| `sdk` / `ui` / `shared` | shared types, components, and common utilities |
+| `plugin` / `extensions` / `function` | extension and runtime integration surfaces |
+| `script` / `containers` / `identity` / `enterprise` / `slack` / `storybook` | build, integration, deployment, and surrounding services |
 
-- sessions can resume with reconstructed context
-- subagents can operate as part of the same engineering workflow
-- goal-driven continuation can keep working until a stop condition is actually satisfied
-- project knowledge can be retained and gradually refined
+## Critical Paths
 
-## MiMo Base, SWUST Layer
+### Session Runtime
 
-The mainline follows a strict inheritance rule:
+The session runtime assembles input, selects models, calls tools, handles permissions, and records messages. Long tasks also use memory, checkpoints, and context reconstruction.
 
-- when MiMo-Code already provides the capability, keep the MiMo implementation first
-- when MiMo-Code does not provide it, add a SWUST layer with limited surface change
+### Agent Orchestration
 
-That keeps the runtime cohesive while allowing SWUST to improve Chinese-first UX, engineering safeguards, and project-level control.
+The primary agent, subagents, `goal`, `compose`, and workflows share task state and tool boundaries. Subagent results return to the primary task path, while workflows make multi-stage execution resumable.
 
-## Key SWUST Additions
+### Engineering Safeguards
 
-Within that structure, the most visible SWUST-specific additions are:
+Task Gate, Bash Safety, Write Guard, and Document Validation affect execution boundaries. They handle premature stopping, risky shell commands, write targets, and structured-document edits.
 
-- Chinese-first TUI information organization
-- richer sidebar context for long terminal sessions
-- Task Gate, Bash Safety, Write Guard, and Document Validation
-- project-level visible-subagent settings for model, variant, and max steps
-- memory organization refinements such as `@path` imports and fact storage
+## Reading Order
 
-## Why The Architecture Is Shaped This Way
+To continue into the code structure, start with:
 
-The architecture is optimized for repository-scale work that unfolds over time. That means it prioritizes:
-
-- continuity over one-shot prompting
-- explicit task state over implicit intent
-- governed delegation over ad hoc agent spawning
-- operational safety over unrestricted execution
-
-For API and CLI details, use the main reference pages rather than treating this page as a command catalog.
+1. [Agent Modes](/en/features/agents)
+2. [Persistent Memory](/en/features/memory)
+3. [Workflow Engine](/en/features/workflow)
+4. [Security](/en/features/security)
+5. [Config Schema](/en/api/config-schema)

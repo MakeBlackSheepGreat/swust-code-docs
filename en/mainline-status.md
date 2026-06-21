@@ -6,9 +6,9 @@ Repository: <https://github.com/MakeBlackSheepGreat/swust-code>
 
 ## Current Version
 
-v0.6.0 is based on MiMo-Code. Runtime capabilities that already exist in MiMo-Code keep their original implementation, including memory, checkpoints, actor / subagent, `goal`, `compose`, Dream / Distill, MCP, LSP, plugins, and the TUI / Server Runtime.
+v0.6.0 is based on MiMo-Code and includes long-task runtime capabilities such as memory, checkpoints, actor / subagent, `goal`, `compose`, Dream / Distill, MCP, LSP, plugins, and the TUI / Server Runtime.
 
-The SWUST layer mainly adds:
+This version adds the following SWUST-side work:
 
 - Chinese-first TUI wording and information layout
 - richer sidebar context
@@ -26,19 +26,6 @@ The SWUST layer mainly adds:
 | subagent delegation, review, and parallel execution | good fit |
 | durable project knowledge and memory maintenance | good fit |
 | one-shot conceptual questions | not the main target |
-
-## Version Wording
-
-When the docs mention memory, checkpoints, subagents, `goal`, `compose`, Dream / Distill, and related runtime behavior, they refer to the MiMo-Code implementation inherited by the current mainline. SWUST-specific wording is reserved for behavior that SWUST actually adds or changes, such as Task Gate, Bash Safety, Write Guard, Document Validation, and project-level `/subagent` settings.
-
-Provider and model names keep their original names:
-
-- `MiMo Auto`
-- Xiaomi MiMo Platform
-- `mimo/mimo-auto`
-- `xiaomi/mimo-*`
-
-These are provider or model identifiers and remain unchanged in configuration and documentation.
 
 ## Next Reading
 

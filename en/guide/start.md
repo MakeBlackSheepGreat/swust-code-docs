@@ -42,8 +42,6 @@ The first launch opens provider setup. Common options are:
 | `Import from Claude Code` | Claude Code credentials already exist on this machine |
 | `Custom Provider` | You use an OpenAI-compatible gateway or another provider |
 
-Provider and model names keep their original naming. `MiMo Auto`, `Xiaomi MiMo Platform`, `mimo/mimo-auto`, and `xiaomi/mimo-*` remain provider or model identifiers.
-
 If you prefer to manage providers from the terminal:
 
 ```bash

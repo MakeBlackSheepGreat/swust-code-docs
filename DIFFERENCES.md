@@ -11,7 +11,6 @@ MiMo-Code 提供记忆、checkpoint、subagent、`goal`、`compose`、Dream / Di
 - 命令说明、提示和常用对话框使用中文表达
 - 侧边栏展示工作目录、Goal、Task、Todo、LSP、MCP、变更文件、token、费用和缓存状态
 - getting started 提示直接指向常用入口
-- 主题以深蓝色为主，和龙山灵码当前 TUI 保持一致
 
 这些界面调整用于减少终端里反复查找状态和命令的时间。
 

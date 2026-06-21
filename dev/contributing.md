@@ -34,13 +34,6 @@ bun turbo test
 - **工具注册**：`Tool.make({ description, input, output, execute })`
 - **测试**：Bun test runner
 
-## 分支策略
-
-- `main` — 稳定版本
-- `dev` — 开发分支
-- 功能分支：`feature/<name>`
-- 修复分支：`fix/<name>`
-
 ## 提交规范
 
 ```
