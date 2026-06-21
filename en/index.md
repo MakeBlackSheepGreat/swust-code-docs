@@ -4,7 +4,7 @@ layout: home
 hero:
   name: SWUST Code
   text: "Terminal-native AI coding agent built on MiMo-Code"
-  tagline: "Designed for long-running software work. SWUST Code keeps MiMo-Code's runtime strengths for memory, checkpoints, subagent orchestration, goal, Compose, Dream/Distill, MCP, LSP, and plugins, then adds Chinese-first terminal UX, engineering safeguards, and project-level control."
+  tagline: "Work inside real repositories from the terminal: read code, edit files, run commands, delegate to subagents, write checkpoints, and keep project knowledge for the next session."
   actions:
     - theme: brand
       text: Quick Start
@@ -18,24 +18,59 @@ hero:
 
 features:
   - title: Long-Task Continuity
-    details: "Persistent memory, checkpoints, task progress, and context reconstruction help the agent continue work instead of relearning the repository."
+    details: "Memory, checkpoints, task progress, and context reconstruction work together so resumed sessions do not start from zero."
     link: /en/features/memory
   - title: Multi-Agent Collaboration
-    details: "build, plan, compose, goal, and subagents share one runtime model for planning, parallel execution, review, verification, and autonomy."
+    details: "build, plan, compose, goal, and subagents share one runtime path for planning, execution, review, and verification."
     link: /en/features/agents
   - title: Engineering Safeguards
-    details: "On top of the MiMo base, SWUST adds Task Gate, Bash Safety, Write Guard, Document Validation, and stronger context governance."
+    details: "Task Gate, Bash Safety, Write Guard, and Document Validation handle premature stops, risky shell commands, bad writes, and structured-document errors."
     link: /en/features/security
   - title: Chinese-First TUI
-    details: "Sidebar organization, control aliases, feedback surfaces, theme choices, and reading flow are tuned for real daily terminal work."
+    details: "Sidebar layout, command aliases, prompts, feedback, and theme choices are tuned for daily terminal work by Chinese-speaking developers."
     link: /en/features/tui
   - title: Evolving Project Knowledge
-    details: "/dream and /distill turn durable project knowledge and repeated workflows into reusable memory, skills, subagents, or commands."
+    details: "/dream consolidates durable knowledge; /distill packages repeated work into skills, commands, subagents, or workflows."
     link: /en/features/dream
   - title: Per-Subagent Control
-    details: "Visible subagents can be configured with project-level model, reasoning variant, and max-step limits."
+    details: "/subagent sets project-level model, reasoning variant, and max-step limits for visible subagents."
     link: /en/features/agents
 ---
+
+<div class="swust-signal-row">
+  <a class="swust-signal" href="/en/mainline-status">
+    <span class="swust-signal-label">Mainline</span>
+    <strong>MiMo-Code base</strong>
+    <span>v0.6.0</span>
+  </a>
+  <a class="swust-signal" href="/en/features/agents">
+    <span class="swust-signal-label">Agents</span>
+    <strong>build / plan / compose / goal</strong>
+    <span>project-level subagent settings</span>
+  </a>
+  <a class="swust-signal" href="/en/features/memory">
+    <span class="swust-signal-label">Continuity</span>
+    <strong>memory + checkpoint</strong>
+    <span>resume, compact, rebuild context</span>
+  </a>
+</div>
+
+<div class="swust-terminal">
+  <div class="swust-terminal-bar">
+    <span></span><span></span><span></span>
+    <strong>swust-code</strong>
+  </div>
+  <div class="swust-terminal-body">
+
+```bash
+$ swust-code
+> /goal fix type errors and update tests
+> /subagent
+> /dream
+```
+
+  </div>
+</div>
 
 ## Product Position
 
@@ -58,6 +93,31 @@ It fits work such as:
 | [Persistent Memory](/en/features/memory) | Learn how memory, checkpoints, and context reconstruction work together |
 | [Agent Modes](/en/features/agents) | Learn how build, plan, compose, goal, and subagents cooperate |
 | [Workflow Engine](/en/features/workflow) | Learn how multi-agent execution is scripted and resumed |
+
+## Four Tracks
+
+<div class="swust-flow-grid">
+  <a class="swust-flow-card" href="/en/features/agents">
+    <span>01</span>
+    <strong>Agent Roles</strong>
+    <p>Use build, plan, compose, goal, and subagents for the main thread, research, orchestration, autonomy, and local execution.</p>
+  </a>
+  <a class="swust-flow-card" href="/en/features/memory">
+    <span>02</span>
+    <strong>Memory And Resume</strong>
+    <p>Use MEMORY.md, facts, checkpoints, and task progress to preserve context that can continue later.</p>
+  </a>
+  <a class="swust-flow-card" href="/en/features/security">
+    <span>03</span>
+    <strong>Engineering Safeguards</strong>
+    <p>Handle risky shell commands, bad writes, premature stops, and structured-document mistakes in the runtime.</p>
+  </a>
+  <a class="swust-flow-card" href="/en/features/workflow">
+    <span>04</span>
+    <strong>Workflow Packaging</strong>
+    <p>Turn repeated multi-agent processes into recoverable, recorded, repeatable workflows.</p>
+  </a>
+</div>
 
 ## Best-Fit Workloads
 
