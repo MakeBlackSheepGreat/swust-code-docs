@@ -52,6 +52,28 @@ Do not copy another site's visual identity, colors, imagery, or layout gimmicks.
 - short headings that describe the user's next decision
 - evidence before claims
 
+## Common Failure Modes To Avoid
+
+The most recent rejected draft failed because it sounded like an internal maintenance memo. Do not repeat these patterns:
+
+- Do not put sections named `当前主线`, `先确认这三件事`, `命名边界`, `维护原则`, or similar governance headings on the home page.
+- Do not use audit-table language such as `模块 / 当前行为`, `问题 / 结论 / 继续阅读`, or `层级 / 内容 / 说明` on the home page. These tables belong in reference pages only when they answer a real user question.
+- Do not explain the MiMo/SWUST inheritance rule repeatedly. State it once where it matters, then move on to usage.
+- Do not write sentences whose main point is "we did not rebrand this" or "we did not rewrite that" unless the page is specifically about compatibility.
+- Do not write evaluative setup phrases such as "定位很明确", "真正危险的地方", "价值不在于", "the point is not", or "narrow product position". Start with the concrete behavior instead.
+- Do not mix Chinese prose with raw English nouns when a clear Chinese phrase exists. Keep product terms like `checkpoint`, `subagent`, `provider`, `variant`, `MCP`, and `LSP`; translate generic words such as "config", "current line", "module", and "settings" in Chinese pages.
+- Do not use table cells that force awkward line breaks for short labels. If a table becomes visually cramped, use short sections, bullets, or a definition list instead.
+- Do not write "某某更适合真实工程" without immediately naming the command, file, screen, or behavior that proves it.
+
+Home page writing should feel like a project front page:
+
+1. What this tool is.
+2. How to install it.
+3. What it is good at.
+4. Where to read next.
+
+Status and developer pages may carry maintenance rules, but they must be brief and clearly separated from user-facing setup and feature pages.
+
 ## Anti-AI Writing Rules
 
 Before adding or rewriting any page, remove these patterns:

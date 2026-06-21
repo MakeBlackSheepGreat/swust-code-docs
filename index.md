@@ -4,7 +4,7 @@ layout: home
 hero:
   name: 龙山灵码
   text: "SWUST Code"
-  tagline: "基于 MiMo-Code 的终端 AI 编程工具。它保留 MiMo-Code 的长任务运行时，并在中文 TUI、工程防护、记忆组织和项目级子智能体配置上增加 SWUST 层。"
+  tagline: "基于 MiMo-Code 的终端 AI 编程工具，适合在真实仓库中处理修复、重构、迁移等需要多轮推进的任务。"
   actions:
     - theme: brand
       text: 快速开始
@@ -19,72 +19,64 @@ hero:
 
 <section class="swust-home-intro">
   <div class="swust-install">
-    <p class="swust-kicker">INSTALL</p>
+    <p class="swust-kicker">安装</p>
     <pre><code>npm install -g @swust-code/cli
 swust-code</code></pre>
   </div>
   <div class="swust-facts">
-    <p class="swust-kicker">CURRENT LINE</p>
+    <p class="swust-kicker">信息</p>
     <dl>
-      <div><dt>声明版本</dt><dd>v0.6.0</dd></div>
-      <div><dt>运行时基座</dt><dd>MiMo-Code</dd></div>
-      <div><dt>CLI</dt><dd><code>swust-code</code></dd></div>
-      <div><dt>项目目录</dt><dd><code>.swust-code/</code></dd></div>
+      <div><dt>版本</dt><dd>v0.6.0</dd></div>
+      <div><dt>基座</dt><dd>MiMo-Code</dd></div>
+      <div><dt>命令</dt><dd><code>swust-code</code></dd></div>
+      <div><dt>项目资产</dt><dd><code>.swust-code/</code></dd></div>
     </dl>
   </div>
 </section>
 
-## 当前主线
+## 适合处理的任务
 
-| 模块 | 当前行为 |
-|------|----------|
-| MiMo-Code 基座 | memory、checkpoint、subagent、`goal`、`compose`、MCP、LSP 和插件能力继续遵循 MiMo 当前主线。 |
-| 可恢复长任务 | `MEMORY.md`、facts、`checkpoint.md` 和 task progress 用于保存项目事实、会话状态和任务进度。 |
-| subagent 设置 | 使用 `/subagent` 为可见子智能体设置模型、variant 和最大步数，配置写入项目 config。 |
+龙山灵码更适合放在已有仓库里使用，尤其是一次对话很难完成的工作：
 
-## 先确认这三件事
+- 修复一组测试、类型或构建错误
+- 分阶段完成重构、迁移或功能实现
+- 把调查、实现、评审、验证交给不同子智能体
+- 在多次会话之间保留项目规则、结论和进度
 
-| 问题 | 结论 | 继续阅读 |
-|------|------|----------|
-| 当前主线基于什么 | MiMo-Code。MiMo 已有能力优先保留原生实现。 | [主线状态](/mainline-status) |
-| SWUST 新增什么 | 中文 TUI、Task Gate、Bash Safety、Write Guard、Document Validation、`/subagent` 项目级配置等。 | [SWUST 优势](/DIFFERENCES) |
-| 第一次怎么用 | 安装 CLI，在仓库根目录运行 `swust-code`，按向导配置 Provider。 | [快速开始](/guide/start) |
+如果只是解释一个概念，普通聊天工具通常更直接。
 
-## 适合什么工作
+## 核心能力
 
-SWUST Code 更适合真实仓库里的连续任务：
+### 记住项目上下文
 
-- 多文件修复、重构、迁移、升级
-- 需要 `goal` 判断完成条件的长任务
-- 需要 subagent 调查、实现、评审或验证的任务
-- 需要在多次会话之间保留项目规则、事实和进度的任务
+项目记忆保存长期规则和事实。会话接近上下文上限时，checkpoint 会记录当前进度，恢复时再把必要信息组合回上下文。
 
-如果只是问一个简短概念，普通聊天工具通常更直接。
+阅读：[持久化记忆](/features/memory)
 
-## MiMo 基座与 SWUST 层
+### 拆分长任务
 
-| 层级 | 内容 | 说明 |
-|------|------|------|
-| MiMo-Code 基座 | memory、checkpoint、actor / subagent、`goal`、`compose`、Dream / Distill、MCP、LSP、插件、TUI / Server Runtime | 文档中按 MiMo 原生能力描述。 |
-| SWUST 层 | 中文优先信息组织、侧边栏体验、工程防护、记忆路径守卫、文档验证、子智能体项目级配置 | 只在 MiMo 没有或 SWUST 明确增强的地方写成新增价值。 |
+`goal` 用自然语言描述完成条件，`compose` 用于组织复杂任务，subagent 用于处理局部调查、实现或验证。
 
-## 常用入口
+阅读：[智能体模式](/features/agents)
 
-| 你要做什么 | 页面 |
-|------------|------|
-| 安装、首次启动、配置 Provider | [快速开始](/guide/start) |
-| 理解主智能体、`goal`、`compose` 和 subagent | [智能体模式](/features/agents) |
-| 理解 `MEMORY.md`、facts 和 checkpoint | [持久化记忆](/features/memory) |
-| 查看 Task Gate、Bash Safety、Write Guard | [安全防护](/features/security) |
-| 查看 CLI 命令和配置字段 | [CLI 命令](/api/commands)、[配置 Schema](/api/config-schema) |
+### 收紧工程风险
 
-## 命名边界
+Task Gate、Bash Safety、Write Guard 和 Document Validation 分别处理提前停止、高风险 shell 命令、越界写入和结构化文档修改。
 
-Provider 和模型名称不替换：
+阅读：[安全防护](/features/security)
 
-- `MiMo Auto`
-- `小米 MiMo 平台`
-- `mimo/mimo-auto`
-- `xiaomi/mimo-*`
+### 沉淀重复流程
 
-这些是服务商或模型标识，不是 SWUST 品牌文案。
+`/dream` 用于整理项目知识，`/distill` 用于把重复动作沉淀为 skill、command、subagent 或 workflow。
+
+阅读：[工作流引擎](/features/workflow)
+
+## 从这里开始
+
+| 目标 | 页面 |
+|------|------|
+| 安装并完成第一次启动 | [快速开始](/guide/start) |
+| 配置模型和 Provider | [LLM 提供商](/guide/providers) |
+| 了解子智能体、`goal` 和 `compose` | [智能体模式](/features/agents) |
+| 查看 CLI 和配置字段 | [CLI 命令](/api/commands)、[配置 Schema](/api/config-schema) |
+| 了解当前版本状态 | [主线状态](/mainline-status) |

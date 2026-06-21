@@ -1,89 +1,49 @@
 # 主线状态
 
-> 当前声明版本：v0.6.0
-> 代码仓库：<https://github.com/MakeBlackSheepGreat/swust-code>
+当前声明版本：`v0.6.0`
 
-## 当前主线是什么
+代码仓库：<https://github.com/MakeBlackSheepGreat/swust-code>
 
-龙山灵码当前主线以 MiMo-Code 为运行时基座。维护时按下面的规则判断：
+## 当前版本
 
-- MiMo-Code 已有的运行时能力，继续沿用 MiMo 当前主线实现
-- SWUST 的新增内容，尽量以独立增强层叠加
-- Provider、模型和服务名称保持原始命名，不做产品品牌替换
+v0.6.0 基于 MiMo-Code。MiMo-Code 已经提供的运行时能力继续沿用原实现，包括记忆、checkpoint、actor / subagent、`goal`、`compose`、Dream / Distill、MCP、LSP、插件和 TUI / Server Runtime。
 
-因此，当前主线应被理解为“**MiMo-Code 基座上的 SWUST 产品层**”。
+SWUST 层主要增加这些内容：
 
-## 主线继承了什么
-
-当前主线继承 MiMo-Code 的核心运行时能力：
-
-- 终端 TUI、Server Runtime、Web / Desktop 入口
-- 多 Provider 模型路由与 OpenAI 兼容接入
-- LSP、MCP、插件、自定义命令、技能系统
-- 持久化记忆、checkpoint、上下文重建
-- actor / subagent 编排与任务追踪
-- `goal`、`compose`、Dream / Distill、语音输入
-
-这些能力在文档里应被视为 MiMo 基座能力。
-
-## SWUST 额外强化了什么
-
-在 MiMo 基座之上，当前主线额外强化了更偏工程使用的部分：
-
-- 龙山灵码品牌、中文文案与中文优先的信息组织
-- 更完整的 TUI 侧边栏上下文与 getting started 提示
-- attention 通知与声音包配置
+- 中文优先的 TUI 文案和信息组织
+- 更完整的侧边栏上下文
 - Task Gate、Bash Safety、Write Guard
-- Document Validation 与 cache-stable 上下文布局
-- `@path` 记忆导入与 one-fact-per-file 事实存储
-- `/memory`、`/paste-image` 与常用控制项别名
-- `/subagent` / `/subagents` 子智能体项目级个性化设置
+- Document Validation 和 cache-stable 上下文布局
+- `@path` 记忆导入和 one-fact-per-file 事实存储
+- `/memory`、`/paste-image`、`/subagent`、`/subagents`
 
-这些增强主要服务于长期工程任务中的信息组织、风险控制和角色配置。
+## 适用边界
 
-## 当前能力边界
-
-龙山灵码当前主线主要面向以下工作：
-
-| 任务类型 | 当前状态 |
-|----------|----------|
+| 工作类型 | 状态 |
+|----------|------|
 | 真实仓库内的多轮编码任务 | 适合 |
 | 长任务恢复、续跑、分阶段推进 | 适合 |
 | 子智能体拆分、复核、并行执行 | 适合 |
 | 项目知识沉淀与长期记忆维护 | 适合 |
-| 一次性浅层问答或演示式聊天 | 不是主要优化目标 |
+| 一次性浅层问答 | 不是主要目标 |
 
-这意味着主线价值更多体现在连续工作能力、工程约束意识和恢复能力。
+## 版本口径
 
-## TUI 与使用体验
+文档中提到 memory、checkpoint、subagent、`goal`、`compose`、Dream / Distill 等能力时，默认表示 v0.6.0 继承 MiMo-Code 的实现。只有 Task Gate、Bash Safety、Write Guard、Document Validation、`/subagent` 项目级配置等明确由 SWUST 增加或调整的内容，才写作 SWUST 层能力。
 
-当前主线保留 MiMo 的终端运行模型，同时保留了 SWUST 更适合中文用户的若干体验决定：
-
-- 首页与主题以深蓝主色为主
-- 侧边栏延续旧 SWUST 较好的阅读节奏和信息密度
-- 关键命令、提示和面板文案以中文优先组织
-- 可见子智能体可在项目内单独设置模型、思考强度和最大执行步数
-
-对于日常终端使用者，这些调整的目标是减少来回切换和重复解释。
-
-## Provider 命名说明
-
-以下名称是服务商或模型标识，不属于 SWUST 品牌替换范围：
+Provider 和模型名称保持原名：
 
 - `MiMo Auto`
 - `小米 MiMo 平台`
 - `mimo/mimo-auto`
 - `xiaomi/mimo-*`
 
-文档、界面和配置都应保留这些原名。
+这些名称是服务商或模型标识，配置和文档中都保留原名。
 
-## 面向后续维护的原则
+## 继续阅读
 
-后续继续演进主线时，建议保持以下判断顺序：
-
-1. 先确认 MiMo 当前主线是否已经提供能力
-2. 如果已有能力，优先继承而不是重写
-3. 如果没有，再补 SWUST 层
-4. 如果只是历史版本有而 MiMo 当前没有，再判断它是否仍然值得纳入当前主线
-
-这也是当前公开文档、README 和版本说明的统一口径。
+- [快速开始](/guide/start)
+- [SWUST 优势](/DIFFERENCES)
+- [智能体模式](/features/agents)
+- [持久化记忆](/features/memory)
+- [工作流引擎](/features/workflow)

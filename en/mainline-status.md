@@ -1,89 +1,49 @@
 # Mainline Status
 
-> Current declared version: v0.6.0
-> Repository: <https://github.com/MakeBlackSheepGreat/swust-code>
+Declared version: `v0.6.0`
 
-## What The Current Mainline Is
+Repository: <https://github.com/MakeBlackSheepGreat/swust-code>
 
-The current SWUST Code mainline uses MiMo-Code as its runtime base. Maintenance follows these rules:
+## Current Version
 
-- if MiMo-Code already provides the runtime capability, the mainline keeps the MiMo implementation
-- SWUST-specific work is added as a product layer where possible
-- provider, model, and service names stay unchanged
+v0.6.0 is based on MiMo-Code. Runtime capabilities that already exist in MiMo-Code keep their original implementation, including memory, checkpoints, actor / subagent, `goal`, `compose`, Dream / Distill, MCP, LSP, plugins, and the TUI / Server Runtime.
 
-The mainline should therefore be understood as **a SWUST product layer on top of the MiMo-Code base**.
+The SWUST layer mainly adds:
 
-## What It Inherits From MiMo-Code
-
-The current mainline inherits MiMo-Code's core runtime capabilities:
-
-- terminal TUI, server runtime, and web / desktop surfaces
-- multi-provider model routing and OpenAI-compatible integrations
-- LSP, MCP, plugins, custom commands, and skills
-- persistent memory, checkpoints, and context reconstruction
-- actor / subagent orchestration and task tracking
-- `goal`, `compose`, Dream / Distill, and voice input
-
-In public documentation, these should be described as inherited MiMo capabilities.
-
-## What The SWUST Layer Adds
-
-On top of the MiMo base, the current mainline strengthens the product around real engineering use:
-
-- SWUST branding, Chinese localization, and Chinese-first information flow
-- richer TUI sidebar context and getting-started guidance
-- attention notifications and sound-pack configuration
+- Chinese-first TUI wording and information layout
+- richer sidebar context
 - Task Gate, Bash Safety, and Write Guard
 - Document Validation and cache-stable context layout
 - `@path` memory imports and one-fact-per-file fact storage
-- `/memory`, `/paste-image`, and familiar control aliases
-- `/subagent` / `/subagents` for project-level visible-subagent customization
+- `/memory`, `/paste-image`, `/subagent`, and `/subagents`
 
-These additions mainly serve information flow, risk control, and role configuration in long-running engineering work.
+## Fit
 
-## Capability Boundary
+| Workload | Status |
+|----------|--------|
+| multi-step coding work inside real repositories | good fit |
+| long tasks that need resume behavior | good fit |
+| subagent delegation, review, and parallel execution | good fit |
+| durable project knowledge and memory maintenance | good fit |
+| one-shot conceptual questions | not the main target |
 
-The current mainline is primarily designed for:
+## Version Wording
 
-| Workload | Fit |
-|----------|-----|
-| multi-step coding work inside real repositories | strong |
-| long tasks that must resume and continue | strong |
-| subagent delegation, review, and parallel work | strong |
-| durable project knowledge accumulation | strong |
-| short one-shot chat or demo prompting | not the primary target |
+When the docs mention memory, checkpoints, subagents, `goal`, `compose`, Dream / Distill, and related runtime behavior, they refer to the MiMo-Code implementation inherited by the current mainline. SWUST-specific wording is reserved for behavior that SWUST actually adds or changes, such as Task Gate, Bash Safety, Write Guard, Document Validation, and project-level `/subagent` settings.
 
-That means the mainline's value is mostly in continuity, engineering constraint awareness, and recovery behavior.
-
-## TUI And Daily Use
-
-The current mainline keeps MiMo's terminal runtime model while preserving several SWUST choices that matter in daily use:
-
-- a deep-blue SWUST visual identity on the home surface
-- sidebar organization and density closer to the stronger parts of earlier SWUST builds
-- Chinese-first wording for key commands, prompts, and panels
-- per-project model, reasoning-variant, and step overrides for visible subagents
-
-These changes are meant to reduce friction during real terminal work.
-
-## Provider Naming
-
-The following names are provider or model identifiers and are intentionally not rebranded:
+Provider and model names keep their original names:
 
 - `MiMo Auto`
-- `Xiaomi MiMo Platform`
+- Xiaomi MiMo Platform
 - `mimo/mimo-auto`
 - `xiaomi/mimo-*`
 
-Documentation, UI, and configuration should keep these original names.
+These are provider or model identifiers and remain unchanged in configuration and documentation.
 
-## Ongoing Maintenance Rule
+## Next Reading
 
-As the mainline continues to evolve, the recommended decision order is:
-
-1. check whether MiMo current mainline already provides the capability
-2. if it does, inherit it instead of rewriting it
-3. if it does not, add the SWUST layer
-4. if an older SWUST branch had it but MiMo current mainline does not, decide whether it still belongs in the current mainline
-
-That is the stable documentation rule for the current public mainline.
+- [Quick Start](/en/guide/start)
+- [SWUST Advantages](/en/DIFFERENCES)
+- [Agent Modes](/en/features/agents)
+- [Persistent Memory](/en/features/memory)
+- [Workflow Engine](/en/features/workflow)
