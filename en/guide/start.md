@@ -1,6 +1,6 @@
 # Quick Start
 
-SWUST Code is a terminal-native AI coding agent built on MiMo-Code. It is intended for real repository work that continues across files, stages, and sessions.
+SWUST Code is a terminal AI coding tool built on MiMo-Code for repository work that continues across files, stages, and sessions.
 
 ## What It Fits Best
 
@@ -62,7 +62,7 @@ For a first project session, this sequence tends to work well:
 4. use `compose` or subagents for decomposition, review, or parallel work
 5. use `/dream` or `/distill` at the end of a phase to retain knowledge and package repeated work
 
-The important point is that SWUST Code is not optimized around the single prompt alone. It is optimized around the full task lifecycle.
+This path covers task execution, resume behavior, and knowledge consolidation in one workflow.
 
 ## 4. Everyday Commands
 

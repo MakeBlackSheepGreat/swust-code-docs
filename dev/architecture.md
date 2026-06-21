@@ -2,7 +2,7 @@
 
 ## 当前架构怎么理解
 
-龙山灵码当前主线以 MiMo-Code 为运行时基座，再叠加 SWUST 的产品层增强。对开发者来说，最重要的不是记住每个目录，而是先理解系统为什么会呈现出现在这种分层：
+龙山灵码当前主线以 MiMo-Code 为运行时基座，再叠加 SWUST 的产品层增强。可以先从四个职责理解这套分层：
 
 - 接口层要同时服务 CLI / TUI / Web / Desktop / API
 - 编排层要让主智能体、subagent、workflow、goal 共享同一套运行时
@@ -30,11 +30,11 @@ Foundation Layer
   Effect services / SQLite + Drizzle / config / filesystem / project state
 ```
 
-这不是精确到每个源码文件的“教条分层图”，而是帮助理解当前主线设计取向的工作视角。
+这张图用于说明当前主线的职责边界，不对应每个源码文件的精确目录位置。
 
 ## Monorepo 大致分工
 
-当前仓库的 `packages/` 更接近“按交付面和能力边界组织”，而不是旧式的严格教科书分层。可以粗略理解为：
+当前仓库的 `packages/` 按交付面和能力边界组织。可以粗略理解为：
 
 | 包组 | 主要职责 |
 |------|----------|
@@ -58,7 +58,7 @@ Foundation Layer
 
 ### 2. 长任务能力放在主路径
 
-记忆、checkpoint、goal、subagent、workflow 不是“高级选配”，而是主任务链路的一部分。这样设计之后：
+记忆、checkpoint、goal、subagent、workflow 位于主任务链路中。这样设计之后：
 
 - 会话恢复不会变成旁路逻辑
 - 子智能体能回写任务上下文
@@ -66,7 +66,7 @@ Foundation Layer
 
 ### 3. 工程防护也是运行时能力
 
-Task Gate、Bash Safety、Write Guard、Document Validation 这类机制之所以重要，是因为它们不是“文档建议”，而是会影响实际执行边界的运行时能力。
+Task Gate、Bash Safety、Write Guard、Document Validation 会影响实际执行边界，因此属于运行时能力。
 
 ## 面向开发者的阅读顺序
 

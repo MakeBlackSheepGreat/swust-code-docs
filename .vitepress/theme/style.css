@@ -3,6 +3,9 @@
   --vp-c-brand-2: #2563eb;
   --vp-c-brand-3: #60a5fa;
   --vp-c-brand-soft: rgba(37, 99, 235, 0.12);
+  --swust-ink: #0f172a;
+  --swust-line: rgba(37, 99, 235, 0.18);
+  --swust-grid: rgba(37, 99, 235, 0.08);
   --swust-doc-line: 1.82;
   --swust-doc-width: 900px;
   --swust-home-width: 1080px;
@@ -14,12 +17,21 @@
   --vp-c-brand-2: #60a5fa;
   --vp-c-brand-3: #2563eb;
   --vp-c-brand-soft: rgba(96, 165, 250, 0.16);
+  --swust-ink: #e5e7eb;
+  --swust-line: rgba(147, 197, 253, 0.22);
+  --swust-grid: rgba(147, 197, 253, 0.09);
 }
 
 body {
   background:
-    linear-gradient(180deg, rgba(37, 99, 235, 0.045), transparent 360px),
+    linear-gradient(var(--swust-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--swust-grid) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(37, 99, 235, 0.05), transparent 420px),
     var(--vp-c-bg);
+  background-size:
+    52px 52px,
+    52px 52px,
+    auto;
 }
 
 .VPDoc .content,
@@ -125,10 +137,12 @@ body {
 
 .VPHome .name {
   color: var(--vp-c-brand-1);
+  font-weight: 760;
 }
 
 .VPHome .text {
   max-width: 760px;
+  color: var(--swust-ink);
 }
 
 .VPHome .tagline {
@@ -138,6 +152,7 @@ body {
 
 .VPHome .VPFeature {
   border-radius: var(--swust-radius);
+  border-color: var(--swust-line);
   transition:
     border-color 0.18s ease,
     transform 0.18s ease;
@@ -157,7 +172,7 @@ body {
 }
 
 .VPHome .vp-doc {
-  max-width: 920px;
+  max-width: 960px;
 }
 
 .VPHome .vp-doc h2 {
@@ -179,6 +194,82 @@ body {
   border-radius: var(--swust-radius) !important;
 }
 
+.swust-home-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 18px;
+  margin: 24px 0 38px;
+}
+
+.swust-install,
+.swust-facts {
+  border: 1px solid var(--swust-line);
+  border-radius: var(--swust-radius);
+  background: color-mix(in srgb, var(--vp-c-bg) 88%, var(--vp-c-brand-soft));
+}
+
+.swust-install {
+  padding: 18px;
+}
+
+.swust-kicker {
+  margin: 0 0 10px !important;
+  color: var(--vp-c-brand-1) !important;
+  font-size: 12px;
+  font-weight: 760;
+  letter-spacing: 0.08em;
+}
+
+.swust-install pre {
+  margin: 0;
+  padding: 18px;
+  overflow-x: auto;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: var(--swust-radius);
+  background: var(--vp-code-block-bg);
+}
+
+.swust-install code {
+  display: block;
+  color: var(--vp-code-block-color);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.swust-facts {
+  padding: 18px;
+}
+
+.swust-facts dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.swust-facts div {
+  min-height: 82px;
+  padding: 12px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: var(--swust-radius);
+  background: var(--vp-c-bg);
+}
+
+.swust-facts dt {
+  margin-bottom: 10px;
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.swust-facts dd {
+  margin: 0;
+  color: var(--swust-ink);
+  font-size: 16px;
+  font-weight: 720;
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 768px) {
   .VPDoc .content,
   .VPDoc .content-container {
@@ -198,5 +289,13 @@ body {
 
   .VPHome .tagline {
     line-height: 1.65;
+  }
+
+  .swust-home-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .swust-facts dl {
+    grid-template-columns: 1fr;
   }
 }

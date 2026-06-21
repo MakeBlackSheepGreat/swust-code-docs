@@ -4,79 +4,87 @@ layout: home
 hero:
   name: SWUST Code
   text: "龙山灵码"
-  tagline: "A terminal AI coding tool based on MiMo-Code. The current mainline inherits MiMo-Code memory, checkpoints, subagents, goal, compose, MCP, LSP, and plugins, with added Chinese TUI work, engineering safeguards, and project-level subagent settings."
+  tagline: "A terminal AI coding tool based on MiMo-Code. It keeps the MiMo-Code long-task runtime and adds a SWUST layer for Chinese TUI work, engineering safeguards, memory organization, and project-level subagent settings."
   actions:
     - theme: brand
       text: Quick Start
       link: /en/guide/start
     - theme: alt
-      text: Mainline Status
-      link: /en/mainline-status
+      text: GitHub
+      link: https://github.com/MakeBlackSheepGreat/swust-code
     - theme: alt
-      text: SWUST Advantages
-      link: /en/DIFFERENCES
-
-features:
-  - title: MiMo-Code Base
-    details: "The current mainline inherits MiMo-Code runtime behavior. If MiMo already provides a feature, the MiMo implementation remains the default."
-    link: /en/mainline-status
-  - title: Memory And Checkpoints
-    details: "MEMORY.md, facts, checkpoint.md, and task progress store project facts, session state, and task progress."
-    link: /en/features/memory
-  - title: Multi-Agent Runtime
-    details: "build, plan, compose, goal, and subagents are used for analysis, execution, orchestration, and verification."
-    link: /en/features/agents
-  - title: Engineering Safeguards
-    details: "Task Gate, Bash Safety, Write Guard, and Document Validation handle premature stops, risky commands, bad writes, and document-structure errors."
-    link: /en/features/security
-  - title: Workflow And Consolidation
-    details: "workflow is used for resumable multi-stage work; dream and distill consolidate project knowledge and repeated processes."
-    link: /en/features/workflow
-  - title: Chinese TUI
-    details: "Chinese command text, sidebar information, and theme configuration are tuned for daily terminal work."
-    link: /en/features/tui
+      text: NPM
+      link: https://www.npmjs.com/package/@swust-code/cli
 ---
 
-## Start Here
+<section class="swust-home-intro">
+  <div class="swust-install">
+    <p class="swust-kicker">INSTALL</p>
+    <pre><code>npm install -g @swust-code/cli
+swust-code</code></pre>
+  </div>
+  <div class="swust-facts">
+    <p class="swust-kicker">CURRENT LINE</p>
+    <dl>
+      <div><dt>Declared version</dt><dd>v0.6.0</dd></div>
+      <div><dt>Runtime base</dt><dd>MiMo-Code</dd></div>
+      <div><dt>CLI</dt><dd><code>swust-code</code></dd></div>
+      <div><dt>Project dir</dt><dd><code>.swust-code/</code></dd></div>
+    </dl>
+  </div>
+</section>
+
+## Current Mainline
+
+| Module | Current behavior |
+|--------|------------------|
+| MiMo-Code base | memory, checkpoints, subagents, `goal`, `compose`, MCP, LSP, and plugins follow the current MiMo mainline. |
+| Resumable long tasks | `MEMORY.md`, facts, `checkpoint.md`, and task progress store project facts, session state, and task progress. |
+| Subagent settings | Use `/subagent` to set model, variant, and max steps for visible subagents. Settings are stored in project config. |
+
+## Check These First
+
+| Question | Current answer | Read next |
+|----------|----------------|-----------|
+| What is the current mainline based on? | MiMo-Code. Existing MiMo behavior stays first. | [Mainline Status](/en/mainline-status) |
+| What does SWUST add? | Chinese TUI work, Task Gate, Bash Safety, Write Guard, Document Validation, project-level `/subagent` settings, and related guardrails. | [SWUST Advantages](/en/DIFFERENCES) |
+| How do I start? | Install the CLI, run `swust-code` in a repository, then configure a provider from the startup guide. | [Quick Start](/en/guide/start) |
+
+## Good Fit
+
+SWUST Code is intended for repository work that continues across multiple steps:
+
+- multi-file fixes, refactors, migrations, and upgrades
+- long tasks that need `goal` to check completion
+- tasks that benefit from subagent research, implementation, review, or verification
+- projects that need rules, facts, and progress to survive across sessions
+
+For a short conceptual answer, a normal chat tool is usually simpler.
+
+## MiMo Base And SWUST Layer
+
+| Layer | Contents | How to describe it |
+|-------|----------|--------------------|
+| MiMo-Code base | memory, checkpoints, actor / subagent runtime, `goal`, `compose`, Dream / Distill, MCP, LSP, plugins, TUI / Server Runtime | Treat these as inherited MiMo capabilities. |
+| SWUST layer | Chinese-first information flow, sidebar work, engineering safeguards, memory path guards, document validation, project-level subagent settings | Describe these as SWUST additions only where the behavior is actually added or changed by SWUST. |
+
+## Common Entry Points
 
 | Goal | Page |
 |------|------|
-| Install and complete the first launch | [Quick Start](/en/guide/start) |
-| Check what the current mainline is based on | [Mainline Status](/en/mainline-status) |
-| Understand what SWUST adds beyond MiMo | [SWUST Advantages](/en/DIFFERENCES) |
-| Understand agents, subagents, goal, and compose | [Agent Modes](/en/features/agents) |
-| Understand memory and checkpoint recovery | [Persistent Memory](/en/features/memory) |
-| Read CLI and config details | [CLI Commands](/en/api/commands), [Config Schema](/en/api/config-schema) |
+| Install, first launch, provider setup | [Quick Start](/en/guide/start) |
+| Understand the main agent, `goal`, `compose`, and subagents | [Agent Modes](/en/features/agents) |
+| Understand `MEMORY.md`, facts, and checkpoints | [Persistent Memory](/en/features/memory) |
+| Read about Task Gate, Bash Safety, and Write Guard | [Security](/en/features/security) |
+| Check CLI commands and config fields | [CLI Commands](/en/api/commands), [Config Schema](/en/api/config-schema) |
 
-## Basic Facts
+## Naming Boundary
 
-| Item | Current value |
-|------|---------------|
-| Chinese name | 龙山灵码 |
-| English name | SWUST Code |
-| CLI command | `swust-code` |
-| Declared version | `v0.6.0` |
-| Runtime base | MiMo-Code |
-| Project directory | `.swust-code/` |
-| Runtime config | `swust-code.json` or `swust-code.jsonc` |
+Provider and model names are not rebranded:
 
-## Fit
+- `MiMo Auto`
+- Xiaomi MiMo Platform
+- `mimo/mimo-auto`
+- `xiaomi/mimo-*`
 
-SWUST Code is better suited for repository work that needs more than one turn, such as:
-
-- fixing a set of type, test, or build failures
-- completing a refactor, upgrade, or feature in phases
-- delegating investigation, implementation, review, or verification to subagents
-- keeping project rules and progress across sessions
-
-It is not mainly a short-answer chat interface. For a brief explanation, a normal chat tool is often simpler.
-
-## Relationship To MiMo-Code
-
-The maintenance rule is:
-
-1. If MiMo-Code already provides a capability, keep the MiMo implementation first.
-2. If MiMo-Code does not provide it, add the SWUST layer.
-3. Keep provider and model names unchanged, including `MiMo Auto`, `mimo/mimo-auto`, and `xiaomi/mimo-*`.
-
-This rule prevents the current mainline from drifting back toward the older OpenCode-era implementation and keeps inherited behavior separate from SWUST-specific additions.
+These are provider or model identifiers, not SWUST product copy.

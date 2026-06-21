@@ -36,6 +36,22 @@ Use GitHub Docs and MDN-style technical writing as the default editorial model:
 
 Good documentation should feel calm, specific, and useful. It should not feel like an AI-generated summary of a product strategy.
 
+## Reference Sites
+
+Before changing the home page or a long-form explanatory page, use these reference patterns:
+
+- MiMo Code product page: short product name, one sentence, install command, primary links, then feature sections. Do not front-load a long theory of the project.
+- MiMo Code long-horizon article: date, title, problem, design, mechanism, evaluation or limits, usage. Long pages should read like a technical note, not like a launch announcement.
+- Radar project board: visual interest comes from information. Metrics, tags, source links, update dates, and ranked lists are useful. Decorative panels that do not carry facts are not useful.
+
+Do not copy another site's visual identity, colors, imagery, or layout gimmicks. Extract the structure:
+
+- one clear first action
+- a compact fact panel
+- visible commands or file paths
+- short headings that describe the user's next decision
+- evidence before claims
+
 ## Anti-AI Writing Rules
 
 Before adding or rewriting any page, remove these patterns:
@@ -75,6 +91,7 @@ Each page should have one job.
 - Reference page: exact syntax, fields, defaults, examples.
 - Status page: stable current state only.
 - Advantages page: explain differences with concrete behavior, not broad claims.
+- Technical article page: start from the problem, then describe the design, implementation surface, limits, and usage.
 
 When writing a feature page, use this order unless there is a strong reason not to:
 
@@ -93,8 +110,20 @@ When writing a feature page, use this order unless there is a strong reason not 
 - Use English technical terms when they are product terms: `checkpoint`, `subagent`, `provider`, `variant`.
 - Do not translate provider/model names.
 - Do not invent slogans.
+- Avoid defensive framing such as "不是 X，而是 Y" unless the next sentence gives a concrete command, file path, config field, or runtime behavior.
+- If the page compares SWUST with MiMo, use tables and observable behavior instead of adjectives.
 
 If a sentence would still sound plausible after replacing the product name with any other AI coding tool, rewrite it.
+
+## Visual Design Rules
+
+The docs site can be visually distinctive, but decoration must carry information.
+
+- Prefer information panels, compact stat rows, tables, tags, command blocks, and source links.
+- Use sharp borders, restrained spacing, and a small number of accent colors.
+- Avoid large blurred gradients, abstract glow cards, fake dashboards, and ornamental terminal panels.
+- Do not add a visual section unless it helps the user decide what to read, install, configure, or verify.
+- Keep homepage density moderate. A developer should understand the product, install path, base relationship, and next pages without scrolling through repeated feature cards.
 
 ## Do Not Add Internal Process Details
 

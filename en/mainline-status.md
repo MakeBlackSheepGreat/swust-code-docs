@@ -5,13 +5,13 @@
 
 ## What The Current Mainline Is
 
-The current SWUST Code mainline uses MiMo-Code as its runtime base. This is an implementation rule, not just branding language:
+The current SWUST Code mainline uses MiMo-Code as its runtime base. Maintenance follows these rules:
 
 - if MiMo-Code already provides the runtime capability, the mainline keeps the MiMo implementation
-- SWUST-specific work is added as a product layer where possible instead of rewriting the base back toward older OpenCode-era behavior
+- SWUST-specific work is added as a product layer where possible
 - provider, model, and service names stay unchanged
 
-The mainline should therefore be understood as **a SWUST product layer on top of the MiMo-Code base**, not a regression to the historical pre-MiMo stack.
+The mainline should therefore be understood as **a SWUST product layer on top of the MiMo-Code base**.
 
 ## What It Inherits From MiMo-Code
 
@@ -24,7 +24,7 @@ The current mainline inherits MiMo-Code's core runtime capabilities:
 - actor / subagent orchestration and task tracking
 - `goal`, `compose`, Dream / Distill, and voice input
 
-In public documentation, these should be described as inherited MiMo capabilities, not relabeled as SWUST inventions.
+In public documentation, these should be described as inherited MiMo capabilities.
 
 ## What The SWUST Layer Adds
 
@@ -39,7 +39,7 @@ On top of the MiMo base, the current mainline strengthens the product around rea
 - `/memory`, `/paste-image`, and familiar control aliases
 - `/subagent` / `/subagents` for project-level visible-subagent customization
 
-The point is not to accumulate feature labels. The point is to make the mainline more usable for long-running engineering work.
+These additions mainly serve information flow, risk control, and role configuration in long-running engineering work.
 
 ## Capability Boundary
 
@@ -53,7 +53,7 @@ The current mainline is primarily designed for:
 | durable project knowledge accumulation | strong |
 | short one-shot chat or demo prompting | not the primary target |
 
-That means the mainline's value is mostly in continuity, engineering constraint awareness, and recovery behavior rather than single-turn speed.
+That means the mainline's value is mostly in continuity, engineering constraint awareness, and recovery behavior.
 
 ## TUI And Daily Use
 
@@ -64,7 +64,7 @@ The current mainline keeps MiMo's terminal runtime model while preserving severa
 - Chinese-first wording for key commands, prompts, and panels
 - per-project model, reasoning-variant, and step overrides for visible subagents
 
-These changes are meant to reduce friction during real terminal work, not just change the skin.
+These changes are meant to reduce friction during real terminal work.
 
 ## Provider Naming
 

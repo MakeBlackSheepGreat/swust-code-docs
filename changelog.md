@@ -31,7 +31,7 @@
 - Voice Input（语音输入，基于 TenVAD + MiMo ASR）
 - CC Memory Indexing（Claude Code 内存索引兼容）
 - 远程 Workspace 同步（SSE + HTTP replay）
-- 更先进的 Tool Pruning（soft-trim + hard-prune + 非必要内容剥离 + checkpoint 触发 + 压力等级）
+- Tool Pruning（soft-trim + hard-prune + 非必要内容剥离 + checkpoint 触发 + 压力等级）
 - 更成熟的 Workspace Adapter 系统
 - 持久化记忆、checkpoint、actor/subagent、goal、Compose、Dream/Distill 原生运行时
 

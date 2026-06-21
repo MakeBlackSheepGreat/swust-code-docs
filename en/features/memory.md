@@ -1,10 +1,10 @@
 # Persistent Memory
 
-SWUST Code's memory system is not just an extra notebook for the model. It is part of the infrastructure that makes long-running work continuous.
+SWUST Code's memory system stores project rules, historical facts, and session recovery information. It works with checkpoints and context reconstruction to support long-running work.
 
 ## Why Memory Matters For Long Tasks
 
-In real repositories, the issue is often not whether one answer is correct. The issue is whether the system can:
+In real repositories, long-running tasks need the system to:
 
 - remember project constraints in the next phase
 - resume later without losing where the work stopped
@@ -90,4 +90,4 @@ The following are usually better kept at the session layer:
 - unconfirmed guesses
 - local observations that will quickly expire
 
-A good memory system is not only about storing more. It is about storing what remains useful.
+Memory files should prioritize content that remains useful over time, not every temporary observation.

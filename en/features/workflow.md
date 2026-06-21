@@ -1,6 +1,6 @@
 # Workflow Engine
 
-SWUST Code's workflow engine turns multi-agent work into a recoverable, inspectable, repeatable engineering process. It is not just a command alias layer. It is an orchestration runtime for long tasks.
+SWUST Code's workflow engine turns multi-agent work into a recoverable, inspectable, repeatable engineering process.
 
 ## What Problem It Solves
 
@@ -58,7 +58,7 @@ That makes it easier to decide whether a workflow should resume, continue, or re
 
 The current mainline already includes built-in workflows such as `deep-research`. They are useful when search, extraction, grouping, cross-checking, and reporting should be kept as separate phases instead of being compressed into one conversational turn.
 
-The real value of workflow is not that the script looks advanced. The value is that the process stays understandable as the task grows.
+Workflow keeps stages, parallel work, logs, resume behavior, and result collection in an explicit structure.
 
 ## When To Switch To Workflow
 

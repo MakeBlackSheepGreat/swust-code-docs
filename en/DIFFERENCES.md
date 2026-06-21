@@ -1,128 +1,120 @@
 # SWUST Advantages
 
-This page is not a migration log and not a historical OpenCode audit. It answers a simpler question: **once MiMo-Code is accepted as the runtime base, what does SWUST Code add on top, and what kinds of engineering problems does it handle better than a generic AI coding agent?**
+This page explains how SWUST Code relates to MiMo-Code and what behavior the SWUST layer adds. It is not a migration log, and it does not rename MiMo features as SWUST inventions.
 
-## Why MiMo-Code Is The Base
+## The Problem
 
-SWUST Code uses MiMo-Code as its current base because MiMo already connects the runtime pieces that long-running software work needs:
+AI coding work inside a real repository is rarely finished in one answer. Common failure modes include:
 
-- persistent memory and checkpoints are part of session continuity, not bolt-on features
-- actor / subagent orchestration, `goal`, `compose`, Dream / Distill, MCP, LSP, and plugins live in one runtime model
-- the terminal TUI, server runtime, and web / desktop surfaces share the same underlying capabilities
-- context reconstruction, task tracking, and subagent execution are already on the critical path for long tasks
+- early constraints disappear when the context grows
+- a resumed session needs the project state explained again
+- subtasks can be delegated, but roles lack project-level limits
+- shell execution, file writes, and structured-document edits create engineering risk
+- Chinese terminal users need direct command text, state, and sidebar information
 
-That makes MiMo a stronger place to continue product work. SWUST does not need to rebuild an older runtime shape first. It can focus on product-layer improvements instead.
+MiMo-Code already solves much of the runtime foundation. SWUST Code keeps that base and adds a SWUST layer on top.
 
-## The SWUST Layer Relative To MiMo
+## What MiMo-Code Provides
 
-MiMo solves the problem of having a capable long-task runtime. The SWUST layer focuses on whether that runtime is easier to use, better governed, and better suited for Chinese-speaking developers in real engineering work.
+The current mainline inherits the MiMo-Code long-task runtime:
 
-### Chinese-First TUI And Information Flow
+| Capability | Purpose |
+|------------|---------|
+| memory / checkpoint | store project facts, session state, and recovery context |
+| actor / subagent | delegate work to independent roles and return results to the main session |
+| `goal` | check whether the stopping condition has actually been met |
+| `compose` | organize planning, parallel execution, review, and result integration |
+| Dream / Distill | turn recent work into durable knowledge or reusable flows |
+| MCP / LSP / plugin / skill | connect tools, language services, and project extensions |
 
-SWUST goes beyond brand replacement by reorganizing the terminal experience around daily usage:
+These capabilities should be described as MiMo base capabilities. SWUST does not rewrite these mechanisms or move the mainline back toward the older OpenCode-era shape.
 
-- key commands, prompts, and panels are written with Chinese readability first
-- the sidebar emphasizes working directory, Goal, Task, Todo, LSP, MCP, changed files, token, cost, and cache context
-- the home page and top-level docs are structured around where to start and what to read next
+## What The SWUST Layer Adds
 
-The benefit is not cosmetic differentiation. The benefit is lower friction during extended terminal work.
+### Chinese-First Terminal Information
 
-### Stronger Engineering Safeguards
+The SWUST layer changes high-frequency terminal information for Chinese-speaking users:
 
-MiMo already has a permissions model. SWUST adds more attention to the places where real engineering mistakes happen:
+- command descriptions and common entry points use Chinese wording
+- the sidebar emphasizes working directory, Goal, Task, Todo, LSP, MCP, changed files, token usage, cost, and cache state
+- the home page, quick start, and feature pages are organized around the user's next action instead of implementation history
 
-- Task Gate reduces premature stopping when unfinished work still exists
-- Bash Safety adds risk analysis for shell execution
-- Write Guard narrows writable path boundaries
-- Document Validation adds constraints for structured-document work
-- cache-stable context layout helps reduce drift in long-running sessions
+The standard is not whether the UI looks different. The standard is whether the user can find task-relevant state faster.
 
-These additions are meant to reduce operational mistakes, premature completion, and context distortion in real repositories.
+### Engineering Safeguards
 
-### Project-Level Subagent Personalization
+The SWUST layer gives several high-risk areas their own handling:
 
-MiMo already provides the subagent runtime. SWUST adds a clearer layer for project-level role control:
+| Module | Problem handled |
+|--------|-----------------|
+| Task Gate | reduces premature stopping while unfinished tasks remain |
+| Bash Safety | adds risk analysis for shell commands |
+| Write Guard | narrows memory and project write boundaries |
+| Document Validation | checks structure when editing structured documents |
+| cache-stable prefix | reduces noise from context-prefix drift during long tasks |
 
-- `/subagent` and `/subagents` open visible-subagent settings
-- different subagents can use different models
-- each subagent can have its own reasoning variant
-- each subagent can have its own max-step limit
+These modules do not replace MiMo's permission system. They add more specific engineering boundaries.
 
-That makes subagents more than generic delegated workers. They become project-governed roles such as lightweight investigators, heavier review agents, short-step executors, or constrained verifiers.
+### Project-Level Subagent Settings
 
-### A Stronger Long-Task Engineering Loop
+MiMo already provides the subagent runtime. SWUST adds a project-level settings entry:
 
-SWUST emphasizes memory, checkpoints, and Dream / Distill as parts of one long-term project loop:
+```text
+/subagent
+/subagents
+```
 
-- memory stores durable rules and project facts
-- checkpoints support session recovery and context reconstruction
-- Dream consolidates recent work into durable knowledge
-- Distill turns repeated actions into skills, commands, subagents, or workflows
+Visible subagents can be configured with:
 
-The result is that project knowledge can accumulate instead of being re-explained every session.
+- model
+- reasoning variant
+- max execution steps
+- cleared overrides to return to default behavior
 
-## What Makes SWUST Different From A Generic Coding Agent
+Settings are written into project-level `agent` config instead of global defaults. This lets one project give investigation, implementation, review, and verification roles different model and step policies.
 
-Compared with a generic AI coding agent, SWUST is more directly focused on three problems.
+### Memory Organization Additions
 
-### 1. How Long Tasks Stay Continuous
+SWUST keeps MiMo memory and checkpoint behavior and adds a clearer project-knowledge organization layer:
 
-Many coding agents work well for short tasks, but degrade once work spans multiple stages, files, or sessions:
+- `MEMORY.md` supports `@path` imports
+- project facts can be stored as one-fact-per-file
+- write targets are checked by guards
+- `/memory` searches durable project knowledge
 
-- constraints get forgotten
-- the repository has to be relearned
-- unfinished state is not tracked reliably
-- quality drops as context grows
+The goal is to reduce repeated project explanation while keeping memory files maintainable.
 
-SWUST puts memory, checkpoints, Goal, Task, subagents, and context reconstruction on the same path so the task can keep moving.
+## Compared With A Generic Coding Agent
 
-### 2. How Multi-Agent Work Actually Serves Engineering
+A generic coding agent often optimizes for single-turn generation. SWUST Code focuses more on what happens when work continues over time.
 
-Many products treat multi-agent features as a set of named personas. SWUST is more concerned with whether those agents can carry real engineering roles:
+| Problem | Common approach | SWUST Code approach |
+|---------|-----------------|---------------------|
+| Long session | summarize or drop history | recover necessary state through memory, checkpoints, and context reconstruction |
+| Many subtasks | manually split prompts | use subagent / compose / goal for research, execution, review, and completion checks |
+| Many project rules | repeat reminders | store rules in project memory and fact files, then re-inject on recovery |
+| Risky operations | rely on manual review | use permissions plus Task Gate, Bash Safety, Write Guard, and Document Validation |
 
-- the primary agent drives the main thread of work
-- compose handles planning, parallelization, review, and merge structure
-- goal handles stop-condition-based autonomous continuation
-- subagents handle research, implementation, verification, and checkpoint-related tasks
+## When It Fits
 
-With project-level subagent configuration, multi-agent behavior becomes a governable role system rather than a display feature.
+Better fit:
 
-### 3. How Engineering Risk Is Contained
+- repository tasks that need multiple turns
+- refactors, migrations, upgrades, and batch fixes
+- work that benefits from subagent role separation
+- projects that need rules and progress to persist across sessions
 
-In real repositories, risk often comes less from a single wrong answer and more from:
+Not the best fit:
 
-- a shell command that should not have run
-- a task that should not have stopped
-- a path that should not have been written
-- a structured document that was modified incorrectly
+- one-shot conceptual explanations
+- short questions without repository context
+- temporary questions that do not need memory, checkpoints, or tool calls
 
-One of SWUST's distinguishing choices is to treat those risks as first-class runtime concerns.
+## Maintenance Rule
 
-## Typical Use Cases
+Future work follows this order:
 
-| Scenario | Why SWUST fits |
-|----------|----------------|
-| long-running defect fixing | goal, task state, checkpoints, and memory keep work continuous |
-| repository migration and refactoring | work can be split across files, stages, and roles |
-| standards-driven development | docs, architecture rules, and long-term constraints can be retained |
-| model-assisted review | different subagents can be limited to different models and step budgets |
-| repeated engineering flow packaging | dream / distill can turn experience into reusable assets |
-
-## Good Fit And Poor Fit
-
-### Better fit
-
-- continuous development tasks inside real repositories
-- long tasks that need resume behavior
-- multi-agent work that needs explicit delegation, review, and result recovery
-- projects that benefit from durable knowledge accumulation
-
-### Less of a fit
-
-- shallow one-shot prompting
-- treating the terminal primarily as a simplified chat window
-- temporary scripting questions that do not need memory, task state, or recovery
-
-## In One Line
-
-If MiMo-Code is the base that already solves the long-task runtime problem, then SWUST Code is the product layer that makes that base more suitable for real software engineering through Chinese-first UX, stronger safeguards, subagent governance, and longer-horizon project workflow.
+1. If MiMo-Code already provides a feature, keep the current MiMo implementation first.
+2. If MiMo-Code does not provide it and SWUST needs it, add it as a SWUST layer.
+3. Keep provider and model names unchanged, including `MiMo Auto`, `mimo/mimo-auto`, and `xiaomi/mimo-*`.
+4. Public docs describe stable capabilities, not temporary branches, PR states, or agent-session process.

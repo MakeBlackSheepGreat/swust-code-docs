@@ -28,7 +28,7 @@ If you already know the next step, `build` or `plan` is often enough. `compose` 
 
 ## How Subagents Participate
 
-Subagents are not a separate product surface. They are role extensions inside the current work chain:
+Subagents are role extensions inside the current work chain:
 
 - they can advance an isolated subtask
 - they can run in the foreground or continue in the background
@@ -41,7 +41,7 @@ The runtime also uses dedicated system agents such as:
 - `dream`
 - `distill`
 
-You usually do not manage those directly, but they explain why SWUST Code can keep moving in long-running work instead of behaving like a single-turn assistant.
+You usually do not manage those directly. They handle checkpoints, memory consolidation, and flow packaging in the background.
 
 ## Project-Level `/subagent` Configuration
 
@@ -57,7 +57,7 @@ From that interface, you can set for each visible subagent:
 - a max-step limit
 - or clear overrides and return to the default behavior
 
-These settings live at the project level rather than becoming global defaults. That makes them useful for repository-specific role control, such as:
+These settings live at the project level and do not become global defaults. They are useful for repository-specific role control, such as:
 
 - faster, cheaper investigation subagents
 - stronger review subagents with heavier reasoning
